@@ -27,7 +27,6 @@ const ExercisesService = ({children}) => {
             .orderByKey()
             .equalTo(authUser.uid)
             .on('value', snapshot => {  
-                debugger;
                 const obj = snapshot.val();
                 var exercises = obj[Object.keys(obj)][trainingId];
                 if (exercises) {
