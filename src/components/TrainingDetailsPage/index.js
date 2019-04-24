@@ -3,27 +3,18 @@ import React, { useContext, useState, useEffect } from 'react';
 import { FirebaseContext } from '../../services/firebase';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import { AuthUserContext } from '../../services/authentication-service';
+import { UserSelectionsServiceContext } from '../../services/user-selection-service';
+import { ExercisesServiceContext } from '../../services/exercises-service';
 
 const TrainingDetailsPage = (props) => {
 
-    const id = props.match.params.id;
-    const trainingsService = useContext(TrainingsServiceContext);
-    const firebase = useContext(FirebaseContext);
-    const authUser = useContext(AuthUserContext);
-    const [exercises, setExercises] = useState([]);
-    
-    useEffect(() => {
-        if (authUser) {
-            trainingsService.getExercisesByTrainingId(firebase, authUser.uid, id).then( data => {
-                setExercises(data);
-                console.log(data);
-            });
-        }
-    }, [authUser]);
+    const userSelectionsService = useContext(UserSelectionsServiceContext);
+    const exercisesService = useContext(ExercisesServiceContext);
 
+    const exercises = exercisesService && exercisesService.exercises;
     return (
         <div>
-            Training details for training: {id}
+            Training details for training: {userSelectionsService.userSelections.trainingId}
             {exercises && 
                 <ul>
                     {exercises.map(exercise => 
@@ -37,5 +28,6 @@ const TrainingDetailsPage = (props) => {
         </div>
     );
 };
+
 
 export default TrainingDetailsPage;
