@@ -13,13 +13,13 @@ const TrainingsService = ({children}) => {
 
     useEffect(() => {
         if (authUser && firebaseContext.firebase) {
-            debugger;
+            
             get();
         }
     }, [authUser, firebaseContext])
 
     const get = () => {
-        debugger;
+        
         firebaseContext.firebase.db.ref(`trainings`)
         .orderByKey()
         .equalTo(authUser.uid)
