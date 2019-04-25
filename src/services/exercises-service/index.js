@@ -16,7 +16,6 @@ const ExercisesService = ({children}) => {
     
     useEffect(() => {
         if (authUser && firebaseContext.firebase && userSelectionsService.userSelections.trainingId) {
-            debugger;
             const trainingId = userSelectionsService.userSelections.trainingId;
             getByTrainingId(trainingId);
         }
@@ -34,6 +33,8 @@ const ExercisesService = ({children}) => {
                         ...exercises[key], 
                         id: key 
                     }));
+                    console.log("Exercises loaded");
+                    console.log(exercisesList);
                     setExercises(exercisesList);
                 } else {
                     setExercises([]);

@@ -8,6 +8,7 @@ import TrainingDetailsPage from './components/TrainingDetailsPage';
 import TrainingsPage from './components/TrainingsPage';
 import Header from './components/header';
 import SignInPage from './components/SignInPage';
+import ExerciseDetailsPage from './components/ExerciseDetails';
 
 
 class App extends Component {
@@ -19,13 +20,7 @@ class App extends Component {
           <Route exact path={ROUTES.LANDING} render={(props) => <TrainingsPage {...props} />} />
           <Route exact path={ROUTES.TRAINING_DETAILS} render={(props) => <TrainingDetailsPage {...props} />} />
           <Route path={ROUTES.SIGN_IN} render={(props) => <SignInPage {...props} />} />
-          {/* <Route path={ROUTES.TRAINING_DAY} render={(props) => <TrainingDay {...props} exerciseService={ExerciseDb} />} />
-                    <Route path={ROUTES.EXERCISE_INFO} render={(props) => <ExerciseDetails {...props} exerciseService={ExerciseDb} exerciseSetService={ExerciseSetDb} />} />
-                    <Route path={ROUTES.ACCOUNT} render={(props) => <AccountPage {...props} />} />
-                    <Route path={ROUTES.ADMIN} render={(props) => <AdminPage {...props} />} />
-                    <Route path={ROUTES.PASSWORD_FORGET} render={(props) => <PasswordForgetPage {...props} />} />
-                    <Route path={ROUTES.SIGN_UP} render={(props) => <SignUpPage {...props} />} />
-            */}
+          <Route path={ROUTES.EXERCISE_DETAILS} render={(props) => <ExerciseDetailsPage {...props} />} />
         </div>
       </Router>
     );
