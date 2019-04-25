@@ -3,7 +3,7 @@ import * as ROUTES from '../../constants/routes'
 import { FirebaseContext } from '../../services/firebase';
 import { withRouter } from 'react-router-dom'
 import TrainingDay from './TrainingDay';
-import ListControls from './list-controls';
+import ListControls from '../common/list-controls';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import { AuthUserContext } from '../../services/authentication-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';

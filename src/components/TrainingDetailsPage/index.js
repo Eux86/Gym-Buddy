@@ -5,16 +5,23 @@ import { AuthUserContext } from '../../services/authentication-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import * as ROUTES from '../../constants/routes';
+import { TrainingsServiceContext } from '../../services/trainings-service';
+import ListControls from '../common/list-controls';
 
 const TrainingDetailsPage = (props) => {
 
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
-
+    const trainingService = useContext(TrainingsServiceContext);
     const exercises = exercisesService && exercisesService.exercises;
+    let currentTraining = null;
+
+    if (userSelectionsService.userSelections.trainingId && trainingService.trainings) {
+        currentTraining = trainingService.trainings.find(x => x.id === userSelectionsService.userSelections.trainingId);
+    }
 
     const deleteExercise = (event, id) => {
-        console.log("should delete exercise id: " + id);
+        exercisesService.del(currentTraining.id, id);
         event.preventDefault();
     }
 
@@ -25,35 +32,51 @@ const TrainingDetailsPage = (props) => {
         event.preventDefault();
     }
 
+    const onAdd = (newElementName) => {
+        console.log("should add "+newElementName);
+        const newExercise = {
+            name: newElementName,
+            description: ''
+        }
+        exercisesService.add(currentTraining.id, newExercise);
+    }
+
     return (
         <div>
             Training details for training: {userSelectionsService.userSelections.trainingId}
+            <h1>{currentTraining && currentTraining.name}</h1>
             {exercises &&
                 <ul>
-                    {exercises.map(exercise =>
-                        <li key={exercise.id} className="list-group-item d-flex justify-content-between">
-                            <div>
-                                <a href="#" onClick={(event) => onClick(event, exercise.id)}>
-                                    <div>
-                                        {exercise.name}
-                                    </div>
-                                </a>
-                                <div className="text-muted">
-                                    {exercise.description}
-                                </div>
-                            </div>
-                            <div className="mx-2">
-                                <button type="button" className="btn btn-default btn-md" onClick={(event) => deleteExercise(event, exercise.id)}>
-                                    <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </li>
-                    )}
+                    <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />
+                    <ListControls onAdd={onAdd} />
                 </ul>
             }
         </div>
     );
 };
 
+const List = ({ exercises, onClick, deleteExercise }) => {
+    return (
+        exercises.map(exercise =>
+            <li key={exercise.id} className="list-group-item d-flex justify-content-between">
+                <div>
+                    <a href="#" onClick={(event) => onClick(event, exercise.id)}>
+                        <div>
+                            {exercise.name}
+                        </div>
+                    </a>
+                    <div className="text-muted">
+                        {exercise.description}
+                    </div>
+                </div>
+                <div className="mx-2">
+                    <button type="button" className="btn btn-default btn-md" onClick={(event) => deleteExercise(event, exercise.id)}>
+                        <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </li>
+        )
+    )
+}
 
 export default TrainingDetailsPage;

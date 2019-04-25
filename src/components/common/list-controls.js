@@ -1,15 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { TrainingsServiceContext } from '../../services/trainings-service'
+import React, { useState, useEffect } from 'react';
 
 const INITIAL_STATE = {
     isAddMode: false,
-    newTrainingName: ""
+    newElementName: ""
 }
 
-function NewTrainingForm(props) {
+function ListControls(props) {
     const [state, setState] = useState(INITIAL_STATE)
-    const trainingsService = useContext(TrainingsServiceContext);
-
 
     const onAddPressed = (e) => {
         setState({ isAddMode: true });
@@ -22,7 +19,7 @@ function NewTrainingForm(props) {
     }
 
     const onConfirmPressed = (e) => {
-        props.onAdd(state.newTrainingName);
+        props.onAdd(state.newElementName);
         setState(INITIAL_STATE);
         e.preventDefault();
     }
@@ -39,11 +36,11 @@ function NewTrainingForm(props) {
             {state.isAddMode &&
                 <li className="list-group-item d-flex justify-content-between">
                     <input
-                        name="newTrainingName"
+                        name="newElementName"
                         type="text"
                         className="form-control"
                         placeholder="New Training"
-                        value={state.newTrainingName}
+                        value={state.newElementName}
                         onChange={onChange} />
                 </li>
             }
@@ -53,7 +50,7 @@ function NewTrainingForm(props) {
                         <button className="btn btn-danger" onClick={onCancelPressed}>
                             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </button>
-                        <button className="btn btn-primary" onClick={onConfirmPressed} disabled={state.newTrainingName == null}>
+                        <button className="btn btn-primary" onClick={onConfirmPressed} disabled={state.newElementName == null}>
                             <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         </button>
                     </>
@@ -71,4 +68,4 @@ function NewTrainingForm(props) {
 }
 
 
-export default NewTrainingForm;
+export default ListControls;

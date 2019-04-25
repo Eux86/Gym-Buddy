@@ -3,8 +3,8 @@ import React, {useState, useEffect, useContext} from 'react'
 export const UserSelectionsServiceContext = React.createContext();
 
 const INITIAL_STATE = {
-  // trainingId: '-LcvIg3kwEAqwfiVI8jE',
-  // exerciseId: 'exerciseid01'
+  trainingId: '-LcvIg3kwEAqwfiVI8jE',
+  exerciseId: 'exerciseid01'
 }
 
 const UserSelectionsService = ({children}) => {

@@ -42,12 +42,16 @@ const ExercisesService = ({children}) => {
             });
     }
 
-    const add = (exercise) => {
-
+    const add = (trainingId, exercise) => {
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}`).push({
+            description: exercise.description,
+            name: exercise.name,
+            series: [],
+        })
     }
 
-    const del = (id) => {
-
+    const del = (trainingId,id) => {
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/${id}`).remove();
     }
 
     return (
