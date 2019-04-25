@@ -33,7 +33,7 @@ const TrainingDetailsPage = (props) => {
     }
 
     const onAdd = (newElementName) => {
-        console.log("should add "+newElementName);
+        console.log("should add " + newElementName);
         const newExercise = {
             name: newElementName,
             description: ''
@@ -48,12 +48,32 @@ const TrainingDetailsPage = (props) => {
             {exercises &&
                 <ul>
                     <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />
-                    <ListControls onAdd={onAdd} />
+                    <ListControls onAdd={onAdd}>
+                        <ListElementEditor />
+                    </ListControls>
                 </ul>
             }
         </div>
     );
 };
+
+const ListElementEditor = (props) => {
+    const onChange = (event) => {
+        props.onChange(event.target.value);
+    }
+
+    return (
+        <input
+            name="newElementName"
+            type="text"
+            className="form-control"
+            placeholder="New Exercise"
+            value={props.value}
+            onChange={onChange} />
+    )
+}
+
+
 
 const List = ({ exercises, onClick, deleteExercise }) => {
     return (

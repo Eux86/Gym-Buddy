@@ -8,7 +8,7 @@ import TrainingDetailsPage from './components/TrainingDetailsPage';
 import TrainingsPage from './components/TrainingsPage';
 import Header from './components/header';
 import SignInPage from './components/SignInPage';
-import ExerciseDetailsPage from './components/ExerciseDetails';
+import ExerciseDetailsPage from './components/ExerciseDetailsPage';
 
 
 class App extends Component {

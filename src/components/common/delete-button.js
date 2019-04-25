@@ -1,7 +1,7 @@
 import React from 'react'
 
-const DeleteButton = ({ OnClick }) => (
-    <button type="button" className="btn btn-default btn-md" onClick={(e) => OnClick(e)}>
+const DeleteButton = ({ onClick }) => (
+    <button type="button" className="btn btn-default btn-md" onClick={(e) => onClick(e)}>
         <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
 )

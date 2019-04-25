@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ConfirmButton from './confirm-button';
+import CancelButton from './cancel-button';
 
 const INITIAL_STATE = {
     isAddMode: false,
@@ -6,7 +8,7 @@ const INITIAL_STATE = {
 }
 
 function ListControls(props) {
-    const [state, setState] = useState(INITIAL_STATE)
+    const [state, setState] = useState(INITIAL_STATE);
 
     const onAddPressed = (e) => {
         setState({ isAddMode: true });
@@ -24,35 +26,26 @@ function ListControls(props) {
         e.preventDefault();
     }
 
-    const onChange = event => {
-        let newState = {...state};
-        newState[event.target.name] = event.target.value;
-        setState(newState);
-        event.preventDefault();
+    const onChange = value => {
+        setState({...state, newElementName: value});
     }
+
+    const childrenWithProps = React.Children.map(props.children, child =>
+        React.cloneElement(child, { value: state.newElementName, onChange: onChange })
+    );
 
     return (
         <form className="form-group">
             {state.isAddMode &&
                 <li className="list-group-item d-flex justify-content-between">
-                    <input
-                        name="newElementName"
-                        type="text"
-                        className="form-control"
-                        placeholder="New Training"
-                        value={state.newElementName}
-                        onChange={onChange} />
+                    {childrenWithProps} 
                 </li>
             }
             <div className="d-flex flex-row-reverse">
                 {state.isAddMode &&
                     <>
-                        <button className="btn btn-danger" onClick={onCancelPressed}>
-                            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                        <button className="btn btn-primary" onClick={onConfirmPressed} disabled={state.newElementName == null}>
-                            <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
+                        <CancelButton onClick={onCancelPressed} />
+                        <ConfirmButton onClick={onConfirmPressed} disabled={state.newElementName == null} />
                     </>
                 }
                 {!state.isAddMode &&

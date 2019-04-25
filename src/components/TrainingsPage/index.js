@@ -38,14 +38,30 @@ const TrainingsPage = props => {
                     onSelectTraining={onSelectTraining}
                     {...props} 
                 />
-                <ListControls 
-                    onAdd={trainingsService.add} 
-                />
+                <ListControls onAdd={trainingsService.add}>
+                    <ListElementEditor />
+                </ListControls>
             </ul>
 
         </div>
     );
 };
+
+const ListElementEditor = (props) => {
+    const onChange = (event) => {
+        props.onChange(event.target.value);
+    }
+
+    return (
+        <input
+            name="newElementName"
+            type="text"
+            className="form-control"
+            placeholder="New Training"
+            value={props.value}
+            onChange={onChange} />
+    )
+}
 
 const List = ({trainingsData, onDelete, onSelectTraining}) => {
     

@@ -54,12 +54,26 @@ const ExercisesService = ({children}) => {
         firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/${id}`).remove();
     }
 
+    const addSeries = (trainingId, exerciseId, series) => {
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/${exerciseId}/series`).push({
+            repetitions: series.repetitions,
+            amount: series.amount,
+            unit: series.unit,
+        })
+    }
+
+    const delSeries = (trainingId, exerciseId, id) => {
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/${exerciseId}/series/${id}`).remove();
+    }
+
     return (
         <ExercisesServiceContext.Provider
           value={{
             exercises: exercises,
             add: add,
             del: del,
+            addSeries: addSeries,
+            delSeries: delSeries,
           }}
         >
           {children}
