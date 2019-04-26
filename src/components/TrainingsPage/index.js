@@ -1,17 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import * as ROUTES from '../../constants/routes'
-import { FirebaseContext } from '../../services/firebase';
 import { withRouter } from 'react-router-dom'
 import TrainingDay from './TrainingDay';
 import ListControls from '../common/list-controls';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import { AuthUserContext } from '../../services/authentication-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
+import OnlyIfLogged from '../../services/only-if-logged';
 
 
 const TrainingsPage = props => {
     const trainingsService = useContext(TrainingsServiceContext);
-    const firebase = useContext(FirebaseContext);
     const authUser = useContext(AuthUserContext);
     const userSelectionService = useContext(UserSelectionsServiceContext);
 
@@ -29,14 +28,14 @@ const TrainingsPage = props => {
                 <p>Auth User: {authUser.uid}</p>
             }
             {userSelectionService && userSelectionService.userSelections &&
-                <p>Selected training: { userSelectionService.userSelections.trainingId } </p>
+                <p>Selected training: {userSelectionService.userSelections.trainingId} </p>
             }
             <ul>
-                <List 
-                    trainingsData={trainingsService.trainings} 
+                <List
+                    trainingsData={trainingsService.trainings}
                     onDelete={trainingsService.del}
                     onSelectTraining={onSelectTraining}
-                    {...props} 
+                    {...props}
                 />
                 <ListControls onAdd={trainingsService.add}>
                     <ListElementEditor />
@@ -63,17 +62,21 @@ const ListElementEditor = (props) => {
     )
 }
 
-const List = ({trainingsData, onDelete, onSelectTraining}) => {
-    
-    return (trainingsData &&
-            trainingsData.map(training =>
-                <TrainingDay 
-                    key={training.id} 
-                    training={training}
-                    onDelete={onDelete}
-                    onClick={() => onSelectTraining(training.id)}
-                >{training.name}</TrainingDay>
+const List = (props) => {
+    return (
+        <OnlyIfLogged {...props}>
+        {
+            props.trainingsData &&
+            props.trainingsData.map(training =>
+                <TrainingDay
+                key={training.id}
+                training={training}
+                onDelete={props.onDelete}
+                onClick={() => props.onSelectTraining(training.id)}
+            >{training.name}</TrainingDay>
             )
+        }
+        </OnlyIfLogged>
     );
 }
 

@@ -5,6 +5,7 @@ import Firebase from './services/firebase';
 import Authentication from './services/authentication-service';
 import UserSelectionsService from './services/user-selection-service';
 import ExercisesService from './services/exercises-service';
+import UsersService from './services/users-service';
 
 export const SelectionStateContext = React.createContext();
 
@@ -15,7 +16,9 @@ const ServicesStore = ({ children }) => {
                 <TrainingsService>
                     <UserSelectionsService>
                         <ExercisesService>
-                            {children}
+                            <UsersService>
+                                {children}
+                            </UsersService>
                         </ExercisesService>
                     </UserSelectionsService>
                 </TrainingsService>

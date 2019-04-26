@@ -9,6 +9,8 @@ import TrainingsPage from './components/TrainingsPage';
 import Header from './components/header';
 import SignInPage from './components/SignInPage';
 import ExerciseDetailsPage from './components/ExerciseDetailsPage';
+import SignUpPage from './components/sign-up-page';
+import PasswordForgetPage from './components/password-forget';
 
 
 class App extends Component {
@@ -18,8 +20,10 @@ class App extends Component {
         <Header />
         <div className="d-flex justify-content-center">
           <Route exact path={ROUTES.LANDING} render={(props) => <TrainingsPage {...props} />} />
-          <Route exact path={ROUTES.TRAINING_DETAILS} render={(props) => <TrainingDetailsPage {...props} />} />
+          <Route path={ROUTES.TRAINING_DETAILS} render={(props) => <TrainingDetailsPage {...props} />} />
           <Route path={ROUTES.SIGN_IN} render={(props) => <SignInPage {...props} />} />
+          <Route path={ROUTES.SIGN_UP} render={(props) => <SignUpPage {...props} />} />
+          <Route path={ROUTES.PASSWORD_FORGET} render={(props) => <PasswordForgetPage {...props} />} />
           <Route path={ROUTES.EXERCISE_DETAILS} render={(props) => <ExerciseDetailsPage {...props} />} />
         </div>
       </Router>

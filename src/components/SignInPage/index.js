@@ -2,14 +2,16 @@ import React, { useContext, useState, useEvent } from 'react';
 import { withRouter } from 'react-router-dom'
 import * as ROUTES from '../../constants/routes';
 import { FirebaseContext } from '../../services/firebase';
+import { SignUpLink } from '../sign-up-page';
+import { PasswordForgetLink } from '../password-forget';
 
 
 const SignInPage = () => (
     <div>
         <h1>SignIn</h1>
         <SignInForm />
-        {/* <PasswordForgetLink />
-        <SignUpLink /> */}
+        <PasswordForgetLink />
+        <SignUpLink /> 
     </div>
 );
 

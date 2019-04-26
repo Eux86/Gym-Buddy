@@ -27,7 +27,7 @@ const ExercisesService = ({children}) => {
             .equalTo(authUser.uid)
             .on('value', snapshot => {  
                 const obj = snapshot.val();
-                var exercises = obj[Object.keys(obj)][trainingId];
+                var exercises = obj && obj[Object.keys(obj)][trainingId];
                 if (exercises) {
                     const exercisesList = Object.keys(exercises).map(key => ({ 
                         ...exercises[key], 
