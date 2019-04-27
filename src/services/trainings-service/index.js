@@ -31,6 +31,8 @@ const TrainingsService = ({children}) => {
                 }));
                 console.log(trainingSets);
                 setTrainings( trainingSets );
+            } else {
+                setTrainings([]);
             }
         });
     }

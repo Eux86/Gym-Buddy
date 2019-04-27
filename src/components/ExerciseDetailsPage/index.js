@@ -8,12 +8,13 @@ import { SeriesServiceContext } from '../../services/series-service';
 import SeriesEntryTableRow from './series-entry-table-row';
 
 const ExerciseDetailsPage = (props) => {
+    debugger;
     const userSelectionsService = useContext(UserSelectionsServiceContext);
 
     const exercisesService = useContext(ExercisesServiceContext);
     const seriesService = useContext(SeriesServiceContext);
     const currentExerciseId = userSelectionsService.userSelections.exerciseId;
-    const currentExercise = exercisesService && exercisesService.exercises && exercisesService.exercises.find(x => x.id === currentExerciseId);
+    const currentExercise = exercisesService && exercisesService.exercises && exercisesService.exercises.find(x => x.id === currentExerciseId) || null;
 
     let series = null;
     let mostRecentMoment = null;
@@ -28,19 +29,22 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const del = (seriesId) => {
+        debugger;
         seriesService.del(currentExerciseId, seriesId);
     }
 
     const addSeries = (newSeries) => {
         const currentExerciseId = userSelectionsService.userSelections.exerciseId;
-        let order = Math.max(...series.map(x => +x.order)) + 1;
+        let order = series ? Math.max(...series.map(x => +x.order)) + 1 : 0;
         let createDate = (new Date()).toISOString();
         seriesService.add(currentExerciseId, { ...newSeries, order: order, createDate });
-        
+
         // If the other presented series are older, then we make a copy of them with today's date
-        for (let entry of series) {
-            if (getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== getUtcDateWithoutTime(new Date(createDate)).getTime()) {
-                seriesService.add(currentExerciseId, {...entry, createDate: createDate});
+        if (series) {
+            for (let entry of series) {
+                if (getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== getUtcDateWithoutTime(new Date(createDate)).getTime()) {
+                    seriesService.add(currentExerciseId, { ...entry, createDate: createDate });
+                }
             }
         }
     }
@@ -49,16 +53,16 @@ const ExerciseDetailsPage = (props) => {
         const originalDate = getUtcDateWithoutTime(new Date(original.createDate));
         const today = getUtcDateWithoutTime(new Date());
         const copySeriesToNewDate = originalDate.getTime() != today.getTime();
-        if (copySeriesToNewDate){
+        if (copySeriesToNewDate) {
             for (let entry of series) {
                 if (entry.id === edited.id) {
-                    seriesService.add(currentExerciseId, {...edited, createDate: today.toISOString()});
+                    seriesService.add(currentExerciseId, { ...edited, createDate: today.toISOString() });
                 } else {
-                    seriesService.add(currentExerciseId, {...entry, createDate: today.toISOString()});
+                    seriesService.add(currentExerciseId, { ...entry, createDate: today.toISOString() });
                 }
             }
         } else {
-            seriesService.edit(currentExerciseId, {...edited, createDate: today.toISOString()});
+            seriesService.edit(currentExerciseId, { ...edited, createDate: today.toISOString() });
         }
     }
 

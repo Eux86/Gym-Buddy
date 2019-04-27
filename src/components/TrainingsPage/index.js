@@ -24,12 +24,6 @@ const TrainingsPage = props => {
             <p className="text-muted text-center">
                 Your training sets ...
             </p>
-            {authUser &&
-                <p>Auth User: {authUser.uid}</p>
-            }
-            {userSelectionService && userSelectionService.userSelections &&
-                <p>Selected training: {userSelectionService.userSelections.trainingId} </p>
-            }
             <ul>
                 <List
                     trainingsData={trainingsService.trainings}
@@ -65,8 +59,7 @@ const ListElementEditor = (props) => {
 const List = (props) => {
     return (
         <OnlyIfLogged {...props}>
-        {
-            props.trainingsData &&
+        {props.trainingsData &&
             props.trainingsData.map(training =>
                 <TrainingDay
                 key={training.id}
