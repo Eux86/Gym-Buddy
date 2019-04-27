@@ -52,6 +52,15 @@ const SeriesService = ({children}) => {
         })
     }
 
+    const edit = (exerciseId, series) => {
+        firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${series.id}`).set({
+            repetitions: series.repetitions,
+            amount: series.amount,
+            order: series.order,
+            createDate: series.createDate,
+        })
+    }
+
     const del = (exerciseId, id) => {
         firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${id}`).remove();
     }
@@ -62,6 +71,7 @@ const SeriesService = ({children}) => {
             series: series,
             add: add,
             del: del,
+            edit: edit,
           }}
         >
           {children}

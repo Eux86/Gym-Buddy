@@ -1,11 +1,11 @@
 import './index.css';
 
 import React, { useContext, useState, useEffect } from 'react';
-import DeleteButton from '../common/delete-button';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import TableControls from './table-controls';
 import { SeriesServiceContext } from '../../services/series-service';
+import SeriesEntryTableRow from './series-entry-table-row';
 
 const ExerciseDetailsPage = (props) => {
     const userSelectionsService = useContext(UserSelectionsServiceContext);
@@ -17,6 +17,7 @@ const ExerciseDetailsPage = (props) => {
 
     let series = null;
     let mostRecentMoment = null;
+
     if (seriesService.series) {
         const seriesByDate = groupBy(seriesService.series, (x) => getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
         const orderedDates = Object.keys(seriesByDate).sort((a, b) => {
@@ -38,10 +39,26 @@ const ExerciseDetailsPage = (props) => {
         
         // If the other presented series are older, then we make a copy of them with today's date
         for (let entry of series) {
-            debugger;
             if (getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== getUtcDateWithoutTime(new Date(createDate)).getTime()) {
                 seriesService.add(currentExerciseId, {...entry, createDate: createDate});
             }
+        }
+    }
+
+    const editSerie = (original, edited) => {
+        const originalDate = getUtcDateWithoutTime(new Date(original.createDate));
+        const today = getUtcDateWithoutTime(new Date());
+        const copySeriesToNewDate = originalDate.getTime() != today.getTime();
+        if (copySeriesToNewDate){
+            for (let entry of series) {
+                if (entry.id === edited.id) {
+                    seriesService.add(currentExerciseId, {...edited, createDate: today.toISOString()});
+                } else {
+                    seriesService.add(currentExerciseId, {...entry, createDate: today.toISOString()});
+                }
+            }
+        } else {
+            seriesService.edit(currentExerciseId, {...edited, createDate: today.toISOString()});
         }
     }
 
@@ -60,15 +77,7 @@ const ExerciseDetailsPage = (props) => {
                 <tbody>
                     {series &&
                         series.map(serie =>
-                            <tr key={serie.id}>
-                                <th scope="row">{serie.order}</th>
-                                <td>{serie.repetitions}</td>
-                                <td>{serie.amount}</td>
-                                <td>{serie.createDate}</td>
-                                <td>
-                                    <DeleteButton onClick={() => del(serie.id)} />
-                                </td>
-                            </tr>
+                            <SeriesEntryTableRow key={serie.id} serie={serie} del={del} edit={(editedSerie) => editSerie(serie, editedSerie)} />
                         )}
                     <TableControls addSeries={addSeries} />
                 </tbody>
