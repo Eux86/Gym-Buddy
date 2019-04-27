@@ -21,7 +21,7 @@ const PasswordForgetForm = (props) => {
     const firebaseContext = useContext(FirebaseContext);
 
     const onSubmit = event => {
-        debugger;
+        
         const { email } = state;
 
         firebaseContext

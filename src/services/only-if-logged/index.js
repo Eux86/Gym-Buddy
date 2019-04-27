@@ -18,8 +18,10 @@ const OnlyIfLogged = (props) => {
                 }
             )
 
-            return (
-                listener() // unregisters
+            return (() => {
+                if (listener)
+                    listener() // unregisters
+                } 
             )
         }
     }, [firebaseContext])

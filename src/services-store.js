@@ -6,6 +6,7 @@ import Authentication from './services/authentication-service';
 import UserSelectionsService from './services/user-selection-service';
 import ExercisesService from './services/exercises-service';
 import UsersService from './services/users-service';
+import SeriesService from './services/series-service';
 
 export const SelectionStateContext = React.createContext();
 
@@ -16,9 +17,11 @@ const ServicesStore = ({ children }) => {
                 <TrainingsService>
                     <UserSelectionsService>
                         <ExercisesService>
-                            <UsersService>
-                                {children}
-                            </UsersService>
+                            <SeriesService>
+                                <UsersService>
+                                    {children}
+                                </UsersService>
+                            </SeriesService>
                         </ExercisesService>
                     </UserSelectionsService>
                 </TrainingsService>

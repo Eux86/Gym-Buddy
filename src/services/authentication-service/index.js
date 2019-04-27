@@ -4,24 +4,32 @@ import { FirebaseContext } from '../../services/firebase';
 export const AuthUserContext = React.createContext();
 
 
-const Authentication = ({children}) => {
-    const firebaseService = useContext(FirebaseContext);
-    const [state, setState] = useState(null); 
+const Authentication = ({ children }) => {
+  const firebaseService = useContext(FirebaseContext);
+  const [state, setState] = useState(undefined);
 
-    useEffect(() => {
-      if (firebaseService.firebase!=null) {
-        firebaseService.firebase.auth.onAuthStateChanged(authUser => {
-            setState(authUser)
-        });
+  let listener = null;
+  useEffect(() => {
+    if (firebaseService.firebase != null) {
+      
+      listener = firebaseService.firebase.auth.onAuthStateChanged(authUser => {
+        setState(authUser)
+      });
+    }
+
+    return (() => {
+      if (listener)
+        listener() // unregisters
       }
-    }, [firebaseService]);
+    )
+  }, [firebaseService]);
 
-    return (
-        <AuthUserContext.Provider
-          value={state}>
-          {children}
-        </AuthUserContext.Provider>
-      );
+  return (
+    <AuthUserContext.Provider
+      value={state}>
+      {children}
+    </AuthUserContext.Provider>
+  );
 }
 
 export default Authentication;

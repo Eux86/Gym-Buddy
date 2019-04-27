@@ -36,7 +36,7 @@ const UsersService = ({children}) => {
                 registerDate: nowIso, // UTC iso 8601 string
             })
         } else {
-            debugger;
+            
             console.error("Missing fields creating user!");
         }
     }

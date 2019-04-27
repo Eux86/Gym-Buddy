@@ -9,7 +9,6 @@ const TableControls = (props) => {
     const [state, setState] = useState({});
 
     const userSelectionsService = useContext(UserSelectionsServiceContext);
-    const exercisesService = useContext(ExercisesServiceContext);
 
     const onChange = event => {
         let newState = { ...state };
@@ -22,11 +21,8 @@ const TableControls = (props) => {
         const newSeries = {
             repetitions: state.repetitions,
             amount: state.amount,
-            unit: state.unit
         };
-        const currentTrainingId = userSelectionsService.userSelections.trainingId;
-        const currentExerciseId = userSelectionsService.userSelections.exerciseId;
-        exercisesService.addSeries(currentTrainingId, currentExerciseId, newSeries);
+        props.addSeries(newSeries);
         setState({...state,isAddMode: false});
     }
 
@@ -38,7 +34,6 @@ const TableControls = (props) => {
         <>
             {!state.isAddMode &&
                 <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -57,6 +52,7 @@ const TableControls = (props) => {
                             className="form-control"
                             value={state.repetitions}
                             onChange={onChange}
+                            placeholder="Repetitions"
                         />
                     </td>
                     <td>
@@ -66,15 +62,7 @@ const TableControls = (props) => {
                             className="form-control"
                             onChange={onChange}
                             value={state.amount}
-                        />
-                    </td>
-                    <td>
-                        <input
-                            name="unit"
-                            type="text"
-                            className="form-control"
-                            onChange={onChange}
-                            value={state.unit}
+                            placeholder="Amount"
                         />
                     </td>
                     <td className="actions">
