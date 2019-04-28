@@ -51,7 +51,11 @@ const ExercisesService = ({children}) => {
     }
 
     const del = (trainingId,id) => {
-        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/${id}`).remove();
+        var updates = {
+            [`exercises/${authUser.uid}/${trainingId}/${id}`]: null,
+            [`series/${authUser.uid}/${id}`]: null,
+          }
+        firebaseContext.firebase.db.ref().update(updates);
     }
 
     return (

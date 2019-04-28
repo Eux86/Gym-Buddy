@@ -7,6 +7,7 @@ import { ExercisesServiceContext } from '../../services/exercises-service';
 import * as ROUTES from '../../constants/routes';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import ListControls from '../common/list-controls';
+import EditButton from '../common/edit-button';
 
 const TrainingDetailsPage = (props) => {
 
@@ -43,8 +44,15 @@ const TrainingDetailsPage = (props) => {
 
     return (
         <div>
-            Training details for training: {userSelectionsService.userSelections.trainingId}
-            <h1>{currentTraining && currentTraining.name}</h1>
+            <p>
+                Training details for training: {userSelectionsService.userSelections.trainingId}
+            </p>
+            {currentTraining &&
+                <p className="d-flex justify-content-between">
+                    <b>{currentTraining.name}</b>
+                    <EditButton />
+                </p>
+            }
             {exercises &&
                 <ul>
                     <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />

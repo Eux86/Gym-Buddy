@@ -44,28 +44,20 @@ const TrainingsService = ({children}) => {
         })
     }
 
-    const del = async (id) => {
-        firebaseContext.firebase.db.ref(`trainings/${authUser.uid}/${id}`).remove();
-    }
-
-    const getExercisesByTrainingId = (trainingId) => {
-        return new Promise( resolve => {
-            firebaseContext.firebase.db.ref(`exercises`)
-            .orderByKey()
-            .equalTo(authUser.uid)
-            .once('value', snapshot => {  
-                const obj = snapshot.val();
-                var exercises = obj[Object.keys(obj)][trainingId];
-                if (exercises) {
-                    const exercisesList = Object.keys(exercises).map(key => ({ 
-                        ...exercises[key], 
-                        id: key 
-                    }));
-                    resolve(exercisesList);
-                } else {
-                    resolve([]);
+    const del = async (trainingId) => {
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}`).once('value', snapshot => {
+            var updates = {
+                [`trainings/${authUser.uid}/${trainingId}`]: null,
+                [`exercises/${authUser.uid}/${trainingId}`]: null,
+              }
+            const obj = snapshot.val();
+            if (obj) {
+                let currentTrainingExercises = Object.keys(obj);
+                for (let exerciseId of currentTrainingExercises){
+                    updates[`series/${authUser.uid}/${exerciseId}`]= null;
                 }
-            });
+            }
+            firebaseContext.firebase.db.ref().update(updates);
         });
     }
 
@@ -75,7 +67,6 @@ const TrainingsService = ({children}) => {
             trainings: trainings,
             add: add,
             del: del,
-            getExercisesByTrainingId: getExercisesByTrainingId
           }}
         >
           {children}

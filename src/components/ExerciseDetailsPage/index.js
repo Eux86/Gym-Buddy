@@ -8,7 +8,6 @@ import { SeriesServiceContext } from '../../services/series-service';
 import SeriesEntryTableRow from './series-entry-table-row';
 
 const ExerciseDetailsPage = (props) => {
-    debugger;
     const userSelectionsService = useContext(UserSelectionsServiceContext);
 
     const exercisesService = useContext(ExercisesServiceContext);
@@ -29,7 +28,6 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const del = (seriesId) => {
-        debugger;
         seriesService.del(currentExerciseId, seriesId);
     }
 
