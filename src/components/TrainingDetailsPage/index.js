@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-import { FirebaseContext } from '../../services/firebase';
-import { AuthUserContext } from '../../services/authentication-service';
+import './index.css'
+
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import * as ROUTES from '../../constants/routes';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import ListControls from '../common/list-controls';
 import EditButton from '../common/edit-button';
+import EditableTitle from './editable-title';
 
 const TrainingDetailsPage = (props) => {
 
@@ -48,10 +49,11 @@ const TrainingDetailsPage = (props) => {
                 Training details for training: {userSelectionsService.userSelections.trainingId}
             </p>
             {currentTraining &&
-                <p className="d-flex justify-content-between">
-                    <b>{currentTraining.name}</b>
-                    <EditButton />
-                </p>
+                <EditableTitle title={currentTraining.name} />
+                // <p className="">
+                //     <h1>{currentTraining.name}
+                //     <EditButton noBorder/></h1>
+                // </p>
             }
             {exercises &&
                 <ul>
