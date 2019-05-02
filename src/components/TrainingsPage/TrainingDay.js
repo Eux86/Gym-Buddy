@@ -1,4 +1,5 @@
 import React from 'react';
+import DeleteButton from '../common/delete-button';
 
 const TrainingDay = (props) => {
     const {training} = props;
@@ -6,11 +7,6 @@ const TrainingDay = (props) => {
     const onClick = (event,id) => {
         event.preventDefault();
         props.onClick();
-    }
-
-    const deleteTraining = (e,id) => {
-        props.onDelete(id);
-        e.preventDefault();
     }
 
     return(training && 
@@ -21,9 +17,7 @@ const TrainingDay = (props) => {
                 </div>
             </a>
             <div className="mx-2">
-                <button type="button" className="btn btn-default btn-md" onClick={(event) => deleteTraining(event, training.id)}>
-                    <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                </button>
+                <DeleteButton onClick={() => props.onDelete(training.id)} />
             </div>
         </li>
     );

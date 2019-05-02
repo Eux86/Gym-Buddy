@@ -9,6 +9,7 @@ import { TrainingsServiceContext } from '../../services/trainings-service';
 import ListControls from '../common/list-controls';
 import EditButton from '../common/edit-button';
 import EditableTitle from '../common/editable-title';
+import DeleteButton from '../common/delete-button';
 
 const INITIAL_STATE = {
     currentTraining: [],
@@ -110,9 +111,8 @@ const List = ({ exercises, onClick, deleteExercise }) => {
                     </div>
                 </div>
                 <div className="mx-2">
-                    <button type="button" className="btn btn-default btn-md" onClick={(event) => deleteExercise(event, exercise.id)}>
-                        <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </button>
+                    <DeleteButton onClick={() => deleteExercise(exercise.id)} />
+
                 </div>
             </li>
         )
