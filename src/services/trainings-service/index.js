@@ -61,12 +61,20 @@ const TrainingsService = ({children}) => {
         });
     }
 
+    const update = (editedTraining) => {
+        var updates = {
+            [`trainings/${authUser.uid}/${editedTraining.id}`]: editedTraining,
+          }
+        firebaseContext.firebase.db.ref().update(updates);
+    }
+
     return (
         <TrainingsServiceContext.Provider
           value={{
             trainings: trainings,
             add: add,
             del: del,
+            update: update,
           }}
         >
           {children}

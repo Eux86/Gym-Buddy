@@ -6,6 +6,7 @@ import { ExercisesServiceContext } from '../../services/exercises-service';
 import TableControls from './table-controls';
 import { SeriesServiceContext } from '../../services/series-service';
 import SeriesEntryTableRow from './series-entry-table-row';
+import EditableTitle from '../common/editable-title';
 
 const ExerciseDetailsPage = (props) => {
     const userSelectionsService = useContext(UserSelectionsServiceContext);
@@ -14,6 +15,8 @@ const ExerciseDetailsPage = (props) => {
     const seriesService = useContext(SeriesServiceContext);
     const currentExerciseId = userSelectionsService.userSelections.exerciseId;
     const currentExercise = exercisesService && exercisesService.exercises && exercisesService.exercises.find(x => x.id === currentExerciseId) || null;
+
+    console.log(currentExerciseId);
 
     let series = null;
     let mostRecentMoment = null;
@@ -64,9 +67,13 @@ const ExerciseDetailsPage = (props) => {
         }
     }
 
+    const onExerciseTitleChange = (newTitle) => {
+        exercisesService.update(userSelectionsService.userSelections.trainingId,{...currentExercise, name: newTitle});
+    }
+
     return (currentExercise &&
-        <div>
-            <h1>{currentExercise.name}</h1>
+        <div className="container">
+            <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
             <table className="table">
                 <thead>

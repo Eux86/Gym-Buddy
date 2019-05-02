@@ -8,22 +8,29 @@ import * as ROUTES from '../../constants/routes';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import ListControls from '../common/list-controls';
 import EditButton from '../common/edit-button';
-import EditableTitle from './editable-title';
+import EditableTitle from '../common/editable-title';
+
+const INITIAL_STATE = {
+    currentTraining: [],
+}
 
 const TrainingDetailsPage = (props) => {
+    const [state, setState] = useState({});
 
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
     const trainingService = useContext(TrainingsServiceContext);
     const exercises = exercisesService && exercisesService.exercises;
-    let currentTraining = null;
 
-    if (userSelectionsService.userSelections.trainingId && trainingService.trainings) {
-        currentTraining = trainingService.trainings.find(x => x.id === userSelectionsService.userSelections.trainingId);
-    }
+    useEffect(() => {
+        if (userSelectionsService.userSelections.trainingId && trainingService.trainings) {
+            let currentTraining = trainingService.trainings.find(x => x.id === userSelectionsService.userSelections.trainingId);
+            setState({...state, currentTraining: currentTraining});
+        }
+    },[trainingService])
 
     const deleteExercise = (event, id) => {
-        exercisesService.del(currentTraining.id, id);
+        exercisesService.del(state.currentTraining.id, id);
         event.preventDefault();
     }
 
@@ -40,30 +47,33 @@ const TrainingDetailsPage = (props) => {
             name: newElementName,
             description: ''
         }
-        exercisesService.add(currentTraining.id, newExercise);
+        exercisesService.add(state.currentTraining.id, newExercise);
     }
 
-    return (
-        <div>
-            <p>
+    const onNameChange = (currentTraining, newName) => {
+        console.log(newName);
+        trainingService.update({ ...currentTraining, name: newName });
+    }
+
+    return (<>
+                {/* <p>
                 Training details for training: {userSelectionsService.userSelections.trainingId}
-            </p>
-            {currentTraining &&
-                <EditableTitle title={currentTraining.name} />
-                // <p className="">
-                //     <h1>{currentTraining.name}
-                //     <EditButton noBorder/></h1>
-                // </p>
+                </p> */}
+            {state.currentTraining &&
+                <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }
+            <br />
             {exercises &&
-                <ul>
-                    <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />
-                    <ListControls onAdd={onAdd}>
-                        <ListElementEditor />
-                    </ListControls>
-                </ul>
+                <div className="col-12">
+                    <ul>
+                        <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />
+                        <ListControls onAdd={onAdd}>
+                            <ListElementEditor />
+                        </ListControls>
+                    </ul>
+                </div>
             }
-        </div>
+    </>
     );
 };
 

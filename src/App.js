@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <Router>
         <Header />
-        <div className="d-flex justify-content-center">
+        <div>
           <Route exact path={ROUTES.LANDING} render={(props) => <TrainingsPage {...props} />} />
           <Route path={ROUTES.TRAINING_DETAILS} render={(props) => <TrainingDetailsPage {...props} />} />
           <Route path={ROUTES.SIGN_IN} render={(props) => <SignInPage {...props} />} />

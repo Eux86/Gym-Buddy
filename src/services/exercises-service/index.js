@@ -58,12 +58,20 @@ const ExercisesService = ({children}) => {
         firebaseContext.firebase.db.ref().update(updates);
     }
 
+    const update = (trainingId, exercise) => {
+        var updates = {
+            [`exercises/${authUser.uid}/${trainingId}/${exercise.id}`]: exercise,
+          }
+        firebaseContext.firebase.db.ref().update(updates);
+    }
+
     return (
         <ExercisesServiceContext.Provider
           value={{
             exercises: exercises,
             add: add,
             del: del,
+            update: update,
           }}
         >
           {children}
