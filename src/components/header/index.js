@@ -17,15 +17,15 @@ const Header = () => {
     return (
         <div className="header container-fluid bg-dark box-shadow">
             <div className="row h-100">
-                <div className="col-4">
+                <div className="col-2">
                     <a onClick={(e) => onBack(e)} href="#">
                         <span className="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </div>
-                <div className="col-4 mx-auto text-center">
+                <div className="col-8 mx-auto text-center">
                     <Link to="/">Gym Buddy</Link>
                 </div>
-                <div className="col-4">
+                <div className="col-2">
                     <div className="float-right">
                         {authUser && <SignOutButton />}
                     </div>

@@ -1,11 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import * as ROUTES from '../../constants/routes';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import ListControls from '../common/list-controls';
-import EditButton from '../common/edit-button';
 import EditableTitle from '../common/editable-title';
 import DeleteButton from '../common/delete-button';
 
@@ -14,7 +12,7 @@ const INITIAL_STATE = {
 }
 
 const TrainingDetailsPage = (props) => {
-    const [state, setState] = useState({});
+    const [state, setState] = useState({INITIAL_STATE});
 
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
@@ -32,7 +30,7 @@ const TrainingDetailsPage = (props) => {
         exercisesService.del(state.currentTraining.id, id);
     }
 
-    const onClick = (e,id) => {
+    const onClick = (id) => {
         console.log("should slect exercise id: " + id);
         userSelectionsService.setSelectedExercise(id);
         props.history.push(ROUTES.EXERCISE_DETAILS);
@@ -67,7 +65,7 @@ const TrainingDetailsPage = (props) => {
             }
             {exercises &&
                 <div className="col-12">
-                    <ul>
+                    <ul className="list-group">
                         <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />
                         <ListControls onAdd={onAdd}>
                             <ListElementEditor />
@@ -109,7 +107,7 @@ const List = ({ exercises, onClick, deleteExercise }) => {
         exercises.map(exercise =>
             <li key={exercise.id} className="list-group-item d-flex justify-content-between">
                 <div>
-                    <a href="#" onClick={(event) => onClick(event, exercise.id)}>
+                    <a href="#" onClick={(event) => { event.preventDefault(); onClick(exercise.id)} }>
                         <div>
                             {exercise.name}
                         </div>

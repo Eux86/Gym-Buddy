@@ -18,12 +18,16 @@ const TrainingsPage = props => {
     }
     return (
         <div className="container">
+            <h1>
+                Trainings
+            </h1>
+            <br />
             {(!trainingsService.trainings || trainingsService.trainings.length == 0) && 
                 <p className="text-muted text-center">
                     Add your trainings here
                 </p>
             }
-            <ul>
+            <ul className="list-group">
                 <List
                     trainingsData={trainingsService.trainings}
                     onDelete={trainingsService.del}
