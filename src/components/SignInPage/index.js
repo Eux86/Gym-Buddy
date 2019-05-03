@@ -8,10 +8,14 @@ import { PasswordForgetLink } from '../password-forget';
 
 const SignInPage = () => (
     <div className="container">
-        <h1>Sign-In</h1>
-        <SignInForm />
-        <PasswordForgetLink />
-        <SignUpLink />
+        <div className="row justify-content-center">
+            <div className="col">
+                <h1>Sign-In</h1>
+                <SignInForm />
+                <PasswordForgetLink />
+                <SignUpLink />
+            </div>
+        </div>
     </div>
 );
 
@@ -51,7 +55,7 @@ const SignInFormBase = (props) => {
     }
 
     return (
-        <form className="form-horizontal" onSubmit={onSubmit} >
+        <form onSubmit={onSubmit} >
             <div className="form-group">
                 <input
                     className="form-control"

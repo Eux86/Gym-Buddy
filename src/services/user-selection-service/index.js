@@ -4,7 +4,7 @@ export const UserSelectionsServiceContext = React.createContext();
 
 const INITIAL_STATE = {
   trainingId: '-LdYr8ACfkHuHjga-my3',
-  exerciseId: '-LdoblRzjkt8NT49ol23'
+  exerciseId: '-LdtjShUsRO4H4O0O9fW'
 }
 
 const UserSelectionsService = ({children}) => {

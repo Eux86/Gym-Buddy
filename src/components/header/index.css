@@ -1,18 +1,16 @@
 .header a:hover,
 .header a {
-    text-decoration: none;
+    text-decoration: none !important;
     color: white !important;
     font-weight: bold;
 }
-
-
-
 
 .header {
     height: 40px;
     color: white;
     text-decoration: none;
     font-size: 1.5em;
+    margin-bottom: 15px;
 }
 
 .header .row {

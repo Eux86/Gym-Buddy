@@ -7,8 +7,12 @@ import { UsersServiceContext } from '../../services/users-service';
 const SignUpPage = () => {
     return (
         <div className="container">
-            <h1>Sign-Up</h1>
-            <SignUpForm />
+            <div className="row justify-content-center">
+                <div className="col">
+                    <h1>Sign-Up</h1>
+                    <SignUpForm />
+                </div>
+            </div>
         </div>
     );
 }
@@ -67,7 +71,7 @@ const SignUpFormBase = (props) => {
         username === '';
 
     return (
-        <form onSubmit={onSubmit} className="form-horizontal">
+        <form onSubmit={onSubmit} >
             <div className="form-group">
                 <input
                     name="username"

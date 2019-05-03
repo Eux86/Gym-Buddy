@@ -20,22 +20,25 @@ function ListControls(props) {
         e.preventDefault();
     }
 
-    const onConfirmPressed = (e) => {
+    const onConfirmPressed = () => {
         props.onAdd(state.newElementName);
         setState(INITIAL_STATE);
-        e.preventDefault();
     }
 
     const onChange = value => {
         setState({...state, newElementName: value});
     }
 
+    const onSubmit = () => {
+        onConfirmPressed();
+    }
+
     const childrenWithProps = React.Children.map(props.children, child =>
-        React.cloneElement(child, { value: state.newElementName, onChange: onChange })
+        React.cloneElement(child, { value: state.newElementName, onChange: onChange, onSubmit: onSubmit })
     );
 
     return (
-        <form className="form-group">
+        <form className="form-group" onSubmit={() => alert('submitted')}>
             {state.isAddMode &&
                 <li className="list-group-item d-flex justify-content-between">
                     {childrenWithProps} 

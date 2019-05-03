@@ -1,29 +1,28 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import * as ROUTES from '../../constants/routes'
 import { withRouter } from 'react-router-dom'
 import TrainingDay from './TrainingDay';
 import ListControls from '../common/list-controls';
 import { TrainingsServiceContext } from '../../services/trainings-service';
-import { AuthUserContext } from '../../services/authentication-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import OnlyIfLogged from '../../services/only-if-logged';
 
 
 const TrainingsPage = props => {
     const trainingsService = useContext(TrainingsServiceContext);
-    const authUser = useContext(AuthUserContext);
     const userSelectionService = useContext(UserSelectionsServiceContext);
 
     const onSelectTraining = (id) => {
         userSelectionService.setSelectedTraining(id);
         props.history.push(ROUTES.TRAINING_DETAILS);
     }
-
     return (
         <div className="container">
-            <p className="text-muted text-center">
-                Your training sets ...
-            </p>
+            {(!trainingsService.trainings || trainingsService.trainings.length == 0) && 
+                <p className="text-muted text-center">
+                    Add your trainings here
+                </p>
+            }
             <ul>
                 <List
                     trainingsData={trainingsService.trainings}
@@ -45,6 +44,12 @@ const ListElementEditor = (props) => {
         props.onChange(event.target.value);
     }
 
+    const onKeyPressed = (e) => {
+        if (e.key === 'Enter') {
+            props.onSubmit();
+        }
+    }
+
     return (
         <input
             name="newElementName"
@@ -52,7 +57,8 @@ const ListElementEditor = (props) => {
             className="form-control"
             placeholder="New Training"
             value={props.value}
-            onChange={onChange} />
+            onChange={onChange}
+            onKeyPress={onKeyPressed} />
     )
 }
 

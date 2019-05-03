@@ -30,6 +30,12 @@ const TableControls = (props) => {
         setState({...state,isAddMode: value});
     }
 
+    const onKeyUp = (e) => {
+        if (e.key === 'Enter') {
+            addSeries();
+        }
+    }
+
     return (
         <>
             {!state.isAddMode &&
@@ -53,6 +59,7 @@ const TableControls = (props) => {
                             value={state.repetitions}
                             onChange={onChange}
                             placeholder="Repetitions"
+                            onKeyUp={onKeyUp}
                         />
                     </td>
                     <td>
@@ -63,6 +70,7 @@ const TableControls = (props) => {
                             onChange={onChange}
                             value={state.amount}
                             placeholder="Amount"
+                            onKeyUp={onKeyUp}
                         />
                     </td>
                     <td className="actions">

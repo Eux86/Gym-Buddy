@@ -24,20 +24,18 @@ const TrainingDetailsPage = (props) => {
     useEffect(() => {
         if (userSelectionsService.userSelections.trainingId && trainingService.trainings) {
             let currentTraining = trainingService.trainings.find(x => x.id === userSelectionsService.userSelections.trainingId);
-            setState({...state, currentTraining: currentTraining});
+            setState({ ...state, currentTraining: currentTraining });
         }
-    },[trainingService])
+    }, [trainingService])
 
-    const deleteExercise = (event, id) => {
+    const deleteExercise = (id) => {
         exercisesService.del(state.currentTraining.id, id);
-        event.preventDefault();
     }
 
-    const onClick = (event, id) => {
+    const onClick = (e,id) => {
         console.log("should slect exercise id: " + id);
         userSelectionsService.setSelectedExercise(id);
         props.history.push(ROUTES.EXERCISE_DETAILS);
-        event.preventDefault();
     }
 
     const onAdd = (newElementName) => {
@@ -54,14 +52,19 @@ const TrainingDetailsPage = (props) => {
         trainingService.update({ ...currentTraining, name: newName });
     }
 
-    return (<>
-                {/* <p>
+    return (
+        <>
+            {/* <p>
                 Training details for training: {userSelectionsService.userSelections.trainingId}
                 </p> */}
+            
             {state.currentTraining &&
                 <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }
             <br />
+            {(!exercises || exercises.length == 0) &&
+                <div className="text-muted text-center m-5">Add here the exercises of your training</div>
+            }
             {exercises &&
                 <div className="col-12">
                     <ul>
@@ -72,13 +75,19 @@ const TrainingDetailsPage = (props) => {
                     </ul>
                 </div>
             }
-    </>
+        </>
     );
 };
 
 const ListElementEditor = (props) => {
     const onChange = (event) => {
         props.onChange(event.target.value);
+    }
+
+    const onKeyPressed = (e) => {
+        if (e.key === 'Enter') {
+            props.onSubmit();
+        }
     }
 
     return (
@@ -88,7 +97,8 @@ const ListElementEditor = (props) => {
             className="form-control"
             placeholder="New Exercise"
             value={props.value}
-            onChange={onChange} />
+            onChange={onChange}
+            onKeyPress={onKeyPressed} />
     )
 }
 

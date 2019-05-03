@@ -45,14 +45,14 @@ const SeriesEntryTableRow = (props) => {
                 </>
             }
             {state.isEditMode &&
-                <>
+                <form onSubmit={confirmEdit}>
                     <td><input className="form-control" name="repetitions" value={state.serie.repetitions} onChange={onChange} /></td>
                     <td><input className="form-control" name="amount" value={state.serie.amount} onChange={onChange} /></td>
                     <td>
                         <ConfirmButton onClick={confirmEdit} />
                         <CancelButton onClick={() => setState({ ...state, isEditMode: false })} />
                     </td>
-                </>
+                </form>
             }
         </tr>
     )

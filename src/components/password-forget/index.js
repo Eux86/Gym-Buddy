@@ -6,9 +6,13 @@ import { FirebaseContext } from '../../services/firebase';
 
 const PasswordForgetPage = () => (
     <div className="container">
-        <h1>Recover Password</h1>
-        <PasswordForgetForm />
-    </div>
+        <div className="row justify-content-center">
+            <div className="col">
+                <h1>Recover Password</h1>
+                <PasswordForgetForm />
+            </div>
+        </div>
+    </div >
 );
 
 const INITIAL_STATE = {
@@ -45,7 +49,7 @@ const PasswordForgetForm = (props) => {
     const isInvalid = email === '';
 
     return (
-        <form className="form-horizontal" onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
             <div className="form-group">
                 <input
                     className="form-control"
