@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-import './index.css'
-
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import * as ROUTES from '../../constants/routes';
@@ -112,7 +110,6 @@ const List = ({ exercises, onClick, deleteExercise }) => {
                 </div>
                 <div className="mx-2">
                     <DeleteButton onClick={() => deleteExercise(exercise.id)} />
-
                 </div>
             </li>
         )

@@ -20,7 +20,7 @@ const TrainingsPage = props => {
     }
 
     return (
-        <div className="trainings-list col-12 col-lg-9">
+        <div className="container">
             <p className="text-muted text-center">
                 Your training sets ...
             </p>

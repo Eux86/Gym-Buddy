@@ -7,11 +7,11 @@ import { PasswordForgetLink } from '../password-forget';
 
 
 const SignInPage = () => (
-    <div>
-        <h1>SignIn</h1>
+    <div className="container">
+        <h1>Sign-In</h1>
         <SignInForm />
         <PasswordForgetLink />
-        <SignUpLink /> 
+        <SignUpLink />
     </div>
 );
 
@@ -29,7 +29,7 @@ const SignInFormBase = (props) => {
 
     const onSubmit = event => {
         const { email, password } = state;
-        
+
         firebase
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
@@ -44,37 +44,42 @@ const SignInFormBase = (props) => {
     }
 
     const onChange = event => {
-        let newState = {...state};
+        let newState = { ...state };
         newState[event.target.name] = event.target.value;
         setState(newState);
         event.preventDefault();
     }
 
     return (
-        <form className="form-group" onSubmit={onSubmit} >
-            <input
-                className="form-control"
-                name="email"
-                value={email}
-                onChange={onChange}
-                type="text"
-                placeholder="Email Address"
-            />
-            <input
-                className="form-control"
-                name="password"
-                value={password}
-                onChange={onChange}
-                type="password"
-                placeholder="Password"
-            />
-            <button
-                className="btn btn-primary"
-                disabled={isInvalid}
-                type="submit">
-                Sign In
+        <form className="form-horizontal" onSubmit={onSubmit} >
+            <div className="form-group">
+                <input
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={onChange}
+                    type="text"
+                    placeholder="Email Address"
+                />
+            </div>
+            <div className="form-group">
+                <input
+                    className="form-control"
+                    name="password"
+                    value={password}
+                    onChange={onChange}
+                    type="password"
+                    placeholder="Password"
+                />
+            </div>
+            <div className="form-group float-right">
+                <button
+                    className="btn btn-primary"
+                    disabled={isInvalid}
+                    type="submit">
+                    Sign In
                 </button>
-
+            </div>
             {error && <p>{error.message}</p>}
         </form>
     )

@@ -1,0 +1,21 @@
+.header a:hover,
+.header a {
+    text-decoration: none;
+    color: white !important;
+    font-weight: bold;
+}
+
+
+
+
+.header {
+    height: 40px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.header .row {
+    display: flex;  /* make the row a flex container */
+    align-items: center; /* vertically center each flex item in the container */
+}

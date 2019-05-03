@@ -5,8 +5,8 @@ import * as ROUTES from '../../constants/routes';
 import { FirebaseContext } from '../../services/firebase';
 
 const PasswordForgetPage = () => (
-    <div>
-        <h1>PasswordForget</h1>
+    <div className="container">
+        <h1>Recover Password</h1>
         <PasswordForgetForm />
     </div>
 );
@@ -21,7 +21,7 @@ const PasswordForgetForm = (props) => {
     const firebaseContext = useContext(FirebaseContext);
 
     const onSubmit = event => {
-        
+
         const { email } = state;
 
         firebaseContext
@@ -45,18 +45,22 @@ const PasswordForgetForm = (props) => {
     const isInvalid = email === '';
 
     return (
-        <form className="form-group" onSubmit={onSubmit}>
-            <input
-                className="form-control"
-                name="email"
-                value={state.email}
-                onChange={onChange}
-                type="text"
-                placeholder="Email Address"
-            />
-            <button className="btn btn-primary" disabled={isInvalid} type="submit">
-                Reset My Password
-        </button>
+        <form className="form-horizontal" onSubmit={onSubmit}>
+            <div className="form-group">
+                <input
+                    className="form-control"
+                    name="email"
+                    value={state.email}
+                    onChange={onChange}
+                    type="text"
+                    placeholder="Email Address"
+                />
+            </div>
+            <div className="form-group float-right">
+                <button className="btn btn-primary" disabled={isInvalid} type="submit">
+                    Reset My Password
+                </button>
+            </div>
             {error && <p>{error.message}</p>}
         </form>
     );
