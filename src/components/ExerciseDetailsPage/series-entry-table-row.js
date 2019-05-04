@@ -52,8 +52,24 @@ const SeriesEntryTableRow = (props) => {
             }
             {state.isEditMode &&
                 <>
-                    <td><input className="form-control" name="repetitions" value={state.serie.repetitions} onChange={onChange} onKeyDown={onKeyPressed} /></td>
-                    <td><input className="form-control" name="amount" value={state.serie.amount} onChange={onChange} onKeyDown={onKeyPressed}/></td>
+                    <td>
+                        <input
+                            type="number" inputmode="numeric" 
+                            className="form-control" 
+                            name="repetitions" 
+                            value={state.serie.repetitions} 
+                            onChange={onChange} 
+                            onKeyDown={onKeyPressed} />
+                    </td>
+                    <td>
+                        <input
+                            type="number" step="0.01" inputmode="decimal" 
+                            className="form-control" 
+                            name="amount" 
+                            value={state.serie.amount} 
+                            onChange={onChange} 
+                            onKeyDown={onKeyPressed}/>
+                    </td>
                     <td>
                         <ConfirmButton onClick={confirmEdit} />
                         <CancelButton onClick={() => setState({ ...state, isEditMode: false })} />

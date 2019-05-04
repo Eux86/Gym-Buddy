@@ -7,6 +7,7 @@ const DeleteButton = ({ onClick }) => {
             onClick();
         }
         e.preventDefault();
+        e.stopPropagation();
     }
 
     return (

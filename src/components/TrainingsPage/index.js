@@ -27,7 +27,7 @@ const TrainingsPage = props => {
                     Add your trainings here
                 </p>
             }
-            <ul className="list-group">
+            <div className="list-group">
                 <List
                     trainingsData={trainingsService.trainings}
                     onDelete={trainingsService.del}
@@ -37,7 +37,7 @@ const TrainingsPage = props => {
                 <ListControls onAdd={trainingsService.add}>
                     <ListElementEditor />
                 </ListControls>
-            </ul>
+            </div>
 
         </div>
     );

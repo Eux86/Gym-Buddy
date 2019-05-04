@@ -65,12 +65,12 @@ const TrainingDetailsPage = (props) => {
             }
             {exercises &&
                 <div className="col-12">
-                    <ul className="list-group">
+                    <div className="list-group">
                         <List exercises={exercises} onClick={onClick} deleteExercise={deleteExercise} />
                         <ListControls onAdd={onAdd}>
                             <ListElementEditor />
                         </ListControls>
-                    </ul>
+                    </div>
                 </div>
             }
         </>
@@ -105,13 +105,14 @@ const ListElementEditor = (props) => {
 const List = ({ exercises, onClick, deleteExercise }) => {
     return (
         exercises.map(exercise =>
-            <li key={exercise.id} className="list-group-item d-flex justify-content-between">
+            <button 
+                key={exercise.id} 
+                className="list-group-item d-flex justify-content-between"
+                onClick={(event) => { event.preventDefault(); onClick(exercise.id)}}>
                 <div>
-                    <a href="#" onClick={(event) => { event.preventDefault(); onClick(exercise.id)} }>
                         <div>
                             {exercise.name}
                         </div>
-                    </a>
                     <div className="text-muted">
                         {exercise.description}
                     </div>
@@ -119,7 +120,7 @@ const List = ({ exercises, onClick, deleteExercise }) => {
                 <div className="mx-2">
                     <DeleteButton onClick={() => deleteExercise(exercise.id)} />
                 </div>
-            </li>
+            </button>
         )
     )
 }
