@@ -45,7 +45,7 @@ const SeriesEntryTableRow = (props) => {
                     <td>{state.serie.repetitions}</td>
                     <td>{state.serie.amount}</td>
                     <td>
-                        <DeleteButton onClick={() => props.del(state.serie.id)} />
+                        <DeleteButton onClick={() => props.del(state.serie)} />
                         <EditButton onClick={() => setState({ ...state, isEditMode: true })} />
                     </td>
                 </>

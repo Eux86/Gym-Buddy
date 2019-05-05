@@ -6,13 +6,14 @@ import { TrainingsServiceContext } from '../../services/trainings-service';
 import ListControls from '../common/list-controls';
 import EditableTitle from '../common/editable-title';
 import DeleteButton from '../common/delete-button';
+import * as DatetimeHelper from '../../utils/datetime-helper';
 
 const INITIAL_STATE = {
     currentTraining: [],
 }
 
 const TrainingDetailsPage = (props) => {
-    const [state, setState] = useState({INITIAL_STATE});
+    const [state, setState] = useState({ INITIAL_STATE });
 
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
@@ -55,7 +56,7 @@ const TrainingDetailsPage = (props) => {
             {/* <p>
                 Training details for training: {userSelectionsService.userSelections.trainingId}
                 </p> */}
-            
+
             {state.currentTraining &&
                 <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }
@@ -103,20 +104,31 @@ const ListElementEditor = (props) => {
 
 
 const List = ({ exercises, onClick, deleteExercise }) => {
+
+    const isDoneToday = (lastUpdateDate) => {
+        const lastUpdate = DatetimeHelper.getUtcDateWithoutTime(new Date(lastUpdateDate)).getTime();
+        const today = DatetimeHelper.getUtcDateWithoutTime(new Date()).getTime();
+        return lastUpdate === today;
+    }
+
     return (
         exercises.map(exercise =>
-            <button 
-                key={exercise.id} 
+            <button
+                key={exercise.id}
                 className="list-group-item d-flex justify-content-between"
-                onClick={(event) => { event.preventDefault(); onClick(exercise.id)}}>
+                onClick={(event) => { event.preventDefault(); onClick(exercise.id) }}>
                 <div>
-                        <div>
-                            {exercise.name}
-                        </div>
+                    <div>
+                        {exercise.name} {isDoneToday(exercise.lastUpdateDate) ? ' (done)' : ''}
+                    </div>
                     <div className="text-muted">
                         {exercise.description}
                     </div>
                 </div>
+                {isDoneToday(exercise.lastUpdateDate) &&
+                    <div class="led-green">
+                    </div>
+                }
                 <div className="mx-2">
                     <DeleteButton onClick={() => deleteExercise(exercise.id)} />
                 </div>

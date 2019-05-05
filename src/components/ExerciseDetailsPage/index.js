@@ -7,55 +7,70 @@ import TableControls from './table-controls';
 import { SeriesServiceContext } from '../../services/series-service';
 import SeriesEntryTableRow from './series-entry-table-row';
 import EditableTitle from '../common/editable-title';
+import * as DatetimeHelper from '../../utils/datetime-helper';
+
 
 const ExerciseDetailsPage = (props) => {
     const userSelectionsService = useContext(UserSelectionsServiceContext);
-
     const exercisesService = useContext(ExercisesServiceContext);
     const seriesService = useContext(SeriesServiceContext);
     const currentExerciseId = userSelectionsService.userSelections.exerciseId;
     const currentExercise = exercisesService && exercisesService.exercises && exercisesService.exercises.find(x => x.id === currentExerciseId) || null;
 
+    let doneToday = false;
+
     console.log(currentExerciseId);
 
-    let series = null;
-    let mostRecentMoment = null;
+    let latestDaysSeries = null;
+    let mostRecentMoment = currentExercise && currentExercise.lastUpdateDate;
 
-    if (seriesService.series) {
-        const seriesByDate = groupBy(seriesService.series, (x) => getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
+    if (seriesService.series && seriesService.series.length>0) {
+        const seriesByDate = groupBy(seriesService.series, (x) => DatetimeHelper.getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
         const orderedDates = Object.keys(seriesByDate).sort((a, b) => {
             return new Date(a) <= new Date(b) ? 1 : -1;
         });
         mostRecentMoment = orderedDates[0];
-        series = seriesByDate[mostRecentMoment];
+        exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, lastUpdateDate: mostRecentMoment });
+        latestDaysSeries = seriesByDate[mostRecentMoment];
     }
 
-    const del = (seriesId) => {
-        seriesService.del(currentExerciseId, seriesId);
+    if (mostRecentMoment) {
+        doneToday = DatetimeHelper.getUtcDateWithoutTime(new Date(mostRecentMoment)).getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date()).getTime();
     }
 
-    const addSeries = (newSeries) => {
-        const currentExerciseId = userSelectionsService.userSelections.exerciseId;
-        let order = series ? Math.max(...series.map(x => +x.order)) + 1 : 0;
-        let createDate = (new Date()).toISOString();
-        seriesService.add(currentExerciseId, { ...newSeries, order: order, createDate });
-
-        // If the other presented series are older, then we make a copy of them with today's date
-        if (series) {
-            for (let entry of series) {
-                if (getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== getUtcDateWithoutTime(new Date(createDate)).getTime()) {
-                    seriesService.add(currentExerciseId, { ...entry, createDate: createDate });
+    const del = (seriesToDelete) => {
+        const seriesToDeleteCreateDate = DatetimeHelper.getUtcDateWithoutTime(new Date(seriesToDelete.createDate));
+        const today = DatetimeHelper.getUtcDateWithoutTime(new Date());
+        const copySeriesToNewDate = seriesToDeleteCreateDate.getTime() != today.getTime();
+        if (copySeriesToNewDate) {
+            // if it is an entry from an older day's series, then make a copy for today and just don't copy this 
+            // series that we want to delete 
+            for (let entry of latestDaysSeries) {
+                if (entry.id !== seriesToDelete.id) {
+                    seriesService.add(currentExerciseId, { ...entry, createDate: today.toISOString() });
                 }
             }
+        } else {
+            // if it is an entry from today's series, then just delete it
+            seriesService.del(currentExerciseId, seriesToDelete.id);
         }
     }
 
+    const onAddSeries = (newSeries) => {
+        let order = latestDaysSeries ? Math.max(...latestDaysSeries.map(x => +x.order)) + 1 : 0;
+        let today = (new Date()).toISOString();
+        seriesService.add(currentExerciseId, { ...newSeries, order: order, createDate: today });
+
+        // If the other presented series are older, then we make a copy of them with today's date
+        copySeriesWithTodaysDate(latestDaysSeries);
+    }
+
     const editSerie = (original, edited) => {
-        const originalDate = getUtcDateWithoutTime(new Date(original.createDate));
-        const today = getUtcDateWithoutTime(new Date());
+        const originalDate = DatetimeHelper.getUtcDateWithoutTime(new Date(original.createDate));
+        const today = DatetimeHelper.getUtcDateWithoutTime(new Date());
         const copySeriesToNewDate = originalDate.getTime() != today.getTime();
         if (copySeriesToNewDate) {
-            for (let entry of series) {
+            for (let entry of latestDaysSeries) {
                 if (entry.id === edited.id) {
                     seriesService.add(currentExerciseId, { ...edited, createDate: today.toISOString() });
                 } else {
@@ -68,7 +83,31 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const onExerciseTitleChange = (newTitle) => {
-        exercisesService.update(userSelectionsService.userSelections.trainingId,{...currentExercise, name: newTitle});
+        exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, name: newTitle });
+    }
+
+    const onDoneTodayClick = (event) => {
+        copySeriesWithTodaysDate(latestDaysSeries);
+    }
+
+    const onUndoTodayClick = (event) => {
+        if (window.confirm("All edits done today will be canceled, are you sure?")){
+            const today = (new Date()).toISOString();
+            for (let entry of latestDaysSeries) {
+                if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
+                    seriesService.del(currentExerciseId, entry.id);
+                }
+            }
+        }
+    }
+
+    const copySeriesWithTodaysDate = (series) => {
+        const today = (new Date()).toISOString();
+        for (let entry of series) {
+            if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
+                seriesService.add(currentExerciseId, { ...entry, createDate: today });
+            }
+        }
     }
 
     return (currentExercise &&
@@ -84,13 +123,36 @@ const ExerciseDetailsPage = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {series &&
-                        series.map(serie =>
+                    {latestDaysSeries &&
+                        latestDaysSeries.map(serie =>
                             <SeriesEntryTableRow key={serie.id} serie={serie} del={del} edit={(editedSerie) => editSerie(serie, editedSerie)} />
                         )}
-                    <TableControls addSeries={addSeries} />
+                    <TableControls addSeries={onAddSeries} />
                 </tbody>
             </table>
+            <div className="row text-center">
+                <div className="col">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        disabled={doneToday || !latestDaysSeries || latestDaysSeries.length == 0}
+                        onClick={onDoneTodayClick}>
+                        Done today!
+                    </button>
+                </div>
+            </div>
+            {doneToday &&
+                <div className="row text-center">
+                    <div className="col">
+                        <button
+                            type="button"
+                            className="btn btn-link"
+                            onClick={onUndoTodayClick}>
+                            (undo today)
+                        </button>
+                    </div>
+                </div>
+            }
         </div>
     );
 };
@@ -109,6 +171,4 @@ export const groupBy = (list, fun) => {
     }, {})
 };
 
-export const getUtcDateWithoutTime = (date) => {
-    return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-}
+
