@@ -1,7 +1,10 @@
+import './editable-title.css'
+
 import React, { useState, useEffect } from 'react';
-import EditButton from './edit-button';
-import CancelButton from './cancel-button';
-import ConfirmButton from './confirm-button';
+import EditButton from '../edit-button';
+import CancelButton from '../cancel-button';
+import ConfirmButton from '../confirm-button';
+
 
 
 const INITIAL_STATE = {
@@ -14,8 +17,13 @@ const EditableTitle = ({ title, onChange }) => {
     const [state, setState] = useState(INITIAL_STATE);
 
     useEffect(() => {
-        setState({ ...state, title: title })
-    }, [title])
+        setState({ ...state, title: title });
+
+        return () => {
+            const inputEl = document.getElementById('titleEditor');
+            inputEl && inputEl.focus();
+        }
+    }, [title, state.isEditMode])
 
     const onChangeInternal = event => {
         setState({ ...state, [event.target.name]: event.target.value });
@@ -31,29 +39,42 @@ const EditableTitle = ({ title, onChange }) => {
     }
 
     const onEdit = () => {
-        setState({ ...state, isEditMode: true, newTitle: title })
+        setState({ ...state, isEditMode: true, newTitle: title });
+    }
+
+    const onKeyPressed = (e) => {
+        if (e.key === 'Enter') {
+            onConfirmPressed();
+        }
     }
 
     return (
-        <> 
+        <div className="editable-title"> 
             {!state.isEditMode &&
-                <h1>
+                <div className="title-label">
                     {state.title}
                     <EditButton noBorder onClick={() => onEdit(state.title)} />
-                </h1>
+                </div>
             }
             {state.isEditMode &&
                 <>
                     <div className="input-group">
-                        <input type="text" className="form-control" name="newTitle" value={state.newTitle} onChange={onChangeInternal} />
-                        <div className="input-group-btn">
+                        <input 
+                            id="titleEditor" 
+                            type="text" 
+                            className="title-input" 
+                            name="newTitle" 
+                            value={state.newTitle} 
+                            onChange={onChangeInternal} 
+                            onKeyPress={onKeyPressed}/>
+                        <div className="actions">
                             <CancelButton onClick={onCancelPressed} />
                             <ConfirmButton onClick={onConfirmPressed} disabled={state.title == null} />
                         </div>
                     </div>
                 </>
             }
-        </>
+        </div>
     );
 }
 

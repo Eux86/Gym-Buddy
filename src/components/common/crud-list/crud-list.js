@@ -20,7 +20,7 @@ const CrudList = ({ items, onItemSelect, onItemDelete, onItemAdd, semaforeCondit
 
     return (
         <div className="list-group">
-            {
+            {items && 
                 items.map(item =>
                     <button
                         key={item.id}

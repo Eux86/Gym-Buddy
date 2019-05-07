@@ -1,0 +1,26 @@
+.editable-title .title-label, .title-input {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 36px;
+}
+
+.editable-title .title-input {
+    border: none;
+    outline: none;
+    widows: 100%;
+    float:left;
+    border: 1px solid #ddd;
+}
+
+.editable-title .actions {
+    float: left;
+    margin-top: 24px;
+}
+
+.editable-title .actions button {
+    margin-left: 5px;
+}

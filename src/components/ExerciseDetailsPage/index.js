@@ -6,7 +6,7 @@ import { ExercisesServiceContext } from '../../services/exercises-service';
 import TableControls from './table-controls';
 import { SeriesServiceContext } from '../../services/series-service';
 import SeriesEntryTableRow from './series-entry-table-row';
-import EditableTitle from '../common/editable-title';
+import EditableTitle from '../common/editable-title/editable-title';
 import * as DatetimeHelper from '../../utils/datetime-helper';
 
 
@@ -108,10 +108,14 @@ const ExerciseDetailsPage = (props) => {
                 seriesService.add(currentExerciseId, { ...entry, createDate: today });
             }
         }
+        const container = document.getElementById("exercise-details-container");
     }
 
     return (currentExercise &&
-        <div className="container-fluid">
+        <div id="exercise-details-container" className={"container-fluid "+(doneToday && "flash")}>
+            {/* <div className="go-back-link-container">
+                <a><span className="glyphicon glyphicon-menu-up" /> Back to the list </a>
+            </div> */}
             <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
             <table className="table">

@@ -6,6 +6,7 @@ import ListControls from '../common/crud-list/list-controls';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import OnlyIfLogged from '../../services/only-if-logged';
+import CrudList from '../common/crud-list/crud-list';
 
 
 const TrainingsPage = props => {
@@ -27,18 +28,11 @@ const TrainingsPage = props => {
                     Add your trainings here
                 </p>
             }
-            <div className="list-group">
-                <List
-                    trainingsData={trainingsService.trainings}
-                    onDelete={trainingsService.del}
-                    onSelectTraining={onSelectTraining}
-                    {...props}
-                />
-                <ListControls onAdd={trainingsService.add}>
-                    <ListElementEditor />
-                </ListControls>
-            </div>
-
+            <CrudList 
+                    items={trainingsService.trainings} 
+                    onItemSelect={onSelectTraining} 
+                    onItemDelete={trainingsService.del} 
+                    onItemAdd={trainingsService.add}/>
         </div>
     );
 };

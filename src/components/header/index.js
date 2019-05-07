@@ -17,18 +17,18 @@ const Header = () => {
     return (
         <div className="header container-fluid bg-dark box-shadow">
             <div className="row h-100">
-                <div className="col-2">
-                    <a onClick={(e) => onBack(e)} href="#">
-                        <span className="glyphicon glyphicon-chevron-left"></span>
-                    </a>
+            <div className="col-2">
+                    <div className="">
+                        {authUser && <SignOutButton />}
+                    </div>
                 </div>
                 <div className="col-8 mx-auto text-center">
                     <Link to="/">Gym Buddy</Link>
                 </div>
                 <div className="col-2">
-                    <div className="float-right">
-                        {authUser && <SignOutButton />}
-                    </div>
+                    <a className="float-right" onClick={(e) => onBack(e)} href="#">
+                        <span className="glyphicon glyphicon-menu-up"></span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ import SignInPage from './components/SignInPage';
 import ExerciseDetailsPage from './components/ExerciseDetailsPage';
 import SignUpPage from './components/sign-up-page';
 import PasswordForgetPage from './components/password-forget';
+import Breadcrumbs from './components/breadcrumbs/breadcrumbs';
 
 
 class App extends Component {
