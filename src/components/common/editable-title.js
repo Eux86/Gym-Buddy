@@ -35,7 +35,7 @@ const EditableTitle = ({ title, onChange }) => {
     }
 
     return (
-        <div className="container">
+        <> 
             {!state.isEditMode &&
                 <h1>
                     {state.title}
@@ -44,7 +44,7 @@ const EditableTitle = ({ title, onChange }) => {
             }
             {state.isEditMode &&
                 <>
-                    <div class="input-group">
+                    <div className="input-group">
                         <input type="text" className="form-control" name="newTitle" value={state.newTitle} onChange={onChangeInternal} />
                         <div className="input-group-btn">
                             <CancelButton onClick={onCancelPressed} />
@@ -53,7 +53,7 @@ const EditableTitle = ({ title, onChange }) => {
                     </div>
                 </>
             }
-        </div>
+        </>
     );
 }
 

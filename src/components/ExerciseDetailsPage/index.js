@@ -111,7 +111,7 @@ const ExerciseDetailsPage = (props) => {
     }
 
     return (currentExercise &&
-        <div className="container">
+        <div className="container-fluid">
             <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
             <table className="table">

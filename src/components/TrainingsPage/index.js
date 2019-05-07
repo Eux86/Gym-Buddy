@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import * as ROUTES from '../../constants/routes'
 import { withRouter } from 'react-router-dom'
 import TrainingDay from './TrainingDay';
-import ListControls from '../common/list-controls';
+import ListControls from '../common/crud-list/list-controls';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import OnlyIfLogged from '../../services/only-if-logged';
@@ -17,7 +17,7 @@ const TrainingsPage = props => {
         props.history.push(ROUTES.TRAINING_DETAILS);
     }
     return (
-        <div className="container">
+        <div className="container-fluid">
             <h1>
                 Trainings
             </h1>

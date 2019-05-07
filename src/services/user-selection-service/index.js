@@ -3,17 +3,25 @@ import React, {useState, useEffect, useContext} from 'react'
 export const UserSelectionsServiceContext = React.createContext();
 
 const INITIAL_STATE = {
-  trainingId: '-LdYr8ACfkHuHjga-my3',
-  exerciseId: '-LdtjShUsRO4H4O0O9fW'
+  trainingId: '',
+  exerciseId: ''
 }
 
 const UserSelectionsService = ({children}) => {
     const [userSelections, setUserSelections] = useState(INITIAL_STATE);
 
+    useEffect(() => {
+      const selectedExercise = localStorage.getItem("selectedExercise");
+      const selectedTraining = localStorage.getItem("selectedTraining");
+      setUserSelections({trainingId: selectedTraining, exerciseId: selectedExercise});
+    },[])
+
     const setSelectedTraining = (id) => {
+        localStorage.setItem('selectedTraining', id);
         setUserSelections({...userSelections, trainingId: id});
     }
     const setSelectedExercise = (id) => {
+        localStorage.setItem('selectedExercise', id);
         setUserSelections({...userSelections, exerciseId: id});
     }
     

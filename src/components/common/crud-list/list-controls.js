@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ConfirmButton from './confirm-button';
-import CancelButton from './cancel-button';
+import ConfirmButton from '../confirm-button';
+import CancelButton from '../cancel-button';
 
 const INITIAL_STATE = {
     isAddMode: false,
