@@ -22,19 +22,11 @@ const ExercisesService = ({children}) => {
     }, [authUser, firebaseContext, userSelectionsService])
 
     const getByTrainingId = (trainingId) => {
-        firebaseContext.firebase.db.ref(`exercises`)
-            .orderByKey()
-            .equalTo(authUser.uid)
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/`)
             .on('value', snapshot => {  
                 const obj = snapshot.val();
-                var exercises = obj && obj[Object.keys(obj)][trainingId];
-                if (exercises) {
-                    const exercisesList = Object.keys(exercises).map(key => ({ 
-                        ...exercises[key], 
-                        id: key 
-                    }));
-                    console.log("Exercises loaded");
-                    console.log(exercisesList);
+                const exercisesList = obj && Object.keys(obj).map( key => ({...obj[key], id: key }) );
+                if (exercisesList) {
                     setExercises(exercisesList);
                 } else {
                     setExercises([]);
@@ -42,11 +34,13 @@ const ExercisesService = ({children}) => {
             });
     }
 
-    const add = (trainingId, exercise) => {
+    const add = async (trainingId, exercise) => {
+        const timestamp = new Date().getTime();
+        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
         firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}`).push({
             description: exercise.description,
             name: exercise.name,
-            series: [],
+            timestamp,
         })
     }
 
@@ -55,12 +49,18 @@ const ExercisesService = ({children}) => {
             [`exercises/${authUser.uid}/${trainingId}/${id}`]: null,
             [`series/${authUser.uid}/${id}`]: null,
           }
+          debugger;
         firebaseContext.firebase.db.ref().update(updates);
     }
 
-    const update = (trainingId, exercise) => {
+    const update = async (trainingId, exercise) => {
+        const timestamp = new Date().getTime();
+        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
         var updates = {
-            [`exercises/${authUser.uid}/${trainingId}/${exercise.id}`]: exercise,
+            [`exercises/${authUser.uid}/${trainingId}/${exercise.id}`]: {
+                ...exercise,
+                timestamp
+            }
           }
         firebaseContext.firebase.db.ref().update(updates);
     }

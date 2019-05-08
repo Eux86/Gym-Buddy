@@ -15,9 +15,8 @@ function ListControls(props) {
         e.preventDefault();
     }
 
-    const onCancelPressed = (e) => {
+    const onCancelPressed = () => {
         setState({ isAddMode: false });
-        e.preventDefault();
     }
 
     const onConfirmPressed = () => {

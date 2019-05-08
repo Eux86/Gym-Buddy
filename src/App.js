@@ -3,7 +3,6 @@ import * as ROUTES from './constants/routes';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route } from 'react-router-dom'
 import './App.css';
-import Authentication from './services/authentication-service';
 import TrainingDetailsPage from './components/TrainingDetailsPage';
 import TrainingsPage from './components/TrainingsPage';
 import Header from './components/header';
@@ -11,7 +10,6 @@ import SignInPage from './components/SignInPage';
 import ExerciseDetailsPage from './components/ExerciseDetailsPage';
 import SignUpPage from './components/sign-up-page';
 import PasswordForgetPage from './components/password-forget';
-import Breadcrumbs from './components/breadcrumbs/breadcrumbs';
 
 
 class App extends Component {

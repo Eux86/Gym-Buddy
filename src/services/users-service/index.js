@@ -9,23 +9,14 @@ const UsersService = ({children}) => {
     const firebaseContext = useContext(FirebaseContext);
     // const [users, setUsers] = useState(null);
 
-    // const get = () => {
-    //     firebaseContext.firebase.db.ref(`users`)
-    //     .orderByKey()
-    //     .equalTo(authUser.uid)
-    //     .on('value', snapshot => {  
-    //         const obj = snapshot.val();
-    //         if (obj) {
-    //             var trainings = obj[Object.keys(obj)[0]];
-    //             const trainingSets = Object.keys(trainings).map(key => ({ 
-    //                 ...trainings[key], 
-    //                 id: key 
-    //             }));
-    //             console.log(trainingSets);
-    //             setUsers( trainingSets );
-    //         }
-    //     });
-    // }
+    const get = (id) => {
+        return firebaseContext.firebase.db.ref(`users/${id}`)
+        .once('value', snapshot => {  
+            const obj = snapshot.val();
+            const user = obj && Object.keys(obj).map( key => ({...obj[key], id: key }) );
+            return user;
+        });
+    }
 
     const add = async ({uid, username, email}) => {
         if (uid && username && email) {
@@ -36,7 +27,6 @@ const UsersService = ({children}) => {
                 registerDate: nowIso, // UTC iso 8601 string
             })
         } else {
-            
             console.error("Missing fields creating user!");
         }
     }

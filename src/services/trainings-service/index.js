@@ -18,18 +18,11 @@ const TrainingsService = ({children}) => {
     }, [authUser, firebaseContext])
 
     const get = () => {
-        firebaseContext.firebase.db.ref(`trainings`)
-        .orderByKey()
-        .equalTo(authUser.uid)
+        firebaseContext.firebase.db.ref(`trainings/${authUser.uid}`)
         .on('value', snapshot => {  
             const obj = snapshot.val();
-            if (obj) {
-                var trainings = obj[Object.keys(obj)[0]];
-                const trainingSets = Object.keys(trainings).map(key => ({ 
-                    ...trainings[key], 
-                    id: key 
-                }));
-                console.log(trainingSets);
+            const trainingSets = obj && Object.keys(obj).map( key => ({...obj[key], id: key }) );
+            if (trainingSets) {
                 setTrainings( trainingSets );
             } else {
                 setTrainings([]);
@@ -38,9 +31,11 @@ const TrainingsService = ({children}) => {
     }
 
     const add = async (name) => {
-        firebaseContext.firebase.db.ref(`trainings/${authUser.uid}`).push({
+        const timestamp = new Date().getTime();
+        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
+        await firebaseContext.firebase.db.ref(`trainings/${authUser.uid}`).push({
             name: name,
-            exercises: [],
+            timestamp: timestamp,
         })
     }
 
@@ -61,9 +56,14 @@ const TrainingsService = ({children}) => {
         });
     }
 
-    const update = (editedTraining) => {
+    const update = async (editedTraining) => {
+        const timestamp = new Date().getTime();
+        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
         var updates = {
-            [`trainings/${authUser.uid}/${editedTraining.id}`]: editedTraining,
+            [`trainings/${authUser.uid}/${editedTraining.id}`]: {
+                ...editedTraining,
+                timestamp
+            },
           }
         firebaseContext.firebase.db.ref().update(updates);
     }

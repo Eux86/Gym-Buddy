@@ -17,6 +17,7 @@ const TrainingsPage = props => {
         userSelectionService.setSelectedTraining(id);
         props.history.push(ROUTES.TRAINING_DETAILS);
     }
+
     return (
         <div className="container-fluid">
             <h1>
@@ -36,46 +37,6 @@ const TrainingsPage = props => {
         </div>
     );
 };
-
-const ListElementEditor = (props) => {
-    const onChange = (event) => {
-        props.onChange(event.target.value);
-    }
-
-    const onKeyPressed = (e) => {
-        if (e.key === 'Enter') {
-            props.onSubmit();
-        }
-    }
-
-    return (
-        <input
-            name="newElementName"
-            type="text"
-            className="form-control"
-            placeholder="New Training"
-            value={props.value}
-            onChange={onChange}
-            onKeyPress={onKeyPressed} />
-    )
-}
-
-const List = (props) => {
-    return (
-        <OnlyIfLogged {...props}>
-        {props.trainingsData &&
-            props.trainingsData.map(training =>
-                <TrainingDay
-                key={training.id}
-                training={training}
-                onDelete={props.onDelete}
-                onClick={() => props.onSelectTraining(training.id)}
-            >{training.name}</TrainingDay>
-            )
-        }
-        </OnlyIfLogged>
-    );
-}
 
 
 

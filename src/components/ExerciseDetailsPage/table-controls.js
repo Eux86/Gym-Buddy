@@ -53,7 +53,7 @@ const TableControls = (props) => {
                     <td></td>
                     <td>
                         <input
-                            type="number" step="1" inputmode="numeric" pattern="[0-9]*"
+                            type="number" step="1" inputMode="numeric" pattern="[0-9]*"
                             name="repetitions"
                             type="text"
                             className="form-control"
@@ -65,7 +65,7 @@ const TableControls = (props) => {
                     </td>
                     <td>
                         <input
-                            type="number" step="0.01" inputmode="numeric" 
+                            type="number" step="0.01" inputMode="numeric" 
                             name="amount"
                             type="text"
                             className="form-control"

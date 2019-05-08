@@ -30,7 +30,7 @@ const ExerciseDetailsPage = (props) => {
             return new Date(a) <= new Date(b) ? 1 : -1;
         });
         mostRecentMoment = orderedDates[0];
-        exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, lastUpdateDate: mostRecentMoment });
+        //exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, lastUpdateDate: mostRecentMoment });
         latestDaysSeries = seriesByDate[mostRecentMoment];
     }
 
@@ -57,6 +57,7 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const onAddSeries = (newSeries) => {
+        debugger;
         let order = latestDaysSeries ? Math.max(...latestDaysSeries.map(x => +x.order)) + 1 : 0;
         let today = (new Date()).toISOString();
         seriesService.add(currentExerciseId, { ...newSeries, order: order, createDate: today });
@@ -102,13 +103,14 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const copySeriesWithTodaysDate = (series) => {
-        const today = (new Date()).toISOString();
-        for (let entry of series) {
-            if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
-                seriesService.add(currentExerciseId, { ...entry, createDate: today });
+        if (series){
+            const today = (new Date()).toISOString();
+            for (let entry of series) {
+                if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
+                    seriesService.add(currentExerciseId, { ...entry, createDate: today });
+                }
             }
         }
-        const container = document.getElementById("exercise-details-container");
     }
 
     return (currentExercise &&

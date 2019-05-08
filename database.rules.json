@@ -1,6 +1,56 @@
 {
   "rules": {
-    ".read": "true",
-    ".write": "true"
+    "exercises": {
+     "$uid": {
+       ".read": "$uid === auth.uid",
+       ".write": "$uid === auth.uid",
+       "$trainingId": {
+         "$exerciseId": {
+           ".validate": 
+             "newData.hasChild('timestamp') || newData.val()==null",
+             "timestamp": {
+               ".validate": "root.child('users/'+auth.uid+'/lastWrite').val() == newData.val() && newData.val() >= now - 1000"
+             }
+       		}
+       }
+     }
+    },
+    "series": {
+     "$uid": {
+       ".read": "$uid === auth.uid",
+       ".write": "$uid === auth.uid",
+       "$seriesId": {
+         "$exerciseId": {
+           ".validate": 
+             "newData.hasChild('timestamp') || newData.val()==null",
+             "timestamp": {
+               ".validate": "root.child('users/'+auth.uid+'/lastWrite').val() == newData.val() && newData.val() >= now - 1000"
+             }
+         }  
+       }
+     }
+    },
+    "trainings": {
+     "$uid": {
+       ".read": "$uid === auth.uid",
+       ".write": "$uid === auth.uid",
+       "$trainingId": {
+         ".validate": 
+           "newData.hasChild('timestamp') || newData.val()==null",
+           "timestamp": {
+             ".validate": "root.child('users/'+auth.uid+'/lastWrite').val() == newData.val() && newData.val() >= now - 1000"
+           }
+       }
+       
+     }
+    },
+    "users": {
+     "$uid": {
+       ".read": "$uid === auth.uid",
+       ".write": "true",
+       ".validate": 
+				"data.child('lastWrite').val() == null || (newData.hasChild('lastWrite') && newData.child('lastWrite').val() != null && newData.child('lastWrite').val() - 1000 > data.child('lastWrite').val())"
+     }
+   }
   }
 }

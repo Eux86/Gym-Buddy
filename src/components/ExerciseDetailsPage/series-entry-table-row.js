@@ -54,7 +54,7 @@ const SeriesEntryTableRow = (props) => {
                 <>
                     <td>
                         <input
-                            type="number" inputmode="numeric" 
+                            type="number" inputMode="numeric" 
                             className="form-control" 
                             name="repetitions" 
                             value={state.serie.repetitions} 
@@ -63,7 +63,7 @@ const SeriesEntryTableRow = (props) => {
                     </td>
                     <td>
                         <input
-                            type="number" step="0.01" inputmode="decimal" 
+                            type="number" step="0.01" inputMode="decimal" 
                             className="form-control" 
                             name="amount" 
                             value={state.serie.amount} 

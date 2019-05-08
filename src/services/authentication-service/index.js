@@ -14,6 +14,7 @@ const Authentication = ({ children }) => {
       
       listener = firebaseService.firebase.auth.onAuthStateChanged(authUser => {
         setState(authUser)
+        console.log("UID: "+ (authUser && authUser.uid));
       });
     }
 
