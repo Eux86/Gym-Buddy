@@ -18,11 +18,13 @@ const TrainingDetailsPage = (props) => {
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
     const trainingService = useContext(TrainingsServiceContext);
-    const exercises = exercisesService && exercisesService.exercises;
+    const exercises = exercisesService && exercisesService.exercises && exercisesService.exercises.
+                        sort((a,b)=>a.order > b.order);
 
     useEffect(() => {
         if (userSelectionsService.userSelections.trainingId && trainingService.trainings) {
             let currentTraining = trainingService.trainings.find(x => x.id === userSelectionsService.userSelections.trainingId);
+            
             setState({ ...state, currentTraining: currentTraining });
         }
     }, [trainingService])
@@ -39,9 +41,11 @@ const TrainingDetailsPage = (props) => {
 
     const onAdd = (newElementName) => {
         console.log("should add " + newElementName);
+        const lastIndex = Math.max(...exercises.map(x=>x.order || 0))+1;
         const newExercise = {
             name: newElementName,
-            description: ''
+            description: '',
+            order: lastIndex,
         }
         exercisesService.add(state.currentTraining.id, newExercise);
     }

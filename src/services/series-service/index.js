@@ -46,14 +46,16 @@ const SeriesService = ({children}) => {
         await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
 
         const newRef = firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}`).push();
+        debugger;
         var updates = {
             [`series/${authUser.uid}/${exerciseId}/${newRef.key}`]: {
-                ...series,   
-                timestamp      
+                amount: +series.amount,
+                repetitions: +series.repetitions,
+                order: +series.order,
+                createDate: series.createDate   
             },
-            [`exercises/${authUser.uid}/${trainingId}/${exerciseId}`]:{
+            [`exercises/${authUser.uid}/${exerciseId}`]:{
                 ...currentExercise,
-                timestamp: timestamp,
                 lastUpdateDate: DatetimeHelper.getUtcDateWithoutTime(new Date()).toISOString(),
             },
           }
@@ -69,12 +71,13 @@ const SeriesService = ({children}) => {
         
         var updates = {
             [`series/${authUser.uid}/${exerciseId}/${series.id}`]: {
-                ...series,    
-                timestamp      
+                amount: +series.amount,
+                repetitions: +series.repetitions,
+                order: +series.order,
+                createDate: series.createDate      
             },
-            [`exercises/${authUser.uid}/${trainingId}/${exerciseId}`]:{
+            [`exercises/${authUser.uid}/${exerciseId}`]:{
                 ...currentExercise,
-                timestamp: timestamp,
                 lastUpdateDate: DatetimeHelper.getUtcDateWithoutTime(new Date()).toISOString(),
             },
           }

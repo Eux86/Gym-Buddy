@@ -22,7 +22,9 @@ const ExercisesService = ({children}) => {
     }, [authUser, firebaseContext, userSelectionsService])
 
     const getByTrainingId = (trainingId) => {
-        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}/`)
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/`)
+            .orderByChild('trainingId')
+            .equalTo(trainingId)
             .on('value', snapshot => {  
                 const obj = snapshot.val();
                 const exercisesList = obj && Object.keys(obj).map( key => ({...obj[key], id: key }) );
@@ -36,17 +38,19 @@ const ExercisesService = ({children}) => {
 
     const add = async (trainingId, exercise) => {
         const timestamp = new Date().getTime();
+        console.log("TrainingId: "+trainingId);
         await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
-        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}`).push({
+        firebaseContext.firebase.db.ref(`exercises/${authUser.uid}`).push({
+            trainingId: trainingId,
             description: exercise.description,
             name: exercise.name,
-            timestamp,
+            order: exercise.order
         })
     }
 
     const del = (trainingId,id) => {
         var updates = {
-            [`exercises/${authUser.uid}/${trainingId}/${id}`]: null,
+            [`exercises/${authUser.uid}/${id}`]: null,
             [`series/${authUser.uid}/${id}`]: null,
           }
           debugger;

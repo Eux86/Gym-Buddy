@@ -1,56 +1,56 @@
 {
   "rules": {
     "exercises": {
-     "$uid": {
-       ".read": "$uid === auth.uid",
-       ".write": "$uid === auth.uid",
-       "$trainingId": {
-         "$exerciseId": {
-           ".validate": 
-             "newData.hasChild('timestamp') || newData.val()==null",
-             "timestamp": {
-               ".validate": "root.child('users/'+auth.uid+'/lastWrite').val() == newData.val() && newData.val() >= now - 1000"
-             }
-       		}
-       }
-     }
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "$exerciseId": {
+            "name": {".validate": "newData.isString() && newData.val().length > 0"},
+            "description": {".validate": "newData.isString()"},
+            "trainingId": {".validate": "root.child('trainings/'+auth.uid+'/'+newData.val()).exists()"},
+            "order": {".validate": "newData.val()!=null && newData.isNumber()"},  
+      			"lastUpdateDate": {".validate": "newData.isString()"},
+            "id": {".validate": "newData.val() === $exerciseId"},
+            "$other": { ".validate": false }
+        }
+      }
     },
     "series": {
-     "$uid": {
-       ".read": "$uid === auth.uid",
-       ".write": "$uid === auth.uid",
-       "$seriesId": {
-         "$exerciseId": {
-           ".validate": 
-             "newData.hasChild('timestamp') || newData.val()==null",
-             "timestamp": {
-               ".validate": "root.child('users/'+auth.uid+'/lastWrite').val() == newData.val() && newData.val() >= now - 1000"
-             }
-         }  
-       }
-     }
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "$seriesId": {
+          "$exerciseId": {
+            ".validate": "newData.val() != null && root.child('exercises/'+auth.uid).exists()",
+            "amount": {".validate": "newData.isNumber()"},
+            "createDate": {".validate": "newData.isString() && newData.val().length > 0"},
+            "order": {".validate": "newData.isNumber()"},
+            "repetitions": {".validate": "newData.isNumber()"},
+            "$other": { ".validate": false }
+          }
+        }
+      }
     },
     "trainings": {
-     "$uid": {
-       ".read": "$uid === auth.uid",
-       ".write": "$uid === auth.uid",
-       "$trainingId": {
-         ".validate": 
-           "newData.hasChild('timestamp') || newData.val()==null",
-           "timestamp": {
-             ".validate": "root.child('users/'+auth.uid+'/lastWrite').val() == newData.val() && newData.val() >= now - 1000"
-           }
-       }
-       
-     }
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "$trainingId": {
+          	".validate": "newData.val() != null",
+            "name": {".validate": "newData.isString() && newData.val().length > 0"},
+            "$other": { ".validate": false }
+        }
+      }
     },
     "users": {
-     "$uid": {
-       ".read": "$uid === auth.uid",
-       ".write": "true",
-       ".validate": 
-				"data.child('lastWrite').val() == null || (newData.hasChild('lastWrite') && newData.child('lastWrite').val() != null && newData.child('lastWrite').val() - 1000 > data.child('lastWrite').val())"
-     }
-   }
+      "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "true",
+          ".validate": "newData.val() != null",
+					"email": {".validate": "newData.isString() && newData.val().length > 0"},
+          "registerDate": {".validate": "newData.isString() && newData.val().length > 0"},
+          "username": {".validate": "newData.isString() && newData.val().length > 0"},
+      }
+    }
   }
 }
