@@ -41,7 +41,7 @@ const TrainingDetailsPage = (props) => {
 
     const onAdd = (newElementName) => {
         console.log("should add " + newElementName);
-        const lastIndex = Math.max(...exercises.map(x=>x.order || 0))+1;
+        const lastIndex = exercises.length == 0 ? 0 : Math.max(...exercises.map(x=>x.order || 0))+1;
         const newExercise = {
             name: newElementName,
             description: '',

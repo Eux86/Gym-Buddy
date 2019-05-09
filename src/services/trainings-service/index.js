@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 
 import { FirebaseContext } from '../../services/firebase';
 import { AuthUserContext } from '../authentication-service';
+import { AuditServiceContext } from '../audit-service';
 
 export const TrainingsServiceContext = React.createContext();
 
@@ -9,6 +10,7 @@ export const TrainingsServiceContext = React.createContext();
 const TrainingsService = ({children}) => {
     const authUser = useContext(AuthUserContext);
     const firebaseContext = useContext(FirebaseContext);
+    const audit = useContext(AuditServiceContext);
     const [trainings, setTrainings] = useState(null);
 
     useEffect(() => {
@@ -31,15 +33,15 @@ const TrainingsService = ({children}) => {
     }
 
     const add = async (name) => {
-        const timestamp = new Date().getTime();
-        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
+        const timestamp = await audit.add("AddTraining", JSON.stringify(name));
         await firebaseContext.firebase.db.ref(`trainings/${authUser.uid}`).push({
             name: name,
-            timestamp: timestamp,
+            timestamp: +timestamp
         })
     }
 
     const del = async (trainingId) => {
+        const timestamp = await audit.add("DelTraining", JSON.stringify(trainingId));
         firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${trainingId}`).once('value', snapshot => {
             var updates = {
                 [`trainings/${authUser.uid}/${trainingId}`]: null,
@@ -57,15 +59,12 @@ const TrainingsService = ({children}) => {
     }
 
     const update = async (editedTraining) => {
-        const timestamp = new Date().getTime();
-        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
-        var updates = {
-            [`trainings/${authUser.uid}/${editedTraining.id}`]: {
+        const timestamp = await audit.add("EditTraining", JSON.stringify(editedTraining));
+        await firebaseContext.firebase.db.ref(`trainings/${authUser.uid}/${editedTraining.id}`)
+            .update({
                 ...editedTraining,
                 timestamp
-            },
-          }
-        firebaseContext.firebase.db.ref().update(updates);
+            });
     }
 
     return (

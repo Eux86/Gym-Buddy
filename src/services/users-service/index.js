@@ -1,20 +1,27 @@
 import React, {useState, useEffect, useContext} from 'react'
 
 import { FirebaseContext } from '../../services/firebase';
+import { AuthUserContext } from '../authentication-service';
 
 export const UsersServiceContext = React.createContext();
 
 
 const UsersService = ({children}) => {
+    const authUser = useContext(AuthUserContext);
     const firebaseContext = useContext(FirebaseContext);
-    // const [users, setUsers] = useState(null);
+    const [user, setUser] = useState({});
 
-    const get = (id) => {
-        return firebaseContext.firebase.db.ref(`users/${id}`)
-        .once('value', snapshot => {  
-            const obj = snapshot.val();
-            const user = obj && Object.keys(obj).map( key => ({...obj[key], id: key }) );
-            return user;
+    useEffect(() => {
+      if (authUser && firebaseContext.firebase) {
+        get();
+      }
+    }, [authUser, firebaseContext, user])
+
+    const get = () => {
+        return firebaseContext.firebase.db.ref(`users/${authUser.uid}`)
+        .on('value', snapshot => {  
+          const obj = snapshot.val();
+          setUser(obj);
         });
     }
 
@@ -35,6 +42,7 @@ const UsersService = ({children}) => {
         <UsersServiceContext.Provider
           value={{
             add: add,
+            user: user,
           }}
         >
           {children}

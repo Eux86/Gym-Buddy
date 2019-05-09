@@ -3,12 +3,14 @@ import React, {useState, useEffect, useContext} from 'react'
 import { FirebaseContext } from '../../services/firebase';
 import { AuthUserContext } from '../authentication-service';
 import { UserSelectionsServiceContext } from '../user-selection-service';
+import { AuditServiceContext } from '../audit-service';
 
 export const ExercisesServiceContext = React.createContext();
 
 
 const ExercisesService = ({children}) => {
     const authUser = useContext(AuthUserContext);
+    const audit = useContext(AuditServiceContext);
     const firebaseContext = useContext(FirebaseContext);
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const [exercises, setExercises] = useState(null);
@@ -37,14 +39,14 @@ const ExercisesService = ({children}) => {
     }
 
     const add = async (trainingId, exercise) => {
-        const timestamp = new Date().getTime();
-        console.log("TrainingId: "+trainingId);
+        const timestamp = await audit.add("AddTraining", JSON.stringify({trainingId, exercise}));
         await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
         firebaseContext.firebase.db.ref(`exercises/${authUser.uid}`).push({
             trainingId: trainingId,
             description: exercise.description,
             name: exercise.name,
-            order: exercise.order
+            order: exercise.order,
+            timestamp
         })
     }
 
@@ -53,20 +55,19 @@ const ExercisesService = ({children}) => {
             [`exercises/${authUser.uid}/${id}`]: null,
             [`series/${authUser.uid}/${id}`]: null,
           }
-          debugger;
         firebaseContext.firebase.db.ref().update(updates);
     }
 
     const update = async (trainingId, exercise) => {
-        const timestamp = new Date().getTime();
-        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
-        var updates = {
-            [`exercises/${authUser.uid}/${trainingId}/${exercise.id}`]: {
-                ...exercise,
+        const timestamp = await audit.add("AddTraining", JSON.stringify({trainingId, exercise}));
+        await firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${exercise.id}`)
+            .update({
+                trainingId: trainingId,
+                description: exercise.description,
+                name: exercise.name,
+                order: exercise.order,
                 timestamp
-            }
-          }
-        firebaseContext.firebase.db.ref().update(updates);
+            });
     }
 
     return (

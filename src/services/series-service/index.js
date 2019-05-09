@@ -5,11 +5,13 @@ import { AuthUserContext } from '../authentication-service';
 import { UserSelectionsServiceContext } from '../user-selection-service';
 import * as DatetimeHelper from '../../utils/datetime-helper';
 import { ExercisesServiceContext } from '../exercises-service';
+import { AuditServiceContext } from '../audit-service';
 
 export const SeriesServiceContext = React.createContext();
 
 const SeriesService = ({children}) => {
     const authUser = useContext(AuthUserContext);
+    const audit = useContext(AuditServiceContext);
     const firebaseContext = useContext(FirebaseContext);
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
@@ -39,52 +41,51 @@ const SeriesService = ({children}) => {
     }
 
     const add = async (exerciseId, series) => {
-        const trainingId = userSelectionsService.userSelections.trainingId;
         const currentExercise = exercisesService.exercises.find(x => x.id == exerciseId);
         
-        const timestamp = new Date().getTime();
-        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
-
+        const timestamp = await audit.add("AddSeries", JSON.stringify({exerciseId, ...series}));
         const newRef = firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}`).push();
-        debugger;
         var updates = {
             [`series/${authUser.uid}/${exerciseId}/${newRef.key}`]: {
                 amount: +series.amount,
                 repetitions: +series.repetitions,
                 order: +series.order,
-                createDate: series.createDate   
+                createDate: series.createDate,
+                timestamp
             },
             [`exercises/${authUser.uid}/${exerciseId}`]:{
                 ...currentExercise,
                 lastUpdateDate: DatetimeHelper.getUtcDateWithoutTime(new Date()).toISOString(),
+                timestamp
             },
           }
         firebaseContext.firebase.db.ref().update(updates);
     }
 
     const edit = async (exerciseId, series) => {
-        const trainingId = userSelectionsService.userSelections.trainingId;
         const currentExercise = exercisesService.exercises.find(x => x.id == exerciseId);
 
-        const timestamp = new Date().getTime();
-        await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
-        
+        const timestamp = await audit.add("EditSeries", JSON.stringify({exerciseId, ...series}));
+
         var updates = {
             [`series/${authUser.uid}/${exerciseId}/${series.id}`]: {
                 amount: +series.amount,
                 repetitions: +series.repetitions,
                 order: +series.order,
-                createDate: series.createDate      
+                createDate: series.createDate,
+                timestamp  
             },
             [`exercises/${authUser.uid}/${exerciseId}`]:{
                 ...currentExercise,
                 lastUpdateDate: DatetimeHelper.getUtcDateWithoutTime(new Date()).toISOString(),
+                timestamp
             },
           }
         firebaseContext.firebase.db.ref().update(updates);
     }
 
-    const del = (exerciseId, id) => {
+    const del = async (exerciseId, id) => {
+        const timestamp = await audit.add("DelSeries", JSON.stringify({exerciseId, id}));
         firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${id}`).remove();
     }
 

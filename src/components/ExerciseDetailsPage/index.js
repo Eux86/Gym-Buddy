@@ -57,7 +57,6 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const onAddSeries = (newSeries) => {
-        debugger;
         let order = latestDaysSeries ? Math.max(...latestDaysSeries.map(x => +x.order)) + 1 : 0;
         let today = (new Date()).toISOString();
         seriesService.add(currentExerciseId, { ...newSeries, order: order, createDate: today });

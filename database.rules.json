@@ -5,12 +5,14 @@
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid",
         "$exerciseId": {
+          	".validate": "newData.hasChildren(['name','timestamp','trainingId','order'])",
             "name": {".validate": "newData.isString() && newData.val().length > 0"},
             "description": {".validate": "newData.isString()"},
             "trainingId": {".validate": "root.child('trainings/'+auth.uid+'/'+newData.val()).exists()"},
             "order": {".validate": "newData.val()!=null && newData.isNumber()"},  
       			"lastUpdateDate": {".validate": "newData.isString()"},
             "id": {".validate": "newData.val() === $exerciseId"},
+            "timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-1000 "},
             "$other": { ".validate": false }
         }
       }
@@ -19,13 +21,14 @@
       "$uid": {
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid",
-        "$seriesId": {
-          "$exerciseId": {
-            ".validate": "newData.val() != null && root.child('exercises/'+auth.uid).exists()",
+        "$exerciseId": {
+          "$seriesId": {
+            ".validate": "newData.hasChildren(['amount','order','repetitions','createDate','timestamp']) && root.child('exercises/'+auth.uid+'/'+$exerciseId).exists()",
             "amount": {".validate": "newData.isNumber()"},
             "createDate": {".validate": "newData.isString() && newData.val().length > 0"},
             "order": {".validate": "newData.isNumber()"},
             "repetitions": {".validate": "newData.isNumber()"},
+            "timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-1000 "},
             "$other": { ".validate": false }
           }
         }
@@ -36,8 +39,10 @@
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid",
         "$trainingId": {
-          	".validate": "newData.val() != null",
+          	".validate": "newData.hasChildren(['name','timestamp'])",
             "name": {".validate": "newData.isString() && newData.val().length > 0"},
+          	"timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-1000 "},
+            "id":{".validate": "newData.val() === $trainingId"},
             "$other": { ".validate": false }
         }
       }
@@ -49,7 +54,13 @@
           ".validate": "newData.val() != null",
 					"email": {".validate": "newData.isString() && newData.val().length > 0"},
           "registerDate": {".validate": "newData.isString() && newData.val().length > 0"},
-          "username": {".validate": "newData.isString() && newData.val().length > 0"},
+          "username": {".validate": "newData.isString() && newData.val().length > 0"}
+      }
+    },
+    "audit": {
+      "$uid": {
+          ".read": false,
+          ".write": "$uid === auth.uid"
       }
     }
   }
