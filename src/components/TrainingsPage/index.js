@@ -20,7 +20,7 @@ const TrainingsPage = props => {
 
     return (
         <div className="container-fluid">
-            <h1>
+            <h1 className="mt-4">
                 Trainings
             </h1>
             <br />

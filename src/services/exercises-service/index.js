@@ -65,7 +65,7 @@ const ExercisesService = ({children}) => {
                 trainingId: trainingId,
                 description: exercise.description,
                 name: exercise.name,
-                order: exercise.order,
+                order: exercise.order || 0,
                 timestamp
             });
     }

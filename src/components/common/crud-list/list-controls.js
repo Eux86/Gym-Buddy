@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ConfirmButton from '../confirm-button';
-import CancelButton from '../cancel-button';
+import ConfirmButton from '../buttons/confirm-button';
+import CancelButton from '../buttons/cancel-button';
+import AddButton from '../buttons/add-button';
 
 const INITIAL_STATE = {
     isAddMode: false,
@@ -10,9 +11,8 @@ const INITIAL_STATE = {
 function ListControls(props) {
     const [state, setState] = useState(INITIAL_STATE);
 
-    const onAddPressed = (e) => {
+    const onAddPressed = () => {
         setState({ isAddMode: true });
-        e.preventDefault();
     }
 
     const onCancelPressed = () => {
@@ -51,11 +51,7 @@ function ListControls(props) {
                     </>
                 }
                 {!state.isAddMode &&
-                    <>
-                        <button className="btn btn-primary" onClick={onAddPressed}>
-                            <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
-                    </>
+                    <AddButton onClick={onAddPressed} />
                 }
             </div>
         </form>

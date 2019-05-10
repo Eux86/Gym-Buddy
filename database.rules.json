@@ -12,7 +12,7 @@
             "order": {".validate": "newData.val()!=null && newData.isNumber()"},  
       			"lastUpdateDate": {".validate": "newData.isString()"},
             "id": {".validate": "newData.val() === $exerciseId"},
-            "timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-1000 "},
+            "timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-5000 "},
             "$other": { ".validate": false }
         }
       }
@@ -28,7 +28,7 @@
             "createDate": {".validate": "newData.isString() && newData.val().length > 0"},
             "order": {".validate": "newData.isNumber()"},
             "repetitions": {".validate": "newData.isNumber()"},
-            "timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-1000 "},
+            "timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-5000 "},
             "$other": { ".validate": false }
           }
         }
@@ -41,7 +41,7 @@
         "$trainingId": {
           	".validate": "newData.hasChildren(['name','timestamp'])",
             "name": {".validate": "newData.isString() && newData.val().length > 0"},
-          	"timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-1000 "},
+          	"timestamp": {".validate": "root.child('audit/'+auth.uid+'/'+newData.val()).exists() && newData.val()>now-5000 "},
             "id":{".validate": "newData.val() === $trainingId"},
             "$other": { ".validate": false }
         }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import DeleteButton from '../common/delete-button';
-import EditButton from '../common/edit-button';
-import ConfirmButton from '../common/confirm-button';
-import CancelButton from '../common/cancel-button';
+import DeleteButton from '../common/buttons/delete-button';
+import EditButton from '../common/buttons/edit-button';
+import ConfirmButton from '../common/buttons/confirm-button';
+import CancelButton from '../common/buttons/cancel-button';
 
 const INITIAL_STATE = {
     serie: {
@@ -70,7 +70,7 @@ const SeriesEntryTableRow = (props) => {
                             onChange={onChange} 
                             onKeyDown={onKeyPressed}/>
                     </td>
-                    <td>
+                    <td className="actions">
                         <ConfirmButton onClick={confirmEdit} />
                         <CancelButton onClick={() => setState({ ...state, isEditMode: false })} />
                     </td>

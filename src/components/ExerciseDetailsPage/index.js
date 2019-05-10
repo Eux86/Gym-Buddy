@@ -8,15 +8,19 @@ import { SeriesServiceContext } from '../../services/series-service';
 import SeriesEntryTableRow from './series-entry-table-row';
 import EditableTitle from '../common/editable-title/editable-title';
 import * as DatetimeHelper from '../../utils/datetime-helper';
+import BackBar from '../common/back-bar/back-bar';
+import { TrainingsServiceContext } from '../../services/trainings-service';
 
 
 const ExerciseDetailsPage = (props) => {
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
+    const trainingsService = useContext(TrainingsServiceContext);
     const seriesService = useContext(SeriesServiceContext);
     const currentExerciseId = userSelectionsService.userSelections.exerciseId;
+    const currentTrainingId = userSelectionsService.userSelections.trainingId;
     const currentExercise = exercisesService && exercisesService.exercises && exercisesService.exercises.find(x => x.id === currentExerciseId) || null;
-
+    const currentTraining = trainingsService && trainingsService.trainings && trainingsService.trainings.find(x => x.id === currentTrainingId) || null;
     let doneToday = false;
 
     console.log(currentExerciseId);
@@ -114,9 +118,7 @@ const ExerciseDetailsPage = (props) => {
 
     return (currentExercise &&
         <div id="exercise-details-container" className={"container-fluid "+(doneToday && "flash")}>
-            {/* <div className="go-back-link-container">
-                <a><span className="glyphicon glyphicon-menu-up" /> Back to the list </a>
-            </div> */}
+            <BackBar label={"Back to "+ (currentTraining && currentTraining.name)} linkTarget="/training" history={props.history} />            
             <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
             <table className="table">

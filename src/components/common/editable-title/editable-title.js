@@ -1,9 +1,9 @@
 import './editable-title.css'
 
 import React, { useState, useEffect } from 'react';
-import EditButton from '../edit-button';
-import CancelButton from '../cancel-button';
-import ConfirmButton from '../confirm-button';
+import EditButton from '../buttons/edit-button';
+import CancelButton from '../buttons/cancel-button';
+import ConfirmButton from '../buttons/confirm-button';
 
 
 

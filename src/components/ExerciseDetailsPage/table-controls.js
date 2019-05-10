@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
-import ConfirmButton from '../common/confirm-button';
-import CancelButton from '../common/cancel-button';
-import AddButton from '../common/add-button';
+import ConfirmButton from '../common/buttons/confirm-button';
+import CancelButton from '../common/buttons/cancel-button';
+import AddButton from '../common/buttons/add-button';
 
 const TableControls = (props) => {
     const [state, setState] = useState({});

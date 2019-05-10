@@ -1,7 +1,7 @@
-.header a:hover,
-.header a {
-    text-decoration: none !important;
-    color: white !important;
+/* .header-title a:hover,
+.header-title a {
+    text-decoration: none;
+    color: white ;
     font-weight: bold;
 }
 
@@ -13,6 +13,6 @@
 }
 
 .header .row {
-    display: flex;  /* make the row a flex container */
-    align-items: center; /* vertically center each flex item in the container */
-}
+    display: flex;  
+    align-items: center; 
+} */

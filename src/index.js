@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.css';
+import './fontawesome'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -13,7 +15,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 ReactDOM.render(
     <>
-        <link rel="stylesheet" href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" />
+        {/* <link rel="stylesheet" href="https://getbootstrap.com/docs/4.2.1/dist/css/bootstrap.min.css" /> */}
         <ServicesStore>
             <App />
         </ServicesStore>

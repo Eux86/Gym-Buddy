@@ -2,7 +2,7 @@ import './crud-list.css'
 
 import React from 'react';
 
-import DeleteButton from '../delete-button';
+import DeleteButton from '../buttons/delete-button';
 import ListControls from './list-controls';
 import SimpleTextItemEditorTemplate from './item-templates/simple-text-editor-item-template.1';
 import SimpleTextItemTemplate from './item-templates/simple-text-item-template';
@@ -19,7 +19,7 @@ const CrudList = ({ items, onItemSelect, onItemDelete, onItemAdd, semaforeCondit
                     <a
                         href="#"
                         key={item.id}
-                        className="list-group-item"
+                        className="list-group-item text-dark"
                         onClick={(event) => { event.preventDefault(); onItemSelect(item.id) }}>
                         <div className="crud-list-row">
                             {semaforeCondition ?

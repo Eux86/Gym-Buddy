@@ -6,6 +6,7 @@ import { TrainingsServiceContext } from '../../services/trainings-service';
 import EditableTitle from '../common/editable-title/editable-title';
 import CrudList from '../common/crud-list/crud-list';
 import * as DatetimeHelper from '../../utils/datetime-helper';
+import BackBar from '../common/back-bar/back-bar';
 
 
 const INITIAL_STATE = {
@@ -63,6 +64,7 @@ const TrainingDetailsPage = (props) => {
 
     return (
         <div className="container-fluid">
+            <BackBar label="Back to Trainings" linkTarget="/" history={props.history} />
             {state.currentTraining &&
                 <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }

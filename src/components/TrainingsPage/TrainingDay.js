@@ -1,5 +1,5 @@
 import React from 'react';
-import DeleteButton from '../common/delete-button';
+import DeleteButton from '../common/buttons/delete-button';
 
 const TrainingDay = (props) => {
     const { training } = props;
