@@ -10,6 +10,8 @@ import EditableTitle from '../common/editable-title/editable-title';
 import * as DatetimeHelper from '../../utils/datetime-helper';
 import BackBar from '../common/back-bar/back-bar';
 import { TrainingsServiceContext } from '../../services/trainings-service';
+import CrudList from '../common/crud-list/crud-list';
+import TwoColumnsItemTemplate from '../common/crud-list/item-templates/two-columns-item-template';
 
 
 const ExerciseDetailsPage = (props) => {
@@ -121,7 +123,7 @@ const ExerciseDetailsPage = (props) => {
             <BackBar label={"Back to "+ (currentTraining && currentTraining.name)} linkTarget="/training" history={props.history} />            
             <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
-            <table className="table">
+            {/* <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -137,6 +139,18 @@ const ExerciseDetailsPage = (props) => {
                     <TableControls addSeries={onAddSeries} />
                 </tbody>
             </table>
+             */}
+
+            {latestDaysSeries && 
+            <CrudList 
+                    items={latestDaysSeries} 
+                    onItemDelete={del} 
+                    onItemAdd={onAddSeries}
+                    itemTemplate={<TwoColumnsItemTemplate />}
+                    itemHeader={<TwoColumnsItemTemplate item={{repetitions: 'Repetitions', amount: 'Amount'}} />}
+                    />
+            }
+
             <div className="row text-center">
                 <div className="col">
                     <button
