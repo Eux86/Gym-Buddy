@@ -1,11 +1,8 @@
 import './index.css';
 
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import SignOutButton from '../sign-out-button';
 import { AuthUserContext } from '../../services/authentication-service';
 import { UsersServiceContext } from '../../services/users-service';
-import UserCircle from '../common/user-session/user-circle';
 import { withRouter } from 'react-router-dom'
 import * as ROUTES from '../../constants/routes'
 import { FirebaseContext } from '../../services/firebase';
@@ -15,7 +12,7 @@ const Header = ({ history }) => {
     const authUser = useContext(AuthUserContext);
     const userContext = useContext(UsersServiceContext);
     const firebase = useContext(FirebaseContext);
-    
+
     const username = userContext.user && userContext.user.username;
 
     const onBack = (event) => {
@@ -34,16 +31,13 @@ const Header = ({ history }) => {
 
     return (
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Gym Buddy</a>
+            <a class="navbar-brand" href="#" onClick={() => history.push('/')}>Gym Buddy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#" onClick={() => history.push('/')}>Home <span class="sr-only">(current)</span></a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" onClick={logOut}>Sign Out</a>
                     </li>
