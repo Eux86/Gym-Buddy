@@ -12,6 +12,7 @@ import BackBar from '../common/back-bar/back-bar';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import CrudList from '../common/crud-list/crud-list';
 import TwoColumnsItemTemplate from '../common/crud-list/item-templates/two-columns-item-template';
+import TwoColumnsItemEditorTemplate from '../common/crud-list/item-templates/two-columns-editor-item-template';
 
 
 const ExerciseDetailsPage = (props) => {
@@ -146,7 +147,9 @@ const ExerciseDetailsPage = (props) => {
                     items={latestDaysSeries} 
                     onItemDelete={del} 
                     onItemAdd={onAddSeries}
+                    onItemEdit={(original, edited) => editSerie(original,edited)}
                     itemTemplate={<TwoColumnsItemTemplate />}
+                    itemEditTemplate={<TwoColumnsItemEditorTemplate/>}
                     itemHeader={<TwoColumnsItemTemplate item={{repetitions: 'Repetitions', amount: 'Amount'}} />}
                     />
             }

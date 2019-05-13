@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import * as ROUTES from '../../constants/routes'
 import { withRouter } from 'react-router-dom'
 import TrainingDay from './TrainingDay';
-import ListControls from '../common/crud-list/list-controls';
+import AddItemTemplateWrapper from '../common/crud-list/add-item-template-wrapper';
 import { TrainingsServiceContext } from '../../services/trainings-service';
 import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import OnlyIfLogged from '../../services/only-if-logged';

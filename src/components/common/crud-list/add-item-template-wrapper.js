@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     newElementName: ""
 }
 
-function ListControls(props) {
+function AddItemTemplateWrapper(props) {
     const [state, setState] = useState(INITIAL_STATE);
 
     const onAddPressed = () => {
@@ -59,4 +59,4 @@ function ListControls(props) {
 }
 
 
-export default ListControls;
+export default AddItemTemplateWrapper;
