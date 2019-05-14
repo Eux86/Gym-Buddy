@@ -9,7 +9,7 @@ const ButtonContainer = (props) => {
     }
 
     return (
-        <button type="button" className={"btn  "+props.className || ""} onClick={onClickInternal}>
+        <button type="button" className={"btn  "+props.className || ""} onClick={onClickInternal} disabled={props.disabled}>
             {props.children}
         </button>
     )
