@@ -15,6 +15,7 @@ const TwoColumnsItemEditorTemplate = ({onSubmit, onChange, value}) => {
     return (
         <>
             <input
+                type="number" step="1" inputMode="numeric" pattern="[0-9]*"
                 name="repetitions"
                 type="text"
                 className="form-control"
@@ -22,6 +23,7 @@ const TwoColumnsItemEditorTemplate = ({onSubmit, onChange, value}) => {
                 onChange={onChangeInternal}
                 onKeyPress={onKeyPressed} />
             <input
+                type="number" step="1" inputMode="numeric" pattern="[0-9]*"
                 name="amount"
                 type="text"
                 className="form-control"

@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     newElementName: ""
 }
 
-function AddItemTemplateWrapper(props) {
+function AddItemTemplateWrapper({onAdd,children}) {
     const [state, setState] = useState(INITIAL_STATE);
 
     const onAddPressed = () => {
@@ -20,7 +20,7 @@ function AddItemTemplateWrapper(props) {
     }
 
     const onConfirmPressed = () => {
-        props.onAdd(state.newElementName);
+        onAdd(state.newElementName);
         setState(INITIAL_STATE);
     }
 
@@ -32,7 +32,7 @@ function AddItemTemplateWrapper(props) {
         onConfirmPressed();
     }
 
-    const childrenWithProps = React.Children.map(props.children, child =>
+    const childrenWithProps = React.Children.map(children, child =>
         React.cloneElement(child, { value: state.newElementName, onChange: onChange, onSubmit: onSubmit })
     );
 
