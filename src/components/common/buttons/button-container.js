@@ -8,8 +8,6 @@ const ButtonContainer = (props) => {
         e.stopPropagation();
     }
 
-    console.log(props)
-
     return (
         <button type="button" className={"btn  "+props.className || ""} onClick={onClickInternal}>
             {props.children}

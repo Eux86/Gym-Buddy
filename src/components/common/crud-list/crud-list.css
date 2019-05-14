@@ -1,17 +1,36 @@
 
-.crud-list-row {
-    display: grid;
-    grid-template-columns: 15px auto 40px;
-    justify-items: center;
-    align-items: center;
-    grid-gap: 10px;
+.crud-list-row, .crud-list-header {
+    display: flex;
+}
+.crud-list-row{
     height: 50px;
 }
 
 .crud-list-row .crud-list-item-template-content {
-    justify-self: start;
+    display: flex;
+    flex: 1 0 5em;
 }
 
+.crud-list-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.list-group-header { /* overriding bootstrap's defaults */
+    padding-bottom: 5px !important;
+    border: none !important;
+    font-weight: bold;
+}
+
+
+.led-column {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    margin-right: 15px;
+}
 
 .led-green {
     /* margin: 20px auto; */
