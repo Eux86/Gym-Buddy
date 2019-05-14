@@ -16,6 +16,7 @@ import TwoColumnsItemEditorTemplate from '../common/crud-list/item-templates/two
 
 
 const ExerciseDetailsPage = (props) => {
+    console.log("Exercise details page rerender");
     const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
     const trainingsService = useContext(TrainingsServiceContext);
@@ -26,10 +27,10 @@ const ExerciseDetailsPage = (props) => {
     const currentTraining = trainingsService && trainingsService.trainings && trainingsService.trainings.find(x => x.id === currentTrainingId) || null;
     let doneToday = false;
 
-    console.log(currentExerciseId);
-
     let latestDaysSeries = null;
     let mostRecentMoment = currentExercise && currentExercise.lastUpdateDate;
+
+    useEffect(()=>{},[latestDaysSeries]);
 
     if (seriesService.series && seriesService.series.length>0) {
         const seriesByDate = groupBy(seriesService.series, (x) => DatetimeHelper.getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
@@ -63,11 +64,13 @@ const ExerciseDetailsPage = (props) => {
         }
     }
 
-    const onAddSeries = (newSeries) => {
-        let order = latestDaysSeries ? Math.max(...latestDaysSeries.map(x => +x.order)) + 1 : 0;
-        let today = (new Date()).toISOString();
-        seriesService.add(currentExerciseId, { ...newSeries, order: order, createDate: today });
-
+    const onAddSeries = async (newSeries) => {
+        const order = latestDaysSeries ? Math.max(...latestDaysSeries.map(x => +x.order)) + 1 : 0;
+        const today = (new Date()).toISOString();
+        const toAdd = { ...newSeries, order: order, createDate: today };
+        latestDaysSeries.push(toAdd);
+        const result = await seriesService.add(currentExerciseId, toAdd);
+        
         // If the other presented series are older, then we make a copy of them with today's date
         copySeriesWithTodaysDate(latestDaysSeries);
     }
@@ -112,6 +115,7 @@ const ExerciseDetailsPage = (props) => {
         if (series){
             const today = (new Date()).toISOString();
             for (let entry of series) {
+                // If this series was added in the past, then make a copy with today's date
                 if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
                     seriesService.add(currentExerciseId, { ...entry, createDate: today });
                 }
@@ -124,24 +128,6 @@ const ExerciseDetailsPage = (props) => {
             <BackBar label={"Back to "+ (currentTraining && currentTraining.name)} linkTarget="/training" history={props.history} />            
             <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
-            {/* <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Repetitions</th>
-                        <th scope="col">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {latestDaysSeries &&
-                        latestDaysSeries.map(serie =>
-                            <SeriesEntryTableRow key={serie.id} serie={serie} del={del} edit={(editedSerie) => editSerie(serie, editedSerie)} />
-                        )}
-                    <TableControls addSeries={onAddSeries} />
-                </tbody>
-            </table>
-             */}
-
             {latestDaysSeries && 
             <CrudList 
                     items={latestDaysSeries} 
@@ -153,7 +139,6 @@ const ExerciseDetailsPage = (props) => {
                     itemHeader={<TwoColumnsItemTemplate item={{repetitions: 'Repetitions', amount: 'Amount'}} />}
                     />
             }
-
             <div className="row text-center">
                 <div className="col">
                     <button

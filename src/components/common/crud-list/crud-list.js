@@ -68,8 +68,13 @@ const CrudList = ({ items, onItemSelect, onItemDelete, onItemEdit, onItemAdd, se
                     return <a
                         href="#"
                         key={item.id}
-                        className="list-group-item text-dark"
+                        className={"list-group-item list-group-item-action " + (item.temp ? 'disabled' : '')}
                         onClick={event => onItemSelectInternal(event, item)}>
+                        {item.temp &&
+                            <div className="hover">
+                                <div class="lds-facebook center-absolute"><div></div><div></div><div></div></div>
+                            </div>
+                        }
                         <div className="crud-list-row">
                             {semaforeCondition &&
                                 <div className="led-column">
@@ -88,8 +93,8 @@ const CrudList = ({ items, onItemSelect, onItemDelete, onItemEdit, onItemAdd, se
                                         }
                                     </div>
                                     <div className="crud-list-actions">
-                                        {onItemDelete && <DeleteButton onClick={() => onItemDelete(item)} />}
-                                        {onItemEdit && <EditButton onClick={() => onEditInternal(item)} />}
+                                        {onItemDelete && <DeleteButton disabled={item.temp} onClick={() => onItemDelete(item)} />}
+                                        {onItemEdit && <EditButton disabled={item.temp} onClick={() => onEditInternal(item)} />}
                                     </div>
                                 </>
                                 :

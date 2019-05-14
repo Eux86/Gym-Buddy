@@ -39,6 +39,9 @@ const ExercisesService = ({children}) => {
     }
 
     const add = async (trainingId, exercise) => {
+        // addint a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
+        setExercises([...exercises,{...exercise, temp: true}]);
+
         const timestamp = await audit.add("AddTraining", JSON.stringify({trainingId, exercise}));
         await firebaseContext.firebase.db.ref(`users/${authUser.uid}`).update({lastWrite: timestamp});
         firebaseContext.firebase.db.ref(`exercises/${authUser.uid}`).push({
@@ -50,15 +53,13 @@ const ExercisesService = ({children}) => {
         })
     }
 
-    const del = (trainingId,id) => {
-        var updates = {
-            [`exercises/${authUser.uid}/${id}`]: null,
-            [`series/${authUser.uid}/${id}`]: null,
-          }
-        firebaseContext.firebase.db.ref().update(updates);
-    }
-
     const update = async (trainingId, exercise) => {
+        // adding a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
+        const original = exercises.find(x=>x.id===exercise.id);
+        const tempExercises = [...exercises];
+        tempExercises.splice(tempExercises.indexOf(original),1,{...exercise, temp: true})
+        setExercises(tempExercises);
+
         const timestamp = await audit.add("AddTraining", JSON.stringify({trainingId, exercise}));
         await firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${exercise.id}`)
             .update({
@@ -68,6 +69,15 @@ const ExercisesService = ({children}) => {
                 order: exercise.order || 0,
                 timestamp
             });
+    }
+
+
+    const del = (trainingId,id) => {
+        var updates = {
+            [`exercises/${authUser.uid}/${id}`]: null,
+            [`series/${authUser.uid}/${id}`]: null,
+          }
+        firebaseContext.firebase.db.ref().update(updates);
     }
 
     return (
