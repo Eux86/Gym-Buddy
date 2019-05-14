@@ -95,6 +95,12 @@ const SeriesService = ({children}) => {
     }
 
     const del = async (exerciseId, id) => {
+        // adding a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
+        const original = series.find(x=>x.id===id);
+        const tempSeries = [...series];
+        tempSeries.splice(tempSeries.indexOf(original),1,{...original, temp: true})
+        setSeries(tempSeries);
+        
         const timestamp = await audit.add("DelSeries", JSON.stringify({exerciseId, id}));
         firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${id}`).remove();
     }

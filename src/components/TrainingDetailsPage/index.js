@@ -69,8 +69,15 @@ const TrainingDetailsPage = (props) => {
                 <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }
             <br />
-            {(!exercises || exercises.length == 0) &&
-                <div className="text-muted text-center m-5">Add here the exercises of your training</div>
+            {!exercises && 
+                <p className="text-muted text-center">
+                    Loading...
+                </p>
+            }
+            {(exercises && exercises.length == 0) && 
+                <p className="text-muted text-center">
+                    Add here the exercises of your training
+                </p>
             }
             {exercises &&
                 <CrudList 

@@ -30,16 +30,14 @@ const ExerciseDetailsPage = (props) => {
     let latestDaysSeries = null;
     let mostRecentMoment = currentExercise && currentExercise.lastUpdateDate;
 
-    useEffect(()=>{},[latestDaysSeries]);
-
-    if (seriesService.series && seriesService.series.length>0) {
+    if (seriesService.series) {
         const seriesByDate = groupBy(seriesService.series, (x) => DatetimeHelper.getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
         const orderedDates = Object.keys(seriesByDate).sort((a, b) => {
             return new Date(a) <= new Date(b) ? 1 : -1;
         });
         mostRecentMoment = orderedDates[0];
         //exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, lastUpdateDate: mostRecentMoment });
-        latestDaysSeries = seriesByDate[mostRecentMoment];
+        latestDaysSeries = seriesByDate[mostRecentMoment] || [];
     }
 
     if (mostRecentMoment) {
@@ -65,12 +63,13 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const onAddSeries = async (newSeries) => {
-        const order = latestDaysSeries ? Math.max(...latestDaysSeries.map(x => +x.order)) + 1 : 0;
+        debugger;
+        const order = latestDaysSeries.length == 0 ? 0 : Math.max(...latestDaysSeries.map(x => +x.order)) + 1;
         const today = (new Date()).toISOString();
         const toAdd = { ...newSeries, order: order, createDate: today };
         latestDaysSeries.push(toAdd);
         const result = await seriesService.add(currentExerciseId, toAdd);
-        
+
         // If the other presented series are older, then we make a copy of them with today's date
         copySeriesWithTodaysDate(latestDaysSeries);
     }
@@ -101,7 +100,7 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const onUndoTodayClick = (event) => {
-        if (window.confirm("All edits done today will be canceled, are you sure?")){
+        if (window.confirm("All edits done today will be canceled, are you sure?")) {
             const today = (new Date()).toISOString();
             for (let entry of latestDaysSeries) {
                 if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
@@ -112,7 +111,7 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const copySeriesWithTodaysDate = (series) => {
-        if (series){
+        if (series) {
             const today = (new Date()).toISOString();
             for (let entry of series) {
                 // If this series was added in the past, then make a copy with today's date
@@ -124,20 +123,20 @@ const ExerciseDetailsPage = (props) => {
     }
 
     return (currentExercise &&
-        <div id="exercise-details-container" className={"container-fluid "+(doneToday && "flash")}>
-            <BackBar label={"Back to "+ (currentTraining && currentTraining.name)} linkTarget="/training" history={props.history} />            
+        <div id="exercise-details-container" className={"container-fluid " + (doneToday && "flash")}>
+            <BackBar label={"Back to " + (currentTraining && currentTraining.name)} linkTarget="/training" history={props.history} />
             <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
             <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
-            {latestDaysSeries && 
-            <CrudList 
-                    items={latestDaysSeries} 
-                    onItemDelete={del} 
+            {latestDaysSeries &&
+                <CrudList
+                    items={latestDaysSeries}
+                    onItemDelete={del}
                     onItemAdd={onAddSeries}
-                    onItemEdit={(original, edited) => editSerie(original,edited)}
+                    onItemEdit={(original, edited) => editSerie(original, edited)}
                     itemTemplate={<TwoColumnsItemTemplate />}
-                    itemEditTemplate={<TwoColumnsItemEditorTemplate/>}
-                    itemHeader={<TwoColumnsItemTemplate item={{repetitions: 'Repetitions', amount: 'Amount'}} />}
-                    />
+                    itemEditTemplate={<TwoColumnsItemEditorTemplate />}
+                    itemHeader={<TwoColumnsItemTemplate item={{ repetitions: 'Repetitions', amount: 'Amount' }} />}
+                />
             }
             <div className="row text-center">
                 <div className="col">

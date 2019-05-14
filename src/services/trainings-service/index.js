@@ -35,7 +35,6 @@ const TrainingsService = ({children}) => {
     const add = async (name) => {
         // addint a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
         setTrainings([...trainings,{name, temp: true}]);
-        // await new Promise(resolve => setTimeout(resolve, 5000));
 
         const timestamp = await audit.add("AddTraining", JSON.stringify(name));
         await firebaseContext.firebase.db.ref(`trainings/${authUser.uid}`).push({
@@ -60,6 +59,12 @@ const TrainingsService = ({children}) => {
     }
 
     const del = async (training) => {
+        // adding a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
+        const original = trainings.find(x=>x.id===training.id);
+        const tempTrainings = [...trainings];
+        tempTrainings.splice(tempTrainings.indexOf(original),1,{...training, temp: true})
+        setTrainings(tempTrainings);
+
         const timestamp = await audit.add("DelTraining", JSON.stringify(training.id));
         firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${training.id}`).once('value', snapshot => {
             var updates = {
