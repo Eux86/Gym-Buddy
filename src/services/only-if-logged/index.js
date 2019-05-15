@@ -7,6 +7,12 @@ const OnlyIfLogged = (props) => {
     const firebaseContext = useContext(FirebaseContext);
     const authUser = useContext(AuthUserContext);
 
+    if (authUser===undefined) return null;
+    if (authUser===null) {
+        props.history.push(ROUTES.SIGN_IN);
+        return null;
+    }
+
     let listener = null;
     useEffect(() => {
         if (firebaseContext.firebase) {
@@ -30,12 +36,15 @@ const OnlyIfLogged = (props) => {
     if (!props.children) {
         return null;
     }
-    const childrenWithProps = props.children.map(x => React.cloneElement(x, { ...props }));
+    const childrenWithProps = React.Children.map(props.children, child =>
+        React.cloneElement(child, { ...props })
+    );
+    // const childrenWithProps = props.children.map(x => React.cloneElement(x, { ...props }));
 
 
     return (
         <>
-            {authUser &&
+            {
                 childrenWithProps
             }
         </>
