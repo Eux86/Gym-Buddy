@@ -1,11 +1,8 @@
 import './index.css';
 
 import React, { useContext, useState, useEffect } from 'react';
-import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
-import TableControls from './table-controls';
 import { SeriesServiceContext } from '../../services/series-service';
-import SeriesEntryTableRow from './series-entry-table-row';
 import EditableTitle from '../common/editable-title/editable-title';
 import * as DatetimeHelper from '../../utils/datetime-helper';
 import BackBar from '../common/back-bar/back-bar';
@@ -16,35 +13,61 @@ import TwoColumnsItemEditorTemplate from '../common/crud-list/item-templates/two
 
 
 const ExerciseDetailsPage = (props) => {
+    const [state, setState] = useState({
+        currentExercise: null,
+        currentTraining: null,
+        latestDaysSeries: null
+    })
     console.log("Exercise details page rerender");
-    const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
     const trainingsService = useContext(TrainingsServiceContext);
     const seriesService = useContext(SeriesServiceContext);
-    const currentExerciseId = userSelectionsService.userSelections.exerciseId;
-    const currentTrainingId = userSelectionsService.userSelections.trainingId;
-    const currentExercise = exercisesService && exercisesService.exercises && exercisesService.exercises.find(x => x.id === currentExerciseId) || null;
-    const currentTraining = trainingsService && trainingsService.trainings && trainingsService.trainings.find(x => x.id === currentTrainingId) || null;
+    const currentExerciseId = props.match.params.exerciseId;
+    const currentTrainingId = props.match.params.trainingId;
+    
     let doneToday = false;
+    let latestDaysSeries = state.latestDaysSeries;
 
-    let latestDaysSeries = null;
-    let mostRecentMoment = currentExercise && currentExercise.lastUpdateDate;
-
-    if (seriesService.series) {
-        const seriesByDate = groupBy(seriesService.series, (x) => DatetimeHelper.getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
-        const orderedDates = Object.keys(seriesByDate).sort((a, b) => {
-            return new Date(a) <= new Date(b) ? 1 : -1;
-        });
-        mostRecentMoment = orderedDates[0];
-        //exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, lastUpdateDate: mostRecentMoment });
-        latestDaysSeries = seriesByDate[mostRecentMoment] || [];
-    }
-
+    const mostRecentMoment = state.latestDaysSeries && state.latestDaysSeries.length > 0 && DatetimeHelper.getUtcDateWithoutTime(new Date(state.latestDaysSeries[0].createDate));
     if (mostRecentMoment) {
-        doneToday = DatetimeHelper.getUtcDateWithoutTime(new Date(mostRecentMoment)).getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date()).getTime();
+        doneToday = mostRecentMoment.getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date()).getTime();
     }
 
-    const del = (seriesToDelete) => {
+    // if (state.currentExercise && DatetimeHelper.getUtcDateWithoutTime(new Date(mostRecentMoment)) != DatetimeHelper.getUtcDateWithoutTime(new Date(state.currentExercise.lastUpdateDate))){
+    //    exercisesService.update({...state.currentExercise, lastUpdateDate: mostRecentMoment});
+    // }
+    
+
+    useEffect( () => {
+        init();
+    }, [seriesService,trainingsService, exercisesService]);
+
+    const init = async () => {
+        await refreshTraining();
+        await refreshExercise();
+        await refreshList();
+    }
+
+    const refreshList = async () => {
+        const latestDaysSeries = await seriesService.getLastDayByExerciseId(currentExerciseId);
+        setState(state => ({...state, latestDaysSeries}));
+    }
+
+    const refreshExercise = async () => {
+        const currentExercise = await exercisesService.getById(currentExerciseId);
+        setState(state => ({...state, currentExercise}));
+    }
+
+    const refreshTraining = async () => {
+        const currentTraining = await trainingsService.getById(currentTrainingId);
+        setState(state => ({...state, currentTraining}));
+    }
+
+    const del = async (seriesToDelete) => {
+        const tempSeries = state.latestDaysSeries;
+        tempSeries.splice(tempSeries.indexOf(seriesToDelete), 1, { ...seriesToDelete, temp: true })
+        setState({...state,latestDaysSeries: tempSeries});
+        
         const seriesToDeleteCreateDate = DatetimeHelper.getUtcDateWithoutTime(new Date(seriesToDelete.createDate));
         const today = DatetimeHelper.getUtcDateWithoutTime(new Date());
         const copySeriesToNewDate = seriesToDeleteCreateDate.getTime() != today.getTime();
@@ -53,81 +76,101 @@ const ExerciseDetailsPage = (props) => {
             // series that we want to delete 
             for (let entry of latestDaysSeries) {
                 if (entry.id !== seriesToDelete.id) {
-                    seriesService.add(currentExerciseId, { ...entry, createDate: today.toISOString() });
+                    await seriesService.add(currentExerciseId, { ...entry, createDate: today.toISOString() });
                 }
             }
         } else {
             // if it is an entry from today's series, then just delete it
-            seriesService.del(currentExerciseId, seriesToDelete.id);
+            await seriesService.del(currentExerciseId, seriesToDelete.id);
         }
+
+        refreshList();
     }
 
     const onAddSeries = async (newSeries) => {
-        debugger;
+        setState( {...state, latestDaysSeries: [...state.latestDaysSeries, { ...newSeries, temp: true }]} );
+
         const order = latestDaysSeries.length == 0 ? 0 : Math.max(...latestDaysSeries.map(x => +x.order)) + 1;
         const today = (new Date()).toISOString();
         const toAdd = { ...newSeries, order: order, createDate: today };
-        latestDaysSeries.push(toAdd);
         const result = await seriesService.add(currentExerciseId, toAdd);
 
         // If the other presented series are older, then we make a copy of them with today's date
-        copySeriesWithTodaysDate(latestDaysSeries);
+        await copySeriesWithTodaysDate(latestDaysSeries);
+
+        refreshList();
     }
 
-    const editSerie = (original, edited) => {
+    const editSerie = async (original, edited) => {
+        const tempSeries = state.latestDaysSeries;
+        tempSeries.splice(tempSeries.indexOf(original), 1, { ...edited, temp: true })
+        setState({...state, latestDaysSeries: tempSeries });
+
         const originalDate = DatetimeHelper.getUtcDateWithoutTime(new Date(original.createDate));
         const today = DatetimeHelper.getUtcDateWithoutTime(new Date());
         const copySeriesToNewDate = originalDate.getTime() != today.getTime();
         if (copySeriesToNewDate) {
             for (let entry of latestDaysSeries) {
                 if (entry.id === edited.id) {
-                    seriesService.add(currentExerciseId, { ...edited, createDate: today.toISOString() });
+                    await seriesService.add(currentExerciseId, { ...edited, createDate: today.toISOString() });
                 } else {
-                    seriesService.add(currentExerciseId, { ...entry, createDate: today.toISOString() });
+                    await seriesService.add(currentExerciseId, { ...entry, createDate: today.toISOString() });
                 }
             }
         } else {
-            seriesService.edit(currentExerciseId, { ...edited, createDate: today.toISOString() });
+            await seriesService.edit(currentExerciseId, { ...edited, createDate: today.toISOString() });
         }
+        refreshList();
     }
 
-    const onExerciseTitleChange = (newTitle) => {
-        exercisesService.update(userSelectionsService.userSelections.trainingId, { ...currentExercise, name: newTitle });
+    const onExerciseTitleChange = async (newTitle) => {
+        await exercisesService.update(currentTrainingId, { ...state.currentExercise, name: newTitle });
+        refreshExercise();
     }
 
-    const onDoneTodayClick = (event) => {
-        copySeriesWithTodaysDate(latestDaysSeries);
+    const onDoneTodayClick = async () => {
+        await copySeriesWithTodaysDate(latestDaysSeries);
+        refreshList();
+        refreshExercise();
     }
 
-    const onUndoTodayClick = (event) => {
+    const onUndoTodayClick = async () => {
         if (window.confirm("All edits done today will be canceled, are you sure?")) {
             const today = (new Date()).toISOString();
             for (let entry of latestDaysSeries) {
                 if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
-                    seriesService.del(currentExerciseId, entry.id);
+                    await seriesService.del(currentExerciseId, entry.id);
                 }
             }
         }
+        refreshList();
+        refreshExercise();
     }
 
-    const copySeriesWithTodaysDate = (series) => {
+    const copySeriesWithTodaysDate = async (series) => {
         if (series) {
             const today = (new Date()).toISOString();
             for (let entry of series) {
                 // If this series was added in the past, then make a copy with today's date
                 if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() !== DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
-                    seriesService.add(currentExerciseId, { ...entry, createDate: today });
+                    await seriesService.add(currentExerciseId, { ...entry, createDate: today });
                 }
             }
         }
     }
 
-    return (currentExercise &&
+
+   
+    return (state.currentExercise &&
         <div id="exercise-details-container" className={"container-fluid " + (doneToday && "flash")}>
-            <BackBar label={"Back to " + (currentTraining && currentTraining.name)} linkTarget="/training" history={props.history} />
-            <EditableTitle title={currentExercise.name} onChange={onExerciseTitleChange} />
-            <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
-            {latestDaysSeries &&
+            <BackBar label={"Back to " + (state.currentTraining && state.currentTraining.name)} linkTarget={`/training/${currentTrainingId}`} history={props.history} />
+            {state.currentExercise &&
+                <>
+                    <EditableTitle title={state.currentExercise.name} onChange={onExerciseTitleChange} />
+                    <span className="text-muted">Last updated: {new Date(mostRecentMoment).toLocaleDateString()}</span>
+                </>
+            }
+            {state.latestDaysSeries &&
                 <CrudList
                     items={latestDaysSeries}
                     onItemDelete={del}
@@ -168,15 +211,6 @@ const ExerciseDetailsPage = (props) => {
 
 export default ExerciseDetailsPage;
 
-export const groupBy = (list, fun) => {
-    return list.reduce((acc, listEl) => {
-        if (!acc[fun(listEl)]) {
-            acc = { ...acc, [fun(listEl)]: [listEl] };
-        } else {
-            acc[fun(listEl)].push(listEl);
-        }
-        return acc
-    }, {})
-};
+
 
 

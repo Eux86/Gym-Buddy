@@ -72,7 +72,7 @@ const CrudList = ({ items, onItemSelect, onItemDelete, onItemEdit, onItemAdd, se
                         onClick={event => onItemSelectInternal(event, item)}>
                         {item.temp &&
                             <div className="hover">
-                                <div class="lds-facebook center-absolute"><div></div><div></div><div></div></div>
+                                <div className="lds-facebook center-absolute"><div></div><div></div><div></div></div>
                             </div>
                         }
                         <div className="crud-list-row">
