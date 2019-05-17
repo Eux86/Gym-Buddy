@@ -4,20 +4,27 @@ import * as ROUTES from '../../constants/routes';
 import { FirebaseContext } from '../../services/firebase';
 import { SignUpLink } from '../sign-up-page';
 import { PasswordForgetLink } from '../password-forget';
+import { AuthUserContext } from '../../services/authentication-service';
 
 
-const SignInPage = () => (
-    <div className="container">
-        <div className="row justify-content-center">
-            <div className="col">
-                <h1>Sign-In</h1>
-                <SignInForm />
-                <PasswordForgetLink />
-                <SignUpLink />
+const SignInPage = ({ history }) => {
+
+    const auth = useContext(AuthUserContext)
+    if (auth) history.push(ROUTES.LANDING);
+
+    return (
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col">
+                    <h1>Sign-In</h1>
+                    <SignInForm />
+                    <PasswordForgetLink />
+                    <SignUpLink />
+                </div>
             </div>
         </div>
-    </div>
-);
+    )
+};
 
 const INITIAL_STATE = {
     email: '',

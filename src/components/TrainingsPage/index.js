@@ -18,29 +18,31 @@ const TrainingsPage = props => {
     }
 
     return (
-        <div className="container-fluid">
-            <h1 className="mt-4">
-                Trainings
-            </h1>
-            <br />
-            {!trainingsService.trainings && 
-                <p className="text-muted text-center">
-                    Loading...
+        <OnlyIfLogged history={props.history}>
+            <div className="container-fluid">
+                <h1 className="mt-4">
+                    Trainings
+                </h1>
+                <br />
+                {!trainingsService.trainings &&
+                    <p className="text-muted text-center">
+                        Loading...
                 </p>
-            }
-            {(trainingsService.trainings && trainingsService.trainings.length == 0) && 
-                <p className="text-muted text-center">
-                    Add your trainings here
+                }
+                {(trainingsService.trainings && trainingsService.trainings.length == 0) &&
+                    <p className="text-muted text-center">
+                        Add your trainings here
                 </p>
-            }
-            {trainingsService.trainings && 
-                <CrudList 
-                        items={trainingsService.trainings} 
-                        onItemSelect={onSelectTraining} 
-                        onItemDelete={trainingsService.del} 
-                        onItemAdd={trainingsService.add}/>
-            }
-        </div>
+                }
+                {trainingsService.trainings &&
+                    <CrudList
+                        items={trainingsService.trainings}
+                        onItemSelect={onSelectTraining}
+                        onItemDelete={trainingsService.del}
+                        onItemAdd={trainingsService.add} />
+                }
+            </div>
+        </OnlyIfLogged>
     );
 };
 
