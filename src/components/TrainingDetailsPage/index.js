@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import * as ROUTES from '../../constants/routes';
 import { TrainingsServiceContext } from '../../services/trainings-service';
@@ -10,50 +9,65 @@ import BackBar from '../common/back-bar/back-bar';
 
 
 const INITIAL_STATE = {
-    currentTraining: [],
+    currentTraining: {},
+    exercises: []
 }
 
 const TrainingDetailsPage = (props) => {
-    const [state, setState] = useState({ INITIAL_STATE });
-
-    const userSelectionsService = useContext(UserSelectionsServiceContext);
+    console.log("re-render");
     const exercisesService = useContext(ExercisesServiceContext);
     const trainingService = useContext(TrainingsServiceContext);
-    const exercises = exercisesService && exercisesService.exercises && exercisesService.exercises.
-                        sort((a,b)=>a.order > b.order);
+    const [state, setState] = useState(INITIAL_STATE);
+
+    const trainingId = props.match.params.id;
 
     useEffect(() => {
-        if (userSelectionsService.userSelections.trainingId && trainingService.trainings) {
-            let currentTraining = trainingService.trainings.find(x => x.id === userSelectionsService.userSelections.trainingId);
-            
-            setState({ ...state, currentTraining: currentTraining });
-        }
-    }, [trainingService])
+        refreshExercises();
+        refreshTrainingName();
+    }, [trainingService, exercisesService])
 
-    const deleteExercise = (id) => {
-        exercisesService.del(state.currentTraining.id, id);
+    const refreshTrainingName = () => {
+        trainingService.getById(trainingId).then(currentTraining => {
+            console.log("Promise resolved with " + currentTraining);
+            setState(state=> ({ ...state, currentTraining }));
+        });
+    }
+
+    const refreshExercises = () => {
+        exercisesService.getByTrainingId(trainingId).then(exercises => {
+            console.log("Promise resolved with " + exercises);
+            setState(state => ({ ...state, exercises }));
+        });
+    }
+
+    const deleteExercise = async (exercise) => {
+        const tempExercises = [...state.exercises];
+        tempExercises.splice(tempExercises.indexOf(exercise), 1, { ...exercise, temp: true })
+        setState({ ...state, exercises: tempExercises });
+        await exercisesService.del(exercise);
+        refreshExercises();
     }
 
     const onClick = (id) => {
-        console.log("should slect exercise id: " + id);
-        userSelectionsService.setSelectedExercise(id);
-        props.history.push(ROUTES.EXERCISE_DETAILS);
+        props.history.push(`${ROUTES.EXERCISE_DETAILS}/${trainingId}/${id}`);
     }
 
-    const onAdd = (newElementName) => {
-        console.log("should add " + newElementName);
-        const lastIndex = exercises.length == 0 ? 0 : Math.max(...exercises.map(x=>x.order || 0))+1;
+    const onAdd = async (newElementName) => {
+        setState({ ...state, exercises: [...state.exercises, { name: newElementName, temp: true }] });
+        const lastIndex = state.exercises.length == 0 ? 0 : Math.max(...state.exercises.map(x => x.order || 0)) + 1;
         const newExercise = {
             name: newElementName,
             description: '',
             order: lastIndex,
         }
-        exercisesService.add(state.currentTraining.id, newExercise);
+        await exercisesService.add(state.currentTraining.id, newExercise);
+        refreshExercises();
     }
 
-    const onNameChange = (currentTraining, newName) => {
+    const onNameChange = async (currentTraining, newName) => {
         console.log(newName);
-        trainingService.update({ ...currentTraining, name: newName });
+        await trainingService.update({ ...currentTraining, name: newName });
+        refreshTrainingName();
     }
 
     const exerciseDoneToday = (exercise) => {
@@ -62,6 +76,7 @@ const TrainingDetailsPage = (props) => {
         return lastUpdate === today;
     }
 
+    const orderedExercises = state.exercises && state.exercises.sort((a, b) => a.order > b.order);
     return (
         <div className="container-fluid">
             <BackBar label="Back to Trainings" linkTarget="/" history={props.history} />
@@ -69,21 +84,21 @@ const TrainingDetailsPage = (props) => {
                 <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }
             <br />
-            {!exercises && 
+            {!orderedExercises &&
                 <p className="text-muted text-center">
                     Loading...
                 </p>
             }
-            {(exercises && exercises.length == 0) && 
+            {(orderedExercises && orderedExercises.length == 0) &&
                 <p className="text-muted text-center">
                     Add here the exercises of your training
                 </p>
             }
-            {exercises &&
-                <CrudList 
-                    items={exercises} 
-                    onItemSelect={onClick} 
-                    onItemDelete={deleteExercise} 
+            {orderedExercises &&
+                <CrudList
+                    items={orderedExercises}
+                    onItemSelect={onClick}
+                    onItemDelete={deleteExercise}
                     onItemAdd={onAdd}
                     semaforeCondition={exerciseDoneToday} />
             }

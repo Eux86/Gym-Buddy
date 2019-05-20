@@ -1,51 +1,50 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { FirebaseContext } from '../../services/firebase';
 import { AuthUserContext } from '../authentication-service';
-import { UserSelectionsServiceContext } from '../user-selection-service';
 import * as DatetimeHelper from '../../utils/datetime-helper';
 import { ExercisesServiceContext } from '../exercises-service';
 import { AuditServiceContext } from '../audit-service';
 
 export const SeriesServiceContext = React.createContext();
 
-const SeriesService = ({children}) => {
+const SeriesService = ({ children }) => {
     const authUser = useContext(AuthUserContext);
     const audit = useContext(AuditServiceContext);
     const firebaseContext = useContext(FirebaseContext);
-    const userSelectionsService = useContext(UserSelectionsServiceContext);
     const exercisesService = useContext(ExercisesServiceContext);
-    const [series, setSeries] = useState(null);
 
-    
-    useEffect(() => {
-        const exerciseId = userSelectionsService.userSelections.exerciseId;
-        if (authUser && 
-            firebaseContext.firebase && 
-            exerciseId) {
-            getByExerciseId(exerciseId);
-        }
-    }, [authUser, firebaseContext, userSelectionsService])
-
-    const getByExerciseId = (exerciseId) => {
-            firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/`)
-            .on('value', snapshot => {  
-                const obj = snapshot.val();
-                const seriesList = obj && Object.keys(obj).map( key => ({...obj[key], id: key }) );
-                if (seriesList) {
-                    setSeries(seriesList);
-                } else {
-                    setSeries([]);
-                }
-            });
+    const getLastDayByExerciseId = (exerciseId) => {
+        return new Promise((res, rej) => {
+            if (!firebaseContext.firebase || !authUser) {
+                res(null);
+            } else {
+                firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/`)
+                    .once('value', snapshot => {
+                        const obj = snapshot.val();
+                        const seriesList = obj && Object.keys(obj).map(key => ({ ...obj[key], id: key }));
+                        if (seriesList) {
+                            const seriesByDate = groupBy(seriesList, (x) => DatetimeHelper.getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
+                            const orderedDates = Object.keys(seriesByDate).sort((a, b) => {
+                                return new Date(a) <= new Date(b) ? 1 : -1;
+                            });
+                            const mostRecentMoment = orderedDates[0];
+                            const latestDaysSeries = seriesByDate[mostRecentMoment] || [];
+                            res(latestDaysSeries);
+                        } else {
+                            res([]);
+                        }
+                    });
+            }
+        });
     }
 
     const add = async (exerciseId, newSeries) => {
         // addint a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
-        setSeries([...series,{...newSeries, temp: true}]);
-        
-        const currentExercise = exercisesService.exercises.find(x => x.id == exerciseId);
-        const timestamp = await audit.add("AddSeries", JSON.stringify({exerciseId, ...newSeries}));
+        // setSeries([...series, { ...newSeries, temp: true }]);
+
+        const currentExercise = await exercisesService.getById(exerciseId);
+        const timestamp = await audit.add("AddSeries", JSON.stringify({ exerciseId, ...newSeries }));
         const newRef = firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}`).push();
         var updates = {
             [`series/${authUser.uid}/${exerciseId}/${newRef.key}`]: {
@@ -54,69 +53,57 @@ const SeriesService = ({children}) => {
                 order: +newSeries.order,
                 createDate: newSeries.createDate,
                 timestamp
-            },
-            [`exercises/${authUser.uid}/${exerciseId}`]:{
-                ...currentExercise,
-                lastUpdateDate: DatetimeHelper.getUtcDateWithoutTime(new Date()).toISOString(),
-                timestamp
-            },
-          }
+            }
+        }
 
-        return firebaseContext.firebase.db.ref().update(updates);
+        return await firebaseContext.firebase.db.ref().update(updates);
     }
 
+
     const edit = async (exerciseId, editedSeries) => {
-
-        // adding a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
-        const original = series.find(x=>x.id===editedSeries.id);
-        const tempSeries = [...series];
-        tempSeries.splice(tempSeries.indexOf(original),1,{...editedSeries, temp: true})
-        setSeries(tempSeries);
-        
-        // await new Promise(resolve => setTimeout(resolve, 2000));
-
-        const currentExercise = exercisesService.exercises.find(x => x.id == exerciseId);
-        const timestamp = await audit.add("EditSeries", JSON.stringify({exerciseId, ...editedSeries}));
+        const currentExercise = await exercisesService.getById(exerciseId);
+        const timestamp = await audit.add("EditSeries", JSON.stringify({ exerciseId, ...editedSeries }));
         var updates = {
             [`series/${authUser.uid}/${exerciseId}/${editedSeries.id}`]: {
                 amount: +editedSeries.amount,
                 repetitions: +editedSeries.repetitions,
                 order: +editedSeries.order,
                 createDate: editedSeries.createDate,
-                timestamp  
-            },
-            [`exercises/${authUser.uid}/${exerciseId}`]:{
-                ...currentExercise,
-                lastUpdateDate: DatetimeHelper.getUtcDateWithoutTime(new Date()).toISOString(),
                 timestamp
-            },
-          }
-        firebaseContext.firebase.db.ref().update(updates);
+            }
+        }
+        return await firebaseContext.firebase.db.ref().update(updates);
     }
 
     const del = async (exerciseId, id) => {
-        // adding a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
-        const original = series.find(x=>x.id===id);
-        const tempSeries = [...series];
-        tempSeries.splice(tempSeries.indexOf(original),1,{...original, temp: true})
-        setSeries(tempSeries);
-        
-        const timestamp = await audit.add("DelSeries", JSON.stringify({exerciseId, id}));
+        const timestamp = await audit.add("DelSeries", JSON.stringify({ exerciseId, id }));
         firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${id}`).remove();
     }
 
     return (
         <SeriesServiceContext.Provider
-          value={{
-            series: series,
-            add: add,
-            del: del,
-            edit: edit,
-          }}
+            value={{
+                getLastDayByExerciseId: getLastDayByExerciseId,
+                add: add,
+                del: del,
+                edit: edit,
+            }}
         >
-          {children}
+            {children}
         </SeriesServiceContext.Provider>
-      );
+    );
 }
 
 export default SeriesService;
+
+
+export const groupBy = (list, fun) => {
+    return list.reduce((acc, listEl) => {
+        if (!acc[fun(listEl)]) {
+            acc = { ...acc, [fun(listEl)]: [listEl] };
+        } else {
+            acc[fun(listEl)].push(listEl);
+        }
+        return acc
+    }, {})
+};

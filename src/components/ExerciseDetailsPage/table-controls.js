@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { UserSelectionsServiceContext } from '../../services/user-selection-service';
 import { ExercisesServiceContext } from '../../services/exercises-service';
 import ConfirmButton from '../common/buttons/confirm-button';
 import CancelButton from '../common/buttons/cancel-button';
@@ -7,8 +6,6 @@ import AddButton from '../common/buttons/add-button';
 
 const TableControls = (props) => {
     const [state, setState] = useState({});
-
-    const userSelectionsService = useContext(UserSelectionsServiceContext);
 
     const onChange = event => {
         let newState = { ...state };

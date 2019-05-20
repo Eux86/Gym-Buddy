@@ -3,7 +3,6 @@ import TrainingsService from './services/trainings-service'
 
 import Firebase from './services/firebase';
 import Authentication from './services/authentication-service';
-import UserSelectionsService from './services/user-selection-service';
 import ExercisesService from './services/exercises-service';
 import UsersService from './services/users-service';
 import SeriesService from './services/series-service';
@@ -17,15 +16,13 @@ const ServicesStore = ({ children }) => {
             <Authentication>
                 <AuditService>
                     <TrainingsService>
-                        <UserSelectionsService>
-                            <ExercisesService>
-                                <SeriesService>
-                                    <UsersService>
-                                        {children}
-                                    </UsersService>
-                                </SeriesService>
-                            </ExercisesService>
-                        </UserSelectionsService>
+                        <ExercisesService>
+                            <SeriesService>
+                                <UsersService>
+                                    {children}
+                                </UsersService>
+                            </SeriesService>
+                        </ExercisesService>
                     </TrainingsService>
                 </AuditService>
             </Authentication>

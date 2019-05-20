@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import * as ROUTES from '../../constants/routes'
-import { AuthUserContext } from '../authentication-service';
-import { FirebaseContext } from '../firebase';
+import * as ROUTES from '../../../constants/routes'
+import { AuthUserContext } from '../../../services/authentication-service';
+import { FirebaseContext } from '../../../services/firebase';
 
 const OnlyIfLogged = (props) => {
     const firebaseContext = useContext(FirebaseContext);

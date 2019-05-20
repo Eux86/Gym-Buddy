@@ -19,11 +19,11 @@ class App extends Component {
         <Header />
         <div>
           <Route exact path={ROUTES.LANDING} render={(props) => <TrainingsPage {...props} />} />
-          <Route path={ROUTES.TRAINING_DETAILS} render={(props) => <TrainingDetailsPage {...props} />} />
+          <Route path={`${ROUTES.TRAINING_DETAILS}/:id`} render={(props) => <TrainingDetailsPage {...props} />} />
           <Route path={ROUTES.SIGN_IN} render={(props) => <SignInPage {...props} />} />
           <Route path={ROUTES.SIGN_UP} render={(props) => <SignUpPage {...props} />} />
           <Route path={ROUTES.PASSWORD_FORGET} render={(props) => <PasswordForgetPage {...props} />} />
-          <Route path={ROUTES.EXERCISE_DETAILS} render={(props) => <ExerciseDetailsPage {...props} />} />
+          <Route path={`${ROUTES.EXERCISE_DETAILS}/:trainingId/:exerciseId`} render={(props) => <ExerciseDetailsPage {...props} />} />
         </div>
       </Router>
     );
