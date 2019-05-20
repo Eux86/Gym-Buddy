@@ -71,13 +71,15 @@ const ExercisesService = ({ children }) => {
     }
 
     const update = async (trainingId, exercise) => {
-        const timestamp = await audit.add("AddTraining", JSON.stringify({ trainingId, exercise }));
+        debugger;
+        const timestamp = await audit.add("EditTraining", JSON.stringify({ trainingId, exercise }));
         await firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${exercise.id}`)
             .update({
                 trainingId: trainingId,
                 description: exercise.description,
                 name: exercise.name,
                 order: exercise.order || 0,
+                lastUpdateDate: exercise.lastUpdateDate,
                 timestamp
             });
     }

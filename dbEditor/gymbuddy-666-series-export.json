@@ -1,0 +1,993 @@
+{
+  "GTkAv6GT6ZPO2VJUY62cJvcvEVz2" : {
+    "-LdtdzTXgI0oIT8rr33p" : {
+      "-Ldyj6RaK--muEfayILb" : {
+        "amount" : "5",
+        "createDate" : "2019-05-03T17:27:21.832Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-Ldyj8OXYY8PaMLVzNgv" : {
+        "amount" : "10",
+        "createDate" : "2019-05-03T17:27:29.830Z",
+        "order" : 1,
+        "repetitions" : "10"
+      },
+      "-LdyjAhgwQmy6pXLItKQ" : {
+        "amount" : "12.5",
+        "createDate" : "2019-05-03T17:27:39.313Z",
+        "order" : 2,
+        "repetitions" : "8"
+      },
+      "-LdyjFT8JgWvrPw44LXw" : {
+        "amount" : "15",
+        "createDate" : "2019-05-03T17:27:58.781Z",
+        "order" : 3,
+        "repetitions" : "6"
+      }
+    },
+    "-Ldte3LzPnLiW-Gi9l9y" : {
+      "-LdykB36A6y_ppcsHn_B" : {
+        "amount" : "2.5",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LdykhyZK3HSDRLyUU1e" : {
+        "amount" : "2.5",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : "10"
+      },
+      "-Ldylezc-KJAFr845lyl" : {
+        "amount" : "5",
+        "createDate" : "2019-05-03T17:38:31.724Z",
+        "order" : 2,
+        "repetitions" : "8"
+      },
+      "-Ldylh-wxtY-FNrr5-ux" : {
+        "amount" : "7.5",
+        "createDate" : "2019-05-03T17:38:40.001Z",
+        "order" : 3,
+        "repetitions" : "6"
+      }
+    },
+    "-LdteD3qhqegia2Ox1Ne" : {
+      "-LdyngBbEC8v6es3pDIT" : {
+        "amount" : "10",
+        "createDate" : "2019-05-03T17:47:20.915Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LdyniB02G1eqxQv9qzm" : {
+        "amount" : "15",
+        "createDate" : "2019-05-03T17:47:29.070Z",
+        "order" : 1,
+        "repetitions" : "10"
+      },
+      "-LdynjVaFJqQjl8eWHi5" : {
+        "amount" : "20",
+        "createDate" : "2019-05-03T17:47:34.482Z",
+        "order" : 2,
+        "repetitions" : "8"
+      },
+      "-LdyogCl1MO-xAzfIq3p" : {
+        "amount" : "25",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 3,
+        "repetitions" : "6"
+      }
+    },
+    "-LdteK_-MG_qug-k8DZJ" : {
+      "-LdtfCNPuDxVMWtc1SXe" : {
+        "amount" : "5",
+        "createDate" : "2019-05-02T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LdtfDWX95Peecl1DWq5" : {
+        "amount" : "7",
+        "createDate" : "2019-05-02T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : "10"
+      },
+      "-LdtfEgOypa6wYOR46L5" : {
+        "amount" : "10",
+        "createDate" : "2019-05-02T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : "8"
+      },
+      "-LdtfFpJHcFnGYWxJsGp" : {
+        "amount" : "12",
+        "createDate" : "2019-05-02T00:00:00.000Z",
+        "order" : 3,
+        "repetitions" : "6"
+      },
+      "-LdyrFuCdP0j04vzI1-Y" : {
+        "amount" : "10",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LdyrFunqq1eP4pqgsX4" : {
+        "amount" : "15",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : "10"
+      },
+      "-LdyrFv0X1iYJpGAY76H" : {
+        "amount" : "17.5",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : "8"
+      },
+      "-LdyrFvBeNxOL3tSaMe-" : {
+        "amount" : "20",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 3,
+        "repetitions" : "6"
+      }
+    },
+    "-LdteOcJjYWrVPRTpDpf" : {
+      "-Ldyt3cNj2PmPFL4DZBv" : {
+        "amount" : "10",
+        "createDate" : "2019-05-03T18:10:51.725Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LdywLwVEB3qT3VvtpJ0" : {
+        "amount" : "15",
+        "createDate" : "2019-05-03T18:25:13.198Z",
+        "order" : 1,
+        "repetitions" : "10"
+      },
+      "-LdywNGskiTujd8WqdFA" : {
+        "amount" : "20",
+        "createDate" : "2019-05-03T18:25:18.671Z",
+        "order" : 2,
+        "repetitions" : "8"
+      },
+      "-LdywfUe6jt846xIVgwN" : {
+        "amount" : "25",
+        "createDate" : "2019-05-03T18:26:37.377Z",
+        "order" : 3,
+        "repetitions" : "6"
+      }
+    },
+    "-Ldy98CN_VabWdJZoZV_" : {
+      "-Ldy9B49tL7swXrMdFk6" : {
+        "amount" : "76",
+        "createDate" : "2019-05-03T14:46:01.454Z",
+        "order" : 0,
+        "repetitions" : "17"
+      },
+      "-LdyKdCprCUZgSye8Jkz" : {
+        "amount" : "16",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : "22"
+      },
+      "-Le4IgYxVG0bxMWbFplt" : {
+        "amount" : "76",
+        "createDate" : "2019-05-05T00:04:54.893Z",
+        "order" : 0,
+        "repetitions" : "17"
+      },
+      "-Le4IgZ1jyWpZsEBWjcb" : {
+        "amount" : "16",
+        "createDate" : "2019-05-05T00:04:54.893Z",
+        "order" : 1,
+        "repetitions" : "22"
+      },
+      "-LeIG1Q81hGFNLPeRz2I" : {
+        "amount" : "76",
+        "createDate" : "2019-05-07T17:07:58.098Z",
+        "order" : 0,
+        "repetitions" : "17"
+      },
+      "-LeIG1QGLfQ0CoyHRR-5" : {
+        "amount" : "16",
+        "createDate" : "2019-05-07T17:07:58.098Z",
+        "order" : 1,
+        "repetitions" : "22"
+      },
+      "-LeXblOE5TgEawN9XDxO" : {
+        "amount" : 76,
+        "createDate" : "2019-05-10T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : 17,
+        "timestamp" : 1557506496436
+      },
+      "-LeXblOatmR8T85KqnBu" : {
+        "amount" : 163,
+        "createDate" : "2019-05-10T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 22,
+        "timestamp" : 1557506496436
+      },
+      "-LelokX0xNOTpsRfIDZu" : {
+        "amount" : 163,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 22,
+        "timestamp" : 1557761561560
+      },
+      "-Lelr9OVLEbzt9cBn4k_" : {
+        "amount" : 435,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : 23,
+        "timestamp" : 1557762197148
+      },
+      "-LerBa83HS_TXg-d5aVW" : {
+        "amount" : 163,
+        "createDate" : "2019-05-14T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 22,
+        "timestamp" : 1557851696640
+      },
+      "-LerDHN_RXh7JGdH7I3y" : {
+        "amount" : 3,
+        "createDate" : "2019-05-14T16:42:17.705Z",
+        "order" : 2,
+        "repetitions" : 5,
+        "timestamp" : 1557852137708
+      },
+      "-LerGfr4gCRURvkIUagZ" : {
+        "amount" : 4,
+        "createDate" : "2019-05-14T16:57:07.681Z",
+        "order" : 3,
+        "repetitions" : 3,
+        "timestamp" : 1557853027684
+      },
+      "-LerT5saUJToRlQuJzCN" : {
+        "amount" : 5,
+        "createDate" : "2019-05-14T17:51:23.866Z",
+        "order" : 4,
+        "repetitions" : 3,
+        "timestamp" : 1557856283870
+      },
+      "-Lf-0CyBrKlu_L4yppdB" : {
+        "amount" : 9,
+        "createDate" : "2019-05-16T09:41:45.781Z",
+        "order" : 5,
+        "repetitions" : 2,
+        "timestamp" : 1557999705784
+      },
+      "-Lf-0D3FNe7o0UOAqGmq" : {
+        "amount" : 163,
+        "createDate" : "2019-05-16T09:41:46.171Z",
+        "order" : 1,
+        "repetitions" : 22,
+        "timestamp" : 1557999706204
+      },
+      "-Lf-0D5o4Ki2_Urgthc5" : {
+        "amount" : 4,
+        "createDate" : "2019-05-16T09:41:46.171Z",
+        "order" : 3,
+        "repetitions" : 3,
+        "timestamp" : 1557999706267
+      },
+      "-Lf-0D7N5zMf6MyopWAl" : {
+        "amount" : 5,
+        "createDate" : "2019-05-16T09:41:46.171Z",
+        "order" : 4,
+        "repetitions" : 3,
+        "timestamp" : 1557999706282
+      },
+      "-Lf-Hgk_SqR9T4by7NIv" : {
+        "amount" : 3,
+        "createDate" : "2019-05-16T10:58:08.353Z",
+        "order" : 6,
+        "repetitions" : 6,
+        "timestamp" : 1558004288356
+      }
+    },
+    "-LeXXDylpP4Ki2Jgptje" : {
+      "-LeX_aqlL-2t219Oxvcz" : {
+        "amount" : 9,
+        "createDate" : "2019-05-10T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : 5,
+        "timestamp" : 1557505939389
+      }
+    },
+    "-LemGDWLtxEdLOwV2BPl" : {
+      "-LemGMhfn0bEc5TAlNxO" : {
+        "amount" : 10,
+        "createDate" : "2019-05-13T17:37:39.041Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557769059043
+      },
+      "-LemGNowX7X74H7Aadoe" : {
+        "amount" : 12,
+        "createDate" : "2019-05-13T17:37:43.704Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557769063705
+      },
+      "-LemGPFbLXU9GHOSr_RI" : {
+        "amount" : 14,
+        "createDate" : "2019-05-13T17:37:49.560Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557769069561
+      },
+      "-LemGQCxmlcAriP10VdZ" : {
+        "amount" : 16,
+        "createDate" : "2019-05-13T17:37:53.487Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557769073488
+      }
+    },
+    "-LemI7YdZ7GLZt8Y2c3o" : {
+      "-LemIAV5wDQ3l-KGk6Fo" : {
+        "amount" : 6,
+        "createDate" : "2019-05-13T17:45:33.484Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557769533486
+      },
+      "-LemIBaX1XdpO7Io9dJn" : {
+        "amount" : 8,
+        "createDate" : "2019-05-13T17:45:38.416Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557769538417
+      },
+      "-LemIhwbC6tQmiwHQUkl" : {
+        "amount" : 10,
+        "createDate" : "2019-05-13T17:47:54.858Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557769674859
+      },
+      "-LemIj5Slmd9GSZmhKRB" : {
+        "amount" : 12,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557769698288
+      }
+    },
+    "-LemJbDI4mLre3Z0UYba" : {
+      "-LemJcT5QrXTqeewErOd" : {
+        "amount" : 2.5,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557770104789
+      },
+      "-LemKUWjOG6xRxnpZP0w" : {
+        "amount" : 4,
+        "createDate" : "2019-05-13T17:55:39.680Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557770139681
+      },
+      "-LemKWAwCNlmPtjENJWG" : {
+        "amount" : 5.5,
+        "createDate" : "2019-05-13T17:55:46.512Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557770146513
+      },
+      "-LemKxpT8ASX1YIOd_Fe" : {
+        "amount" : 7,
+        "createDate" : "2019-05-13T17:57:43.738Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557770263739
+      }
+    },
+    "-LemLfMXyulL4H8gK5ec" : {
+      "-LemLjkOxOVdxungSr0S" : {
+        "amount" : 7.5,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557770483751
+      },
+      "-LemLlBTLYXTsXlEiLE1" : {
+        "amount" : 12.5,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557770505525
+      },
+      "-LemLoneHd9SoBcqWwiJ" : {
+        "amount" : 17.5,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557770508847
+      },
+      "-LemLq7UhLzbX5aU8ulT" : {
+        "amount" : 20,
+        "createDate" : "2019-05-13T00:00:00.000Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557770515577
+      }
+    },
+    "-LemPhnFNyL5fepTJhob" : {
+      "-LemQa59_32-dTIeHM4L" : {
+        "amount" : 15,
+        "createDate" : "2019-05-13T18:22:19.471Z",
+        "order" : 0,
+        "repetitions" : 3,
+        "timestamp" : 1557771739473
+      }
+    },
+    "-LemPqtGmxzN28Gz59nT" : {
+      "-LemReXZANoEtLOp6iYC" : {
+        "amount" : 15,
+        "createDate" : "2019-05-13T18:26:59.695Z",
+        "order" : 0,
+        "repetitions" : 3,
+        "timestamp" : 1557772019699
+      }
+    },
+    "-LerDrEnRIFWqK1k_Zrf" : {
+      "-LerFMbnMVQPzBCgMDHf" : {
+        "amount" : 5,
+        "createDate" : "2019-05-14T16:51:25.716Z",
+        "order" : 0,
+        "repetitions" : 5,
+        "timestamp" : 1557852685719
+      },
+      "-Lf-oKAbzaK6wjL9rGnI" : {
+        "amount" : 9,
+        "createDate" : "2019-05-16T13:25:04.756Z",
+        "order" : 1,
+        "repetitions" : 9,
+        "timestamp" : 1558013104759
+      },
+      "-Lf-oKGwJ7m4vHtFQ9O2" : {
+        "amount" : 5,
+        "createDate" : "2019-05-16T13:25:05.148Z",
+        "order" : 0,
+        "repetitions" : 5,
+        "timestamp" : 1558013105179
+      }
+    },
+    "-LerFk-AR-U6DEpwXOJD" : {
+      "-LerFlVLr9iuFNWsJi3q" : {
+        "amount" : 9,
+        "createDate" : "2019-05-14T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : 65,
+        "timestamp" : 1557852797745
+      }
+    },
+    "-LewHs_B83V-ezWfmHWs" : {
+      "-LewHtfLeHIVvIw8PRNZ" : {
+        "amount" : 2,
+        "createDate" : "2019-05-15T16:20:32.436Z",
+        "order" : 0,
+        "repetitions" : 1,
+        "timestamp" : 1557937232439
+      }
+    },
+    "-LewccOoQQxMg6tcrK6k" : {
+      "-LewceecWLO3mr0bv1nV" : {
+        "amount" : 42,
+        "createDate" : "2019-05-15T17:55:38.051Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557942938054
+      },
+      "-LewchQcK0pW9uQqZSHk" : {
+        "amount" : 35,
+        "createDate" : "2019-05-15T17:55:49.457Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557942949460
+      },
+      "-LewciK1kmdZlXJGF26d" : {
+        "amount" : 35,
+        "createDate" : "2019-05-15T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557944274742
+      },
+      "-Lewclgw7i6qQecJwlbf" : {
+        "amount" : 28,
+        "createDate" : "2019-05-15T17:56:06.627Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557942966628
+      }
+    },
+    "-Lewcx9Ous_nwuac3bk4" : {
+      "-Lewczq07GqqM69X8ZFy" : {
+        "amount" : 10,
+        "createDate" : "2019-05-15T17:57:04.895Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557943024896
+      },
+      "-Lewd-fFsjzze0HnVMh6" : {
+        "amount" : 12.5,
+        "createDate" : "2019-05-15T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557943194668
+      },
+      "-Lewd0SQlOTxUzRk1cRI" : {
+        "amount" : 17.5,
+        "createDate" : "2019-05-15T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557943201640
+      },
+      "-Lewd1FV1dzlJy8fH6gk" : {
+        "amount" : 20,
+        "createDate" : "2019-05-15T00:00:00.000Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557943338790
+      }
+    },
+    "-LewfgXk_XUW9VIKM1H6" : {
+      "-LewfhqPforSLtMl6RI9" : {
+        "amount" : 15,
+        "createDate" : "2019-05-15T18:08:57.523Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1557943737524
+      },
+      "-Lewg12o3wkZTcJen2-H" : {
+        "amount" : 20,
+        "createDate" : "2019-05-15T18:10:20.081Z",
+        "order" : 1,
+        "repetitions" : 10,
+        "timestamp" : 1557943820082
+      },
+      "-LewgJa9tLHM3ZjZ9sDj" : {
+        "amount" : 25,
+        "createDate" : "2019-05-15T18:11:36.214Z",
+        "order" : 2,
+        "repetitions" : 8,
+        "timestamp" : 1557943896215
+      },
+      "-LewgQzaZVPoRzjH0zz6" : {
+        "amount" : 30,
+        "createDate" : "2019-05-15T18:12:06.283Z",
+        "order" : 3,
+        "repetitions" : 6,
+        "timestamp" : 1557943926285
+      }
+    },
+    "-LewjE9IQihAjVQRl4NY" : {
+      "-LewjN6Lqn7k4LYNxRbT" : {
+        "amount" : 15,
+        "createDate" : "2019-05-15T18:24:56.816Z",
+        "order" : 0,
+        "repetitions" : 3,
+        "timestamp" : 1557944696820
+      }
+    },
+    "-Lf45wBIQvwpRYQ9te7y" : {
+      "-Lf45z5DlnZgfklzdYYV" : {
+        "amount" : 2,
+        "createDate" : "2019-05-17T09:25:08.331Z",
+        "order" : 0,
+        "repetitions" : 3,
+        "timestamp" : 1558085108332
+      },
+      "-Lf464KU6FuCyc5ShZ_J" : {
+        "amount" : 344,
+        "createDate" : "2019-05-17T09:25:33.733Z",
+        "order" : 1,
+        "repetitions" : 33,
+        "timestamp" : 1558085133734
+      },
+      "-Lf46K_HRY0sAO2nlOlU" : {
+        "amount" : 66,
+        "createDate" : "2019-05-17T09:26:10.670Z",
+        "order" : 2,
+        "repetitions" : 77,
+        "timestamp" : 1558085170670
+      }
+    }
+  },
+  "THBh0hIm6jeRXgXRdQ4Vj1SqvNN2" : {
+    "-LdzbwDYoHex15A7aWa0" : {
+      "-LdzcAaaTCmF-V22nKiu" : {
+        "amount" : "8",
+        "createDate" : "2019-05-03T21:36:40.942Z",
+        "order" : 0,
+        "repetitions" : "12"
+      }
+    }
+  },
+  "dsW0SwwTlwXNRwCYpaWA1wVJiJE3" : {
+    "-Ldy87bpNHg63u4zQMEk" : {
+      "-LdyAMJ30iRC_gtnPkeh" : {
+        "amount" : "21",
+        "createDate" : "2019-05-03T14:51:09.125Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LdyTwkzPaoqMG9HfaOz" : {
+        "amount" : "35.1",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : "18"
+      },
+      "-LdyUxTQN_pjlNsXN3zG" : {
+        "amount" : "53",
+        "createDate" : "2019-05-03T16:21:08.841Z",
+        "order" : 2,
+        "repetitions" : "69.9"
+      },
+      "-Le4HUZkJKOAOt7t13_s" : {
+        "amount" : "21",
+        "createDate" : "2019-05-04T23:59:39.424Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-Le4HUZmMwA9_mgCzyVG" : {
+        "amount" : "35.1",
+        "createDate" : "2019-05-04T23:59:39.424Z",
+        "order" : 1,
+        "repetitions" : "18"
+      },
+      "-Le4HUZoDH3KxrOTmARF" : {
+        "amount" : "53",
+        "createDate" : "2019-05-04T23:59:39.424Z",
+        "order" : 2,
+        "repetitions" : "69.9"
+      },
+      "-LeIEBitFW89SEuM1VzL" : {
+        "amount" : "21",
+        "createDate" : "2019-05-07T16:59:55.911Z",
+        "order" : 0,
+        "repetitions" : "12"
+      },
+      "-LeIEBivjUT0IPI-z9ti" : {
+        "amount" : "35.1",
+        "createDate" : "2019-05-07T16:59:55.911Z",
+        "order" : 1,
+        "repetitions" : "18"
+      },
+      "-LeIEBixngfgzTzJHCln" : {
+        "amount" : "53",
+        "createDate" : "2019-05-07T16:59:55.911Z",
+        "order" : 2,
+        "repetitions" : "69.9"
+      },
+      "-LfJaSQXa_YuPzxK5w4H" : {
+        "amount" : 21,
+        "createDate" : "2019-05-20T09:36:59.308Z",
+        "order" : 0,
+        "repetitions" : 12,
+        "timestamp" : 1558345019441
+      },
+      "-LfJaSXoQ31V4Tmy7OkY" : {
+        "amount" : 35.1,
+        "createDate" : "2019-05-20T09:36:59.308Z",
+        "order" : 1,
+        "repetitions" : 18,
+        "timestamp" : 1558345019925
+      },
+      "-LfJaSe6HePakWqbFBH1" : {
+        "amount" : 53,
+        "createDate" : "2019-05-20T09:36:59.308Z",
+        "order" : 2,
+        "repetitions" : 69.9,
+        "timestamp" : 1558345020375
+      }
+    },
+    "-Ldy8OA_zpkKxkI22I8r" : {
+      "-Ldy8PDi0DOAfwpPwlj3" : {
+        "amount" : "123",
+        "createDate" : "2019-05-03T14:42:36.793Z",
+        "order" : 0,
+        "repetitions" : "13"
+      },
+      "-Le46A92fEVSFSX5sur-" : {
+        "amount" : "99",
+        "createDate" : "2019-05-03T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : "57"
+      },
+      "-Le4FS2V40Fol0468wio" : {
+        "amount" : "123",
+        "createDate" : "2019-05-04T23:50:44.827Z",
+        "order" : 0,
+        "repetitions" : "13"
+      },
+      "-Le4FS2Xt612nSspR7pf" : {
+        "amount" : "99",
+        "createDate" : "2019-05-04T23:50:44.827Z",
+        "order" : 2,
+        "repetitions" : "57"
+      },
+      "-LfJbC0Zv2ScSBMLxTuD" : {
+        "amount" : 123,
+        "createDate" : "2019-05-20T09:40:14.239Z",
+        "order" : 0,
+        "repetitions" : 13,
+        "timestamp" : 1558345214388
+      },
+      "-LfJbC7sFH4Dkpwezuh8" : {
+        "amount" : 99,
+        "createDate" : "2019-05-20T09:40:14.239Z",
+        "order" : 2,
+        "repetitions" : 57,
+        "timestamp" : 1558345214822
+      },
+      "-LfKHHJ1GBRY-YLb4-8F" : {
+        "amount" : 5,
+        "createDate" : "2019-05-20T12:48:27.994Z",
+        "order" : 3,
+        "repetitions" : 4,
+        "timestamp" : 1558356507995
+      },
+      "-LfKHOULNYcMVlcjkUR8" : {
+        "amount" : 4,
+        "createDate" : "2019-05-20T12:48:57.390Z",
+        "order" : 4,
+        "repetitions" : 4,
+        "timestamp" : 1558356537391
+      },
+      "-LfKHTCtZ6BcZcEDAQJN" : {
+        "amount" : 4,
+        "createDate" : "2019-05-20T12:49:16.755Z",
+        "order" : 5,
+        "repetitions" : 4,
+        "timestamp" : 1558356556755
+      },
+      "1558306800000" : {
+        "-LfKHpLS7si_mPs_8Dgt" : {
+          "amount" : 3,
+          "createDate" : "2019-05-20T12:50:51.515Z",
+          "order" : 6,
+          "repetitions" : 3,
+          "timestamp" : 1558356651515
+        },
+        "-LfKKIrTrXX08ap-z3DL" : {
+          "amount" : 6,
+          "createDate" : "2019-05-20T00:00:00.000Z",
+          "order" : 7,
+          "repetitions" : 9,
+          "timestamp" : 1558357476574
+        }
+      }
+    },
+    "-Le44GtA9Thh88MUAtHM" : {
+      "-Le44IrBBU26Vn_T6Gg-" : {
+        "amount" : "5",
+        "createDate" : "2019-05-04T23:02:03.639Z",
+        "order" : 0,
+        "repetitions" : "2"
+      },
+      "-LeM-3MzLugreaSqPc4d" : {
+        "amount" : "21",
+        "createDate" : "2019-05-08T10:32:18.928Z",
+        "order" : 0,
+        "repetitions" : "35"
+      },
+      "-LeM-3QRv6ewML4ho7Yl" : {
+        "amount" : "21",
+        "createDate" : "2019-05-08T10:32:19.150Z",
+        "order" : 0,
+        "repetitions" : "35"
+      },
+      "-LeM-JGd_CnRZb25DMZc" : {
+        "amount" : "2",
+        "createDate" : "2019-05-08T10:33:24.054Z",
+        "order" : 0,
+        "repetitions" : "2"
+      }
+    },
+    "-LeMi30yiuSQlFKH55L_" : {
+      "-LeMi4GGvbrTnW4EW1cQ" : {
+        "amount" : "5",
+        "createDate" : "2019-05-08T13:53:20.830Z",
+        "order" : 0,
+        "repetitions" : "g",
+        "timestamp" : 1557323600830
+      },
+      "-LeMjIwb6OeJLQFBgkKa" : {
+        "amount" : "2",
+        "createDate" : "2019-05-08T13:58:43.084Z",
+        "order" : 1,
+        "repetitions" : "2",
+        "timestamp" : 1557323923085
+      },
+      "-LeN151ft1lAGSfW3AXf" : {
+        "amount" : "29",
+        "createDate" : "2019-05-08T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : "2",
+        "timestamp" : 1557328859618
+      }
+    },
+    "-LeN1ShwWjShb_7-oi_j" : {
+      "-LeN1WB-cY9t4nEK7gg1" : {
+        "amount" : "1",
+        "createDate" : "2019-05-08T15:22:37.963Z",
+        "order" : 0,
+        "repetitions" : "1",
+        "timestamp" : 1557328957964
+      }
+    },
+    "-LeN1g5h1scL6R91GCmX" : {
+      "-LeN1iKFA4nolBwObSUS" : {
+        "amount" : "11",
+        "createDate" : "2019-05-08T15:23:31.795Z",
+        "order" : 0,
+        "repetitions" : "1",
+        "timestamp" : 1557329011795
+      }
+    },
+    "-LeN3fLvKC02ljAA5MAj" : {
+      "-LeN3hFTh9irhPAsAIut" : {
+        "amount" : "5",
+        "createDate" : "2019-05-08T15:32:11.665Z",
+        "order" : 0,
+        "repetitions" : "5",
+        "timestamp" : 1557329531665
+      },
+      "-LeN3jlH2Z94xu0yvfjh" : {
+        "amount" : "552",
+        "createDate" : "2019-05-08T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : "5",
+        "timestamp" : 1557329610202
+      }
+    },
+    "-LeN4Z3KMTS5F6lLE0GN" : {
+      "-LeN4_Qz1UTUyGumaIOb" : {
+        "amount" : "2",
+        "createDate" : "2019-05-08T15:36:01.782Z",
+        "order" : 0,
+        "repetitions" : "2",
+        "timestamp" : 1557329761782
+      }
+    },
+    "-LeN4nLAjDZ0FIJwH6Nc" : {
+      "-LeN4oJ3923OXq6_5tCU" : {
+        "amount" : "3",
+        "createDate" : "2019-05-08T15:37:02.701Z",
+        "order" : 0,
+        "repetitions" : "3",
+        "timestamp" : 1557329822702
+      }
+    },
+    "-LeN8kNI_JfinPGmeKyX" : {
+      "-LeNFTV_2P_fTaXndmCQ" : {
+        "amount" : "7",
+        "createDate" : "2019-05-08T16:23:36.913Z",
+        "order" : 0,
+        "repetitions" : "7",
+        "timestamp" : 1557332616914
+      }
+    },
+    "-LeNGM6l2ZRN5vlUk29f" : {
+      "-LeNHD0DMP9SRvbLkjzx" : {
+        "amount" : "4",
+        "createDate" : "2019-05-08T16:31:13.413Z",
+        "order" : 0,
+        "repetitions" : "4",
+        "timestamp" : 1557333073414
+      },
+      "-LeNHEwFCMKfxBQBLLtH" : {
+        "amount" : "432",
+        "createDate" : "2019-05-08T00:00:00.000Z",
+        "id" : "-LeNHEwFCMKfxBQBLLtH",
+        "order" : 1,
+        "repetitions" : "4",
+        "timestamp" : 1557333319967
+      }
+    },
+    "-LeTWuA-rSFjNVxxfQlE" : {
+      "-LeTWwoAlBmYHh-p4wZx" : {
+        "amount" : 3,
+        "createDate" : "2019-05-09T00:00:00.000Z",
+        "order" : 0,
+        "repetitions" : 44,
+        "timestamp" : 1557437955013
+      },
+      "-LeTXHfme45_IIY31wBb" : {
+        "amount" : 33,
+        "createDate" : "2019-05-09T21:39:11.186Z",
+        "order" : 1,
+        "repetitions" : 44,
+        "timestamp" : 1557437951187
+      }
+    },
+    "-Lf-I6EoemP5oRuk7rK1" : {
+      "-Lf-I76Cn4HPlCcUpjMX" : {
+        "amount" : 33,
+        "createDate" : "2019-05-16T11:00:04.375Z",
+        "order" : 0,
+        "repetitions" : 33,
+        "timestamp" : 1558004404376
+      },
+      "-Lf-IEJz0kWLMXTx5wvp" : {
+        "amount" : 44,
+        "createDate" : "2019-05-16T11:00:33.918Z",
+        "order" : 1,
+        "repetitions" : 33,
+        "timestamp" : 1558004433919
+      },
+      "-Lf-IZ8USSGAPS3SpRx5" : {
+        "amount" : 554,
+        "createDate" : "2019-05-16T00:00:00.000Z",
+        "order" : 2,
+        "repetitions" : 5544,
+        "timestamp" : 1558004566330
+      }
+    },
+    "-Lf51707AEkHI8xzhKgG" : {
+      "-Lf5M8KTDx0XPyxziwfx" : {
+        "amount" : 9,
+        "createDate" : "2019-05-17T15:15:17.328Z",
+        "order" : 0,
+        "repetitions" : 9,
+        "timestamp" : 1558106117332
+      },
+      "-Lf5MNDRtr1jYtFsnbmT" : {
+        "amount" : 433,
+        "createDate" : "2019-05-17T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 3,
+        "timestamp" : 1558107403656
+      }
+    },
+    "-Lf5Z3-3RCw-R4vqOa6t" : {
+      "-Lf5Z_7Q_TJQpCSI2_g1" : {
+        "amount" : 5,
+        "createDate" : "2019-05-16T16:14:02.715Z",
+        "order" : 0,
+        "repetitions" : 4,
+        "timestamp" : 1558109642868
+      },
+      "-Lf5_Z1CDzvjXo7xbfyN" : {
+        "amount" : 24,
+        "createDate" : "2019-05-16T00:00:00.000Z",
+        "order" : 1,
+        "repetitions" : 3,
+        "timestamp" : 1558109904851
+      }
+    },
+    "-LfJZ6Jdl-l4JL3UElRm" : {
+      "-LfJZ8-J6bdhNx9x5-mu" : {
+        "amount" : 3,
+        "createDate" : "2019-05-20T09:26:51.365Z",
+        "order" : 0,
+        "repetitions" : 2,
+        "timestamp" : 1558344411515
+      },
+      "-LfJZ9FvqzM7cfzHhEG2" : {
+        "amount" : 5,
+        "createDate" : "2019-05-20T09:26:56.509Z",
+        "order" : 1,
+        "repetitions" : 6,
+        "timestamp" : 1558344416659
+      }
+    }
+  },
+  "ihYeTpc9qYc8KG5JVVNUTlajPSJ3" : {
+    "-Le1iWzEK4ZXqwbrSlqb" : {
+      "-Le1iZFs6b1XiehdMiuN" : {
+        "amount" : "50",
+        "createDate" : "2019-05-04T12:03:26.162Z",
+        "order" : 0,
+        "repetitions" : "3"
+      },
+      "-LeInLR9mwuBNBrZG0YC" : {
+        "amount" : "50",
+        "createDate" : "2019-05-07T19:37:52.729Z",
+        "order" : 0,
+        "repetitions" : "3"
+      }
+    }
+  }
+}

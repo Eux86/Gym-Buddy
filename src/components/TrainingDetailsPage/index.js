@@ -6,6 +6,7 @@ import EditableTitle from '../common/editable-title/editable-title';
 import CrudList from '../common/crud-list/crud-list';
 import * as DatetimeHelper from '../../utils/datetime-helper';
 import BackBar from '../common/back-bar/back-bar';
+import { SeriesServiceContext } from '../../services/series-service';
 
 
 const INITIAL_STATE = {
@@ -17,6 +18,7 @@ const TrainingDetailsPage = (props) => {
     console.log("re-render");
     const exercisesService = useContext(ExercisesServiceContext);
     const trainingService = useContext(TrainingsServiceContext);
+    const seriesService = useContext(SeriesServiceContext);
     const [state, setState] = useState(INITIAL_STATE);
 
     const trainingId = props.match.params.id;

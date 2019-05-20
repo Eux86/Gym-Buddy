@@ -33,11 +33,6 @@ const ExerciseDetailsPage = (props) => {
         doneToday = mostRecentMoment.getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date()).getTime();
     }
 
-    // if (state.currentExercise && DatetimeHelper.getUtcDateWithoutTime(new Date(mostRecentMoment)) != DatetimeHelper.getUtcDateWithoutTime(new Date(state.currentExercise.lastUpdateDate))){
-    //    exercisesService.update({...state.currentExercise, lastUpdateDate: mostRecentMoment});
-    // }
-    
-
     useEffect( () => {
         init();
     }, [seriesService,trainingsService, exercisesService]);
@@ -51,6 +46,12 @@ const ExerciseDetailsPage = (props) => {
     const refreshList = async () => {
         const latestDaysSeries = await seriesService.getLastDayByExerciseId(currentExerciseId);
         setState(state => ({...state, latestDaysSeries}));
+
+        if (state.currentExercise && latestDaysSeries && latestDaysSeries.length>0) { 
+            const lastUpdateDate = DatetimeHelper.getUtcDateWithoutTime(new Date(latestDaysSeries[0].createDate));
+            debugger;
+            exercisesService.update(currentTrainingId, {...state.currentExercise, lastUpdateDate })
+        }
     }
 
     const refreshExercise = async () => {
@@ -63,7 +64,7 @@ const ExerciseDetailsPage = (props) => {
         setState(state => ({...state, currentTraining}));
     }
 
-    const del = async (seriesToDelete) => {
+    const onDeleteInternal = async (seriesToDelete) => {
         const tempSeries = state.latestDaysSeries;
         tempSeries.splice(tempSeries.indexOf(seriesToDelete), 1, { ...seriesToDelete, temp: true })
         setState({...state,latestDaysSeries: tempSeries});
@@ -81,7 +82,7 @@ const ExerciseDetailsPage = (props) => {
             }
         } else {
             // if it is an entry from today's series, then just delete it
-            await seriesService.del(currentExerciseId, seriesToDelete.id);
+            await seriesService.del(currentExerciseId, seriesToDelete);
         }
 
         refreshList();
@@ -136,12 +137,8 @@ const ExerciseDetailsPage = (props) => {
 
     const onUndoTodayClick = async () => {
         if (window.confirm("All edits done today will be canceled, are you sure?")) {
-            const today = (new Date()).toISOString();
-            for (let entry of latestDaysSeries) {
-                if (DatetimeHelper.getUtcDateWithoutTime(new Date(entry.createDate)).getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date(today)).getTime()) {
-                    await seriesService.del(currentExerciseId, entry.id);
-                }
-            }
+            const today = new Date().setHours(0, 0, 0, 0);
+            await seriesService.delByDate(currentExerciseId,today);
         }
         refreshList();
         refreshExercise();
@@ -173,7 +170,7 @@ const ExerciseDetailsPage = (props) => {
             {state.latestDaysSeries &&
                 <CrudList
                     items={latestDaysSeries}
-                    onItemDelete={del}
+                    onItemDelete={onDeleteInternal}
                     onItemAdd={onAddSeries}
                     onItemEdit={(original, edited) => editSerie(original, edited)}
                     itemTemplate={<TwoColumnsItemTemplate />}

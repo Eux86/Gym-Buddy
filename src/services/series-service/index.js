@@ -20,34 +20,26 @@ const SeriesService = ({ children }) => {
                 res(null);
             } else {
                 firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/`)
+                    .orderByKey()
+                    .limitToLast(1)
                     .once('value', snapshot => {
                         const obj = snapshot.val();
-                        const seriesList = obj && Object.keys(obj).map(key => ({ ...obj[key], id: key }));
-                        if (seriesList) {
-                            const seriesByDate = groupBy(seriesList, (x) => DatetimeHelper.getUtcDateWithoutTime(new Date(x.createDate)).toISOString());
-                            const orderedDates = Object.keys(seriesByDate).sort((a, b) => {
-                                return new Date(a) <= new Date(b) ? 1 : -1;
-                            });
-                            const mostRecentMoment = orderedDates[0];
-                            const latestDaysSeries = seriesByDate[mostRecentMoment] || [];
-                            res(latestDaysSeries);
-                        } else {
-                            res([]);
-                        }
+                        const lastDayTimestamp = Object.keys(obj)[0];
+                        const lastDay = obj[lastDayTimestamp]
+                        const seriesList = lastDay && Object.keys(lastDay).map(key => ({ ...lastDay[key], id: key, day: lastDayTimestamp }));
+                        res(seriesList);
                     });
             }
         });
     }
 
     const add = async (exerciseId, newSeries) => {
-        // addint a temporary item to the array so that an item can be seen in the app meanwhile we wait for the server response 
-        // setSeries([...series, { ...newSeries, temp: true }]);
+        const createDate = (new Date()).setHours(0, 0, 0, 0);
 
-        const currentExercise = await exercisesService.getById(exerciseId);
         const timestamp = await audit.add("AddSeries", JSON.stringify({ exerciseId, ...newSeries }));
-        const newRef = firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}`).push();
+        const newRef = firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${createDate}`).push();
         var updates = {
-            [`series/${authUser.uid}/${exerciseId}/${newRef.key}`]: {
+            [`series/${authUser.uid}/${exerciseId}/${createDate}/${newRef.key}`]: {
                 amount: +newSeries.amount,
                 repetitions: +newSeries.repetitions,
                 order: +newSeries.order,
@@ -61,10 +53,9 @@ const SeriesService = ({ children }) => {
 
 
     const edit = async (exerciseId, editedSeries) => {
-        const currentExercise = await exercisesService.getById(exerciseId);
         const timestamp = await audit.add("EditSeries", JSON.stringify({ exerciseId, ...editedSeries }));
         var updates = {
-            [`series/${authUser.uid}/${exerciseId}/${editedSeries.id}`]: {
+            [`series/${authUser.uid}/${exerciseId}/${editedSeries.day}/${editedSeries.id}`]: {
                 amount: +editedSeries.amount,
                 repetitions: +editedSeries.repetitions,
                 order: +editedSeries.order,
@@ -75,10 +66,17 @@ const SeriesService = ({ children }) => {
         return await firebaseContext.firebase.db.ref().update(updates);
     }
 
-    const del = async (exerciseId, id) => {
-        const timestamp = await audit.add("DelSeries", JSON.stringify({ exerciseId, id }));
-        firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${id}`).remove();
+    const del = async (exerciseId, deletedSeries) => {
+        const timestamp = await audit.add("DelSeries", JSON.stringify({ exerciseId, id: deletedSeries.id }));
+        firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${deletedSeries.day}/${deletedSeries.id}`).remove();
     }
+
+    const delByDate = async (exerciseId,date) => {
+        const timestamp = await audit.add("delSeriesByDate", JSON.stringify({ exerciseId, date }));
+        firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${date}`).remove();
+    }
+
+    
 
     return (
         <SeriesServiceContext.Provider
@@ -86,6 +84,7 @@ const SeriesService = ({ children }) => {
                 getLastDayByExerciseId: getLastDayByExerciseId,
                 add: add,
                 del: del,
+                delByDate: delByDate,
                 edit: edit,
             }}
         >
