@@ -76,7 +76,7 @@ const TrainingDetailsPage = (props) => {
         return lastUpdate === today;
     }
 
-    const orderedExercises = state.exercises.sort((a, b) => a.order > b.order);
+    const orderedExercises = state.exercises && state.exercises.sort((a, b) => a.order > b.order);
     return (
         <div className="container-fluid">
             <BackBar label="Back to Trainings" linkTarget="/" history={props.history} />

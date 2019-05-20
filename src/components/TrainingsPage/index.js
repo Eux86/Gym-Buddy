@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import * as ROUTES from '../../constants/routes'
 import { withRouter } from 'react-router-dom'
 import { TrainingsServiceContext } from '../../services/trainings-service';
-import OnlyIfLogged from '../../services/only-if-logged';
+import OnlyIfLogged from '../common/only-if-logged';
 import CrudList from '../common/crud-list/crud-list';
 
 
