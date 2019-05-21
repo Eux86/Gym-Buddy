@@ -24,7 +24,7 @@ const ExerciseDetailsPage = (props) => {
     const seriesService = useContext(SeriesServiceContext);
     const currentExerciseId = props.match.params.exerciseId;
     const currentTrainingId = props.match.params.trainingId;
-    
+
     let doneToday = false;
     let latestDaysSeries = state.latestDaysSeries;
 
@@ -33,9 +33,9 @@ const ExerciseDetailsPage = (props) => {
         doneToday = mostRecentMoment.getTime() === DatetimeHelper.getUtcDateWithoutTime(new Date()).getTime();
     }
 
-    useEffect( () => {
+    useEffect(() => {
         init();
-    }, [seriesService,trainingsService, exercisesService]);
+    }, [seriesService, trainingsService, exercisesService]);
 
     const init = async () => {
         await refreshTraining();
@@ -45,30 +45,29 @@ const ExerciseDetailsPage = (props) => {
 
     const refreshList = async () => {
         const latestDaysSeries = await seriesService.getLastDayByExerciseId(currentExerciseId);
-        setState(state => ({...state, latestDaysSeries}));
+        setState(state => ({ ...state, latestDaysSeries }));
 
-        if (state.currentExercise && latestDaysSeries && latestDaysSeries.length>0) { 
+        if (state.currentExercise && latestDaysSeries && latestDaysSeries.length > 0) {
             const lastUpdateDate = DatetimeHelper.getUtcDateWithoutTime(new Date(latestDaysSeries[0].createDate));
-            debugger;
-            exercisesService.update(currentTrainingId, {...state.currentExercise, lastUpdateDate })
+            exercisesService.update(currentTrainingId, { ...state.currentExercise, lastUpdateDate })
         }
     }
 
     const refreshExercise = async () => {
         const currentExercise = await exercisesService.getById(currentExerciseId);
-        setState(state => ({...state, currentExercise}));
+        setState(state => ({ ...state, currentExercise }));
     }
 
     const refreshTraining = async () => {
         const currentTraining = await trainingsService.getById(currentTrainingId);
-        setState(state => ({...state, currentTraining}));
+        setState(state => ({ ...state, currentTraining }));
     }
 
     const onDeleteInternal = async (seriesToDelete) => {
         const tempSeries = state.latestDaysSeries;
         tempSeries.splice(tempSeries.indexOf(seriesToDelete), 1, { ...seriesToDelete, temp: true })
-        setState({...state,latestDaysSeries: tempSeries});
-        
+        setState({ ...state, latestDaysSeries: tempSeries });
+
         const seriesToDeleteCreateDate = DatetimeHelper.getUtcDateWithoutTime(new Date(seriesToDelete.createDate));
         const today = DatetimeHelper.getUtcDateWithoutTime(new Date());
         const copySeriesToNewDate = seriesToDeleteCreateDate.getTime() != today.getTime();
@@ -89,7 +88,7 @@ const ExerciseDetailsPage = (props) => {
     }
 
     const onAddSeries = async (newSeries) => {
-        setState( {...state, latestDaysSeries: [...state.latestDaysSeries, { ...newSeries, temp: true }]} );
+        setState({ ...state, latestDaysSeries: [...state.latestDaysSeries, { ...newSeries, temp: true }] });
 
         const order = latestDaysSeries.length == 0 ? 0 : Math.max(...latestDaysSeries.map(x => +x.order)) + 1;
         const today = (new Date()).toISOString();
@@ -105,7 +104,7 @@ const ExerciseDetailsPage = (props) => {
     const editSerie = async (original, edited) => {
         const tempSeries = state.latestDaysSeries;
         tempSeries.splice(tempSeries.indexOf(original), 1, { ...edited, temp: true })
-        setState({...state, latestDaysSeries: tempSeries });
+        setState({ ...state, latestDaysSeries: tempSeries });
 
         const originalDate = DatetimeHelper.getUtcDateWithoutTime(new Date(original.createDate));
         const today = DatetimeHelper.getUtcDateWithoutTime(new Date());
@@ -138,7 +137,7 @@ const ExerciseDetailsPage = (props) => {
     const onUndoTodayClick = async () => {
         if (window.confirm("All edits done today will be canceled, are you sure?")) {
             const today = new Date().setHours(0, 0, 0, 0);
-            await seriesService.delByDate(currentExerciseId,today);
+            await seriesService.delByDate(currentExerciseId, today);
         }
         refreshList();
         refreshExercise();
@@ -157,7 +156,7 @@ const ExerciseDetailsPage = (props) => {
     }
 
 
-   
+
     return (state.currentExercise &&
         <div id="exercise-details-container" className={"container-fluid " + (doneToday && "flash")}>
             <BackBar label={"Back to " + (state.currentTraining && state.currentTraining.name)} linkTarget={`/training/${currentTrainingId}`} history={props.history} />
@@ -178,17 +177,24 @@ const ExerciseDetailsPage = (props) => {
                     itemHeader={<TwoColumnsItemTemplate item={{ repetitions: 'Repetitions', amount: 'Amount' }} />}
                 />
             }
-            <div className="row text-center">
-                <div className="col">
-                    <button
-                        type="button"
-                        className="btn btn-success"
-                        disabled={doneToday || !latestDaysSeries || latestDaysSeries.length == 0}
-                        onClick={onDoneTodayClick}>
-                        Done today!
-                    </button>
+            {!state.latestDaysSeries &&
+                <p className="text-muted text-center mt-5">
+                    Loading...
+                </p>
+            }
+            {state.latestDaysSeries && 
+                <div className="row text-center">
+                    <div className="col">
+                        <button
+                            type="button"
+                            className="btn btn-success"
+                            disabled={doneToday || !latestDaysSeries || latestDaysSeries.length == 0}
+                            onClick={onDoneTodayClick}>
+                            Done today!
+                        </button>
+                    </div>
                 </div>
-            </div>
+            }
             {doneToday &&
                 <div className="row text-center">
                     <div className="col">

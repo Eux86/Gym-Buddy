@@ -9,12 +9,11 @@ import CrudList from '../common/crud-list/crud-list';
 const TrainingsPage = props => {
     console.log("rendering")
     const [state, setState] = useState({
-        trainings: []
+        trainings: null
     });
     const trainingsService = useContext(TrainingsServiceContext);
 
     const onSelectTraining = (id) => {
-        // userSelectionService.setSelectedTraining(id);
         props.history.push(`${ROUTES.TRAINING_DETAILS}/${id}`);
     }
 
@@ -54,7 +53,7 @@ const TrainingsPage = props => {
                 </h1>
                 <br />
                 {!trainings &&
-                    <p className="text-muted text-center">
+                    <p className="text-muted text-center mt-5">
                         Loading...
                 </p>
                 }

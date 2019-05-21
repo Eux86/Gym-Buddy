@@ -71,7 +71,6 @@ const ExercisesService = ({ children }) => {
     }
 
     const update = async (trainingId, exercise) => {
-        debugger;
         const timestamp = await audit.add("EditTraining", JSON.stringify({ trainingId, exercise }));
         await firebaseContext.firebase.db.ref(`exercises/${authUser.uid}/${exercise.id}`)
             .update({

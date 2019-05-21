@@ -24,10 +24,14 @@ const SeriesService = ({ children }) => {
                     .limitToLast(1)
                     .once('value', snapshot => {
                         const obj = snapshot.val();
-                        const lastDayTimestamp = Object.keys(obj)[0];
-                        const lastDay = obj[lastDayTimestamp]
-                        const seriesList = lastDay && Object.keys(lastDay).map(key => ({ ...lastDay[key], id: key, day: lastDayTimestamp }));
-                        res(seriesList);
+                        if (obj) {
+                            const lastDayTimestamp = Object.keys(obj)[0];
+                            const lastDay = obj[lastDayTimestamp]
+                            const seriesList = lastDay && Object.keys(lastDay).map(key => ({ ...lastDay[key], id: key, day: lastDayTimestamp }));
+                            res(seriesList);
+                        } else {
+                            res([]);
+                        }
                     });
             }
         });
@@ -71,12 +75,12 @@ const SeriesService = ({ children }) => {
         firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${deletedSeries.day}/${deletedSeries.id}`).remove();
     }
 
-    const delByDate = async (exerciseId,date) => {
+    const delByDate = async (exerciseId, date) => {
         const timestamp = await audit.add("delSeriesByDate", JSON.stringify({ exerciseId, date }));
         firebaseContext.firebase.db.ref(`series/${authUser.uid}/${exerciseId}/${date}`).remove();
     }
 
-    
+
 
     return (
         <SeriesServiceContext.Provider

@@ -10,8 +10,8 @@ import { SeriesServiceContext } from '../../services/series-service';
 
 
 const INITIAL_STATE = {
-    currentTraining: {},
-    exercises: []
+    currentTraining: null,
+    exercises: null
 }
 
 const TrainingDetailsPage = (props) => {
@@ -82,17 +82,18 @@ const TrainingDetailsPage = (props) => {
     return (
         <div className="container-fluid">
             <BackBar label="Back to Trainings" linkTarget="/" history={props.history} />
+            {!orderedExercises &&
+                <p className="text-muted text-center mt-5">
+                    Loading...
+                </p>
+            }
             {state.currentTraining &&
                 <EditableTitle title={state.currentTraining.name} onChange={(newName) => onNameChange(state.currentTraining, newName)} />
             }
             <br />
-            {!orderedExercises &&
-                <p className="text-muted text-center">
-                    Loading...
-                </p>
-            }
+            
             {(orderedExercises && orderedExercises.length == 0) &&
-                <p className="text-muted text-center">
+                <p className="text-muted text-center mt-5">
                     Add here the exercises of your training
                 </p>
             }
