@@ -43,11 +43,7 @@ const OnlyIfLogged = (props) => {
 
 
     return (
-        <>
-            {
-                childrenWithProps
-            }
-        </>
+        childrenWithProps
     )
 }
 

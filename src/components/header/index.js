@@ -45,27 +45,6 @@ const Header = ({ history }) => {
                 
             </div>
         </nav>
-
-        // <div className="header container-fluid bg-dark box-shadow">
-        //     <div className="row h-100">
-        //         <div className="col-2">
-        //             {/* <a className="" onClick={(e) => onBack(e)} href="#">
-        //                 <span className="glyphicon glyphicon-menu-up"></span>
-        //             </a> */}
-        //         </div>
-        //         <div className="header-title col-8 mx-auto text-center">
-        //             <Link to="/">Gym Buddy</Link>
-        //         </div>
-        //         <div className="col-2 session-widget">
-        //             <div className="float-right">
-        //                 <UserCircle history={history} />
-        //             </div>
-        //             {/* <span className="float-right">
-        //                 {authUser && <SignOutButton />}
-        //             </span> */}
-        //         </div>
-        //     </div>
-        // </div>
     )
 }
 

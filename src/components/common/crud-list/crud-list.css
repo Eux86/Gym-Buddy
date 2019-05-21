@@ -102,4 +102,7 @@
         height: 20px;
     }
 }
-  
+.drag-handler {
+    margin-left: -20px;
+    margin-right: 0.5rem;
+}

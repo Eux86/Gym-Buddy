@@ -1,3 +1,4 @@
+import './DragDropTouch'
 import 'bootstrap/dist/css/bootstrap.css';
 import './fontawesome'
 import React from 'react';

@@ -1,0 +1,12 @@
+.drag-handler {
+    width: 100%;
+    justify-content: center;
+    max-width: 30px;
+    display: flex;
+}
+
+.drag-handler div {
+    background-color: rgb(208, 208, 208);
+    padding-left: 1px;
+    margin-right: 2px;
+}

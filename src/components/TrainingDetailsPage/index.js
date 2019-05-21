@@ -50,6 +50,14 @@ const TrainingDetailsPage = (props) => {
         refreshExercises();
     }
 
+    const updateExercise = async (original, edited) => {
+        // const tempExercises = [...state.exercises];
+        // tempExercises.splice(tempExercises.indexOf(original), 1, { ...edited, temp: true })
+        // setState({ ...state, exercises: tempExercises });
+        await exercisesService.update(trainingId, edited);
+        refreshExercises();
+    }
+
     const onClick = (id) => {
         props.history.push(`${ROUTES.EXERCISE_DETAILS}/${trainingId}/${id}`);
     }
@@ -103,7 +111,8 @@ const TrainingDetailsPage = (props) => {
                     onItemSelect={onClick}
                     onItemDelete={deleteExercise}
                     onItemAdd={onAdd}
-                    semaforeCondition={exerciseDoneToday} />
+                    semaforeCondition={exerciseDoneToday}
+                    onItemEdit={updateExercise} />
             }
         </div>
     );

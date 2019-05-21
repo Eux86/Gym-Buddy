@@ -78,7 +78,7 @@ const ExercisesService = ({ children }) => {
                 description: exercise.description,
                 name: exercise.name,
                 order: exercise.order || 0,
-                lastUpdateDate: exercise.lastUpdateDate,
+                lastUpdateDate: exercise.lastUpdateDate || null,
                 timestamp
             });
     }

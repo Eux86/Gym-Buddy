@@ -12,3 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@media (max-width: 576px) {
+  .list-group {
+      margin-right: -15px;
+      margin-left: -15px;
+  }
+}
